@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="ImageIconUaviak"
+           TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="/Resources/Images/IconUaviak.png" />
+    </Style>
+
+    <Style x:Key="BigImageIconUaviak"
+           TargetType="{x:Type Image}"
+           BasedOn="{StaticResource ImageIconUaviak}">
+        <Setter Property="Height" Value="80" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0 10" />
+    </Style>
+</ResourceDictionary>
