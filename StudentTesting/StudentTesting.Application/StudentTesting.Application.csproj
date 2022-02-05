@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>StudentTesting.Application</AssemblyName>
+    <RootNamespace>StudentTesting.Application</RootNamespace>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\IconUaviak.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentTesting.MaterialDesign\StudentTesting.MaterialDesign.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\IconUaviak.png" />
+  </ItemGroup>
+
+</Project>
