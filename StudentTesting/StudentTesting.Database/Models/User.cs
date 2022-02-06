@@ -26,6 +26,11 @@ namespace StudentTesting.Database.Models
         public string PasswordHash { get; set; }
 
         [Column(TypeName = "NVARCHAR")]
+        [StringLength(50)]
+        [Required(AllowEmptyStrings = false)]
+        public string Salt { get; set; }
+
+        [Column(TypeName = "NVARCHAR")]
         [StringLength(100)]
         [Required(AllowEmptyStrings = false)]
         public string FullName { get; set; }

@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
+    <ProjectReference Include="..\StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj" />
   </ItemGroup>
 
 </Project>

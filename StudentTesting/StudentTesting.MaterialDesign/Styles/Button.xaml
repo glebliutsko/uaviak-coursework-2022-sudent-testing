@@ -26,6 +26,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDarkColor}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="Gray" />
+                            <Setter Property="BorderBrush" Value="Gray" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

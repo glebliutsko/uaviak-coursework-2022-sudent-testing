@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentTesting.Application.Views.Windows"
         xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
+        xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance vm:LoginViewModel}"
         Title="Авторизация"
         ResizeMode="CanMinimize"
         Height="350" Width="260">
@@ -27,17 +29,24 @@
                   ap:HeaderGroupBox.HeaderFontSize="16">
             <StackPanel>
                 <TextBox Style="{StaticResource MaterialTextBox}"
-                     Margin="0 0 0 5"
-                     ap:Hint.HintText="Логин" />
+                         Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0 0 0 5"
+                         ap:Hint.HintText="Логин" />
                 <PasswordBox Style="{StaticResource MaterialPasswordBox}"
-                         Margin="0 0 0 15"
-                         ap:Hint.HintText="Пароль" />
+                             ap:NormalPasswordBox.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0 0 0 15"
+                             ap:Hint.HintText="Пароль" />
 
-                <Button Style="{StaticResource PrimaryMaterialButton}" Content="ВОЙТИ"
-                        Margin="0 0 0 5" />
+                <Button Style="{StaticResource PrimaryMaterialButton}"
+                        Content="ВОЙТИ"
+                        Command="{Binding LoginButtonCommand}"
+                        Margin="0 0 0 5" Cursor="Hand" />
             </StackPanel>
         </GroupBox>
 
-        <Button Margin="5 0" Grid.Row="2" Style="{StaticResource SecodaryMaterialButton}" Content="ВОСТАНОВИТЬ ПАРОЛЬ" />
+        <Button Style="{StaticResource SecodaryMaterialButton}"
+                Grid.Row="2"
+                Content="ВОСТАНОВИТЬ ПАРОЛЬ"
+                Margin="5 0" />
     </Grid>
 </Window>

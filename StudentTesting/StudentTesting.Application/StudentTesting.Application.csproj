@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
     <ProjectReference Include="..\StudentTesting.MaterialDesign\StudentTesting.MaterialDesign.csproj" />
   </ItemGroup>
 
