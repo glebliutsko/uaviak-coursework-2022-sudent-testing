@@ -5,9 +5,9 @@ namespace StudentTesting.Application.Views.Windows
     /// <summary>
     /// Логика взаимодействия для LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class AuthorizeWindow : Window
     {
-        public LoginWindow()
+        public AuthorizeWindow()
         {
             InitializeComponent();
         }

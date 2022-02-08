@@ -1,17 +1,15 @@
-﻿using StudentTesting.Application.Commands.Login;
+﻿using StudentTesting.Application.Commands;
+using StudentTesting.Application.Commands.Async;
 using StudentTesting.Database;
-using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
-    class LoginViewModel : ViewModelBase
+    class AuthorizeViewModel : ViewModelBase
     {
-        private readonly StudentDbContext _db;
-
-        public LoginViewModel(StudentDbContext db)
+        public AuthorizeViewModel(StudentDbContext db)
+            : base(db)
         {
-            _db = db;
-            LoginButtonCommand = new LoginCommand(this);
+            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db);
         }
 
         #region Property
@@ -43,7 +41,7 @@ namespace StudentTesting.Application.ViewModels
         #endregion
 
         #region Command
-        public ICommand LoginButtonCommand { get; private set; }
+        public IAsyncCommand CheckCredentialsCommand { get; }
         #endregion
     }
 }

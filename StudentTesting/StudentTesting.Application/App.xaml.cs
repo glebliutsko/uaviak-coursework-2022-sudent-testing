@@ -1,12 +1,7 @@
 ﻿using StudentTesting.Application.ViewModels;
 using StudentTesting.Application.Views.Windows;
 using StudentTesting.Database;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace StudentTesting.Application
@@ -16,6 +11,8 @@ namespace StudentTesting.Application
     /// </summary>
     public partial class App : System.Windows.Application
     {
+        private StudentDbContext _db;
+
         private StudentDbContext GetDbContext()
         {
 #pragma warning disable CS0162
@@ -30,11 +27,18 @@ namespace StudentTesting.Application
         {
             base.OnStartup(e);
 
-            var loginWindow = new LoginWindow
+            _db = GetDbContext();
+
+            var loginWindow = new AuthorizeWindow
             {
-                DataContext = new LoginViewModel(GetDbContext())
+                DataContext = new AuthorizeViewModel(_db)
             };
             loginWindow.Show();
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            _db.Dispose();
         }
     }
 }

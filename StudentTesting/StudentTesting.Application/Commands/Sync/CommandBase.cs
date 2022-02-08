@@ -1,9 +1,10 @@
-﻿using System;
+﻿using StudentTesting.Application.Utils;
+using System;
 using System.Windows.Input;
 
-namespace StudentTesting.Application.Commands
+namespace StudentTesting.Application.Commands.Sync
 {
-    abstract class CommandBase : ICommand
+    abstract class CommandBase : OnPropertyChangeBase, ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -12,7 +13,11 @@ namespace StudentTesting.Application.Commands
         }
 
         public abstract bool CanExecute(object parameter);
-
         public abstract void Execute(object parameter);
+
+        protected void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 }

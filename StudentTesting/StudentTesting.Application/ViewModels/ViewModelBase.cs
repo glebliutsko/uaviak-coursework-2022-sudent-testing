@@ -1,15 +1,17 @@
-﻿using System.ComponentModel;
+﻿using StudentTesting.Application.Utils;
+using StudentTesting.Database;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace StudentTesting.Application.ViewModels
 {
-    abstract class ViewModelBase : INotifyPropertyChanged
+    abstract class ViewModelBase : OnPropertyChangeBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        protected readonly StudentDbContext _db;
 
-        protected virtual void OnPropertyChange([CallerMemberName] string propertyName = "")
+        protected ViewModelBase(StudentDbContext db)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            _db = db;
         }
     }
 }
