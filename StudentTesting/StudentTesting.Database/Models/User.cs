@@ -47,6 +47,8 @@ namespace StudentTesting.Database.Models
         public int? IdGroup { get; set; }
         public Group Group { get; set; }
 
+        public byte[] UserPic { get; set; }
+
         public ICollection<Question> Questions { get; set; }
     }
 }
