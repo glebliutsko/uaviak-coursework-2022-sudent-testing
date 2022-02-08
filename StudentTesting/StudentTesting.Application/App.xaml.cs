@@ -25,6 +25,8 @@ namespace StudentTesting.Application
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            new MainWindow().Show();
+
             base.OnStartup(e);
 
             _db = GetDbContext();

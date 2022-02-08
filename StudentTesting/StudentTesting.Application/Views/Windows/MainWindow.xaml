@@ -1,0 +1,35 @@
+﻿<Window x:Class="StudentTesting.Application.Views.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentTesting.Application.Views.Windows"
+        xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign" xmlns:controls="clr-namespace:StudentTesting.Application.Views.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Style="{StaticResource MaterialGroupBox}"
+                  ap:Border.BorderCornerRadius="0 10 10 0"
+                  Margin="0 5"
+                  Padding="5 10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1">
+                    <controls:UserViewer/>
+                    <Button Style="{StaticResource DangerousMaterialButton}"
+                            Content="ВЫЙТИ"
+                            Margin="0 10 0 0" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

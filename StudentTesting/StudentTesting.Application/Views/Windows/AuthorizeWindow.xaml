@@ -22,9 +22,9 @@
 
         <GroupBox Style="{StaticResource MaterialGroupBox}"
                   Grid.Row="1"
+                  Padding="5"
                   Header="Авторизация"
                   VerticalAlignment="Top"
-                  Padding="5"
                   ap:HeaderGroupBox.HeaderAligment="Center"
                   ap:HeaderGroupBox.HeaderFontSize="16">
             <StackPanel>

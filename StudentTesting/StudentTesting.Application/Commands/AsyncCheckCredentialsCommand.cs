@@ -29,7 +29,10 @@ namespace StudentTesting.Application.Commands
         {
             var checker = await CheckerAuthorizeUser.SearchUserByLogin(_viewModel.Login, _db);
             if (checker == null || !checker.CheckPassword(_viewModel.Password))
+            {
                 MessageBox.Show("Неверный логин или пароль!");
+                return;
+            }
 
             MessageBox.Show($"Логин: {checker.User.Login}\nФИО: {checker.User.FullName}\nРоль: {checker.User.Role}\nДокумент: {checker.User.DocumentNumber}");
         }

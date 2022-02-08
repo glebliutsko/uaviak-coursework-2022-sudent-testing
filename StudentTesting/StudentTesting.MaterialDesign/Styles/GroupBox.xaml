@@ -5,24 +5,37 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
 
         <Setter Property="Background" Value="#ffffff" />
+        <Setter Property="ap:Border.BorderCornerRadius" Value="10" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
                     <Border Background="{TemplateBinding Background}"
-                            CornerRadius="10"
-                            Effect="{StaticResource ShadowGroupBox}">
-                        <StackPanel Margin="5">
+                            Effect="{StaticResource ShadowGroupBox}"
+                            CornerRadius="{TemplateBinding ap:Border.BorderCornerRadius}">
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            
                             <ContentControl x:Name="Header"
-                                    Content="{TemplateBinding Header}"
-                                    HorizontalAlignment="{TemplateBinding ap:HeaderGroupBox.HeaderAligment}"
-                                    FontSize="{TemplateBinding ap:HeaderGroupBox.HeaderFontSize}"
-                                    FontWeight="Bold"
-                                    Margin="0 5 0 10" />
+                                            Grid.Row="0"
+                                            Content="{TemplateBinding Header}"
+                                            HorizontalAlignment="{TemplateBinding ap:HeaderGroupBox.HeaderAligment}"
+                                            FontSize="{TemplateBinding ap:HeaderGroupBox.HeaderFontSize}"
+                                            FontWeight="Bold"
+                                            Margin="0 5 0 10" />
 
-                            <ContentControl Content="{TemplateBinding Content}" />
-                        </StackPanel>
+                            <ContentControl Grid.Row="1"
+                                            Content="{TemplateBinding Content}" />
+                        </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Header" Value="{x:Null}">
+                            <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
