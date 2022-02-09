@@ -30,6 +30,7 @@ namespace StudentTesting.Application
             base.OnStartup(e);
 
             _db = GetDbContext();
+            _db.Groups.FirstOrDefault();
 
             var loginWindow = new AuthorizeWindow
             {

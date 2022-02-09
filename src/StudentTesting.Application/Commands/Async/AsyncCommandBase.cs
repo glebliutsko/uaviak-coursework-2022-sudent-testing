@@ -9,7 +9,7 @@ namespace StudentTesting.Application.Commands.Async
         public bool IsRunning
         {
             get => _isRunning;
-            set
+            private set
             {
                 _isRunning = value;
                 OnPropertyChange();

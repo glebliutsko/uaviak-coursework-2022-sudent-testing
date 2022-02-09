@@ -38,6 +38,19 @@ namespace StudentTesting.Application.ViewModels
             }
         }
         #endregion
+
+        #region ErrorMessage
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChange();
+            }
+        }
+        #endregion
         #endregion
 
         #region Command
