@@ -28,10 +28,6 @@
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDarkColor}" />
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="Gray" />
                             <Setter Property="BorderBrush" Value="Gray" />
@@ -46,17 +42,35 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryFontColor}" />
+        <Style.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDarkColor}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="SecodaryMaterialButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialButton}">
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="Background" Value="#ffffff" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}" />
+        <Style.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryFontColor}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="DangerousMaterialButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialButton}">
-        <Setter Property="BorderBrush" Value="#ff0000" />
-        <Setter Property="Background" Value="#ffffff" />
-        <Setter Property="Foreground" Value="#ff0000" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DangerousColor}" />
+        <Setter Property="Background" Value="{DynamicResource DangerousForegroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource DangerousColor}" />
+        <Style.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource DangerousColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource DangerousForegroundColor}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

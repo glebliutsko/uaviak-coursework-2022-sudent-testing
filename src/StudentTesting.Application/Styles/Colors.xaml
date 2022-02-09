@@ -4,5 +4,9 @@
     <SolidColorBrush x:Key="PrimaryDarkColor" Color="#5cb5ff" />
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#FFFFFF" />
 
+    <SolidColorBrush x:Key="DangerousColor" Color="#ff0000" />
+    <SolidColorBrush x:Key="DangerousForegroundColor" Color="#ffffff" />
+    
+
     <DropShadowEffect x:Key="ShadowGroupBox" Color="#3c4043" Opacity="0.3" ShadowDepth="0" />
 </ResourceDictionary>
