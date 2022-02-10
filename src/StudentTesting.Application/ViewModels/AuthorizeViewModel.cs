@@ -1,15 +1,22 @@
 ﻿using StudentTesting.Application.Commands;
 using StudentTesting.Application.Commands.Async;
+using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Database;
 
 namespace StudentTesting.Application.ViewModels
 {
-    class AuthorizeViewModel : ViewModelBase
+    public class AuthorizeViewModel : ViewModelBase
     {
-        public AuthorizeViewModel(StudentDbContext db)
+        private readonly IShowMainWindowService _showWindowService;
+        private readonly IRequestCaptchaService _requestCaptchaService;
+
+        public AuthorizeViewModel(StudentDbContext db, IShowMainWindowService showWindowService = null, IRequestCaptchaService requestCaptchaService = null)
             : base(db)
         {
-            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db);
+            _showWindowService = showWindowService ?? new ShowMainWindowService();
+            _requestCaptchaService = requestCaptchaService ?? new ShowCapthaWindowService();
+
+            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db, _showWindowService, _requestCaptchaService);
         }
 
         #region Property

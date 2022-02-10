@@ -1,9 +1,8 @@
 ﻿using StudentTesting.Application.Commands.Async;
-using StudentTesting.Application.Services;
+using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Application.ViewModels;
 using StudentTesting.Database;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace StudentTesting.Application.Commands
 {
@@ -13,11 +12,15 @@ namespace StudentTesting.Application.Commands
 
         private readonly StudentDbContext _db;
         private readonly AuthorizeViewModel _viewModel;
+        private readonly IShowMainWindowService _showWindowService;
+        private readonly IRequestCaptchaService _requestCaptchaService;
 
-        public AsyncCheckCredentialsCommand(AuthorizeViewModel viewModel, StudentDbContext db)
+        public AsyncCheckCredentialsCommand(AuthorizeViewModel viewModel, StudentDbContext db, IShowMainWindowService showWindowService, IRequestCaptchaService requestCaptchaService)
         {
             _db = db;
             _viewModel = viewModel;
+            _showWindowService = showWindowService;
+            _requestCaptchaService = requestCaptchaService;
         }
 
         private void ClearField(bool onlyPassword = true)
@@ -35,6 +38,12 @@ namespace StudentTesting.Application.Commands
                 return;
             }
 
+            if (_countAttempts >= 3 && !_requestCaptchaService.RequestCaptcha())
+            {
+                _viewModel.ErrorMessage = "Ошибка капчи";
+                return;
+            }
+
             var checker = await CheckerAuthorizeUser.SearchUserByLogin(_viewModel.Login, _db);
             if (checker == null || !checker.CheckPassword(_viewModel.Password))
             {
@@ -46,7 +55,7 @@ namespace StudentTesting.Application.Commands
 
             ClearField(false);
             _viewModel.ErrorMessage = "";
-            MessageBox.Show($"Логин: {checker.User.Login}\nФИО: {checker.User.FullName}\nРоль: {checker.User.Role}\nДокумент: {checker.User.DocumentNumber}");
+            _showWindowService.ShowWindow(checker.User);
         }
     }
 }

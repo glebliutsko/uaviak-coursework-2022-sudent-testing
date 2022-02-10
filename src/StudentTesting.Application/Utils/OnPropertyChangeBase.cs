@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentTesting.Application.Utils
 {
-    abstract class OnPropertyChangeBase : INotifyPropertyChanged
+    public abstract class OnPropertyChangeBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.Commands.Sync
 {
-    abstract class CommandBase : OnPropertyChangeBase, ICommand
+    public abstract class CommandBase : OnPropertyChangeBase, ICommand
     {
         public event EventHandler CanExecuteChanged
         {

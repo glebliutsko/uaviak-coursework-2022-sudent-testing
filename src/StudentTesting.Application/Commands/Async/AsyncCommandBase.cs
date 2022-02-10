@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace StudentTesting.Application.Commands.Async
 {
-    abstract class AsyncCommandBase : CommandBase, IAsyncCommand
+    public abstract class AsyncCommandBase : CommandBase, IAsyncCommand
     {
         private bool _isRunning;
         public bool IsRunning

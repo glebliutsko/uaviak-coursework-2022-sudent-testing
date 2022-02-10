@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace StudentTesting.Application.ViewModels
 {
-    abstract class ViewModelBase : OnPropertyChangeBase
+    public abstract class ViewModelBase : OnPropertyChangeBase
     {
         protected readonly StudentDbContext _db;
 

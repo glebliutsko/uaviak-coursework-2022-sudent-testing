@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace StudentTesting.Application.Services
+namespace StudentTesting.Application.Services.Authorize
 {
     class CheckerAuthorizeUser
     {

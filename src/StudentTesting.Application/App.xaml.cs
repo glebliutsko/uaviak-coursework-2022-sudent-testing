@@ -1,4 +1,5 @@
-﻿using StudentTesting.Application.ViewModels;
+﻿using StudentTesting.Application.Services.Captcha;
+using StudentTesting.Application.ViewModels;
 using StudentTesting.Application.Views.Windows;
 using StudentTesting.Database;
 using System.Linq;
@@ -25,17 +26,12 @@ namespace StudentTesting.Application
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            new MainWindow().Show();
-
             base.OnStartup(e);
 
             _db = GetDbContext();
             _db.Groups.FirstOrDefault();
 
-            var loginWindow = new AuthorizeWindow
-            {
-                DataContext = new AuthorizeViewModel(_db)
-            };
+            var loginWindow = new AuthorizeWindow(new AuthorizeViewModel(_db));
             loginWindow.Show();
         }
 

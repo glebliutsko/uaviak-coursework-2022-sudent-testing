@@ -7,8 +7,10 @@ namespace StudentTesting.Application.Views.Windows
     /// </summary>
     public partial class AuthorizeWindow : Window
     {
-        public AuthorizeWindow()
+        public AuthorizeWindow(object viewModel)
         {
+            DataContext = viewModel;
+
             InitializeComponent();
         }
     }
