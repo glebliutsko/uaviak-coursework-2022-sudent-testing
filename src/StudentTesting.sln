@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.Database", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.Database.InitalData", "StudentTesting.Database.InitalData\StudentTesting.Database.InitalData.csproj", "{18995CAF-BC02-45F2-AC71-966BEE192A4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentTesting.SecurityPassword", "StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj", "{1C30093B-8256-4354-A789-49B0F191033D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.SecurityPassword", "StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj", "{1C30093B-8256-4354-A789-49B0F191033D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentTesting.Application.Tests", "StudentTesting.Application.Tests\StudentTesting.Application.Tests.csproj", "{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1C30093B-8256-4354-A789-49B0F191033D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C30093B-8256-4354-A789-49B0F191033D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C30093B-8256-4354-A789-49B0F191033D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
