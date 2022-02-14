@@ -10,4 +10,8 @@
     <ProjectReference Include="..\StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
 </Project>
