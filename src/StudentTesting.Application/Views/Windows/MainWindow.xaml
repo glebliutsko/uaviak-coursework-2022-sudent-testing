@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentTesting.Application.Views.Windows"
-        xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign" xmlns:controls="clr-namespace:StudentTesting.Application.Views.Controls"
+        xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
+        xmlns:controls="clr-namespace:StudentTesting.Application.Views.Controls"
+        xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance vm:MainViewModel}"
+        Title="Главное окно" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
@@ -23,16 +26,20 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <ListBox Grid.Row="0">
+                <ListBox SelectionMode="Single"
+                         Grid.Row="0"
+                         SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource MenuListBox}"
+                         ItemsSource="{Binding MenuItems}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            
+                            <TextBlock Text="{Binding Title}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                
+
                 <StackPanel Grid.Row="1">
-                    <controls:UserViewer x:Name="UserView" />
+                    <controls:UserViewer User="{Binding User}" />
 
                     <Grid Margin="0 5 0 0">
                         <Grid.ColumnDefinitions>
@@ -51,7 +58,11 @@
                         </Button>
                     </Grid>
                 </StackPanel>
+
             </Grid>
         </GroupBox>
+        
+        <ContentControl Grid.Column="1"
+                        Content="{Binding Content}" />
     </Grid>
 </Window>

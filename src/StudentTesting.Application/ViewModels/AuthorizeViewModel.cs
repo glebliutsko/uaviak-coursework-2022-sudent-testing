@@ -16,7 +16,7 @@ namespace StudentTesting.Application.ViewModels
         public AuthorizeViewModel(StudentDbContext db, IShowMainWindowService showWindowService = null, IRequestCaptchaService requestCaptchaService = null)
             : base(db)
         {
-            _showWindowService = showWindowService ?? new ShowMainWindowService();
+            _showWindowService = showWindowService ?? new ShowMainWindowService(db);
             _requestCaptchaService = requestCaptchaService ?? new ShowCapthaWindowService();
 
             CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db, _showWindowService, _requestCaptchaService, () => CloseWindow());
