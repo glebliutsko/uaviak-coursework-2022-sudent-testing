@@ -1,4 +1,5 @@
-﻿using StudentTesting.Database.Models;
+﻿using StudentTesting.Application.Views.Windows;
+using StudentTesting.Database.Models;
 using System.Windows;
 
 namespace StudentTesting.Application.Services.Authorize
@@ -7,7 +8,7 @@ namespace StudentTesting.Application.Services.Authorize
     {
         public void ShowWindow(User user)
         {
-            MessageBox.Show($"Логин: {user.Login}\nФИО: {user.FullName}\nРоль: {user.Role}\nДокумент: {user.DocumentNumber}");
+            new MainWindow(user).Show();
         }
     }
 }

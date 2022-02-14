@@ -33,10 +33,14 @@
         </Border>
 
         <TextBox Style="{StaticResource MaterialTextBox}"
-                 Text="{Binding Answer}"
+                 Text="{Binding Answer, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="1" Grid.ColumnSpan="2"
                  ap:Hint.HintText="Символы с картинки"
-                 Margin="0 5" />
+                 Margin="0 5">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding CheckCaptchaCommand}" Key="Enter" />
+            </TextBox.InputBindings>
+        </TextBox>
 
         <Button Style="{StaticResource SecodaryMaterialButton}"
                 Grid.Column="0" Grid.Row="2"

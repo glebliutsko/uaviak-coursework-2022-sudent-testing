@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using StudentTesting.Application.ViewModels;
+using System;
+using System.Windows;
 
 namespace StudentTesting.Application.Views.Windows
 {
@@ -7,11 +9,26 @@ namespace StudentTesting.Application.Views.Windows
     /// </summary>
     public partial class AuthorizeWindow : Window
     {
-        public AuthorizeWindow(object viewModel)
+        private readonly AuthorizeViewModel _viewModel;
+        public AuthorizeWindow(AuthorizeViewModel viewModel)
         {
-            DataContext = viewModel;
+            _viewModel = viewModel;
+            DataContext = _viewModel;
 
             InitializeComponent();
+        }
+
+        private void OnRequestClose(object sender, EventArgs args) =>
+            this.Close();
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.OnRequestClose += OnRequestClose;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _viewModel.OnRequestClose -= OnRequestClose;
         }
     }
 }

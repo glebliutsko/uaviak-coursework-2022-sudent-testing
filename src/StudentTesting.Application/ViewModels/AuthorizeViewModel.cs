@@ -2,11 +2,14 @@
 using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Database;
+using System;
 
 namespace StudentTesting.Application.ViewModels
 {
     public class AuthorizeViewModel : ViewModelBase
     {
+        public event EventHandler OnRequestClose;
+
         private readonly IShowMainWindowService _showWindowService;
         private readonly IRequestCaptchaService _requestCaptchaService;
 
@@ -16,7 +19,7 @@ namespace StudentTesting.Application.ViewModels
             _showWindowService = showWindowService ?? new ShowMainWindowService();
             _requestCaptchaService = requestCaptchaService ?? new ShowCapthaWindowService();
 
-            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db, _showWindowService, _requestCaptchaService);
+            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db, _showWindowService, _requestCaptchaService, () => CloseWindow());
         }
 
         #region Property
@@ -63,5 +66,10 @@ namespace StudentTesting.Application.ViewModels
         #region Command
         public IAsyncCommand CheckCredentialsCommand { get; }
         #endregion
+
+        private void CloseWindow()
+        {
+            OnRequestClose?.Invoke(this, new EventArgs());
+        }
     }
 }

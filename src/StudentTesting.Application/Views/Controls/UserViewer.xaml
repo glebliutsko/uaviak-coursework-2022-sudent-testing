@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StudentTesting.Application.Views.Controls"
+             xmlns:converter="clr-namespace:StudentTesting.Application.Converter"
              mc:Ignorable="d"
              x:Name="Root"
              d:DesignHeight="30" d:DesignWidth="150">
+    <UserControl.Resources>
+        <converter:ImageEmptyConvertor x:Key="DefaultAvatar" />
+        <converter:UserRoleConvertor x:Key="UserRole" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding ElementName=Root, Path=ActualHeight}" />
@@ -15,13 +20,15 @@
 
         <Ellipse>
             <Ellipse.Fill>
-                <ImageBrush ImageSource="/Resources/Images/DefaultUserPic.png" />
+                <ImageBrush ImageSource="{Binding ElementName=Root,
+                                          Path=User.UserPic,
+                                          Converter={StaticResource DefaultAvatar}}" />
             </Ellipse.Fill>
         </Ellipse>
 
         <StackPanel Grid.Column="1" Margin="5 0">
-            <TextBlock Text="Борисов Матвей" />
-            <TextBlock Foreground="Gray" Text="Преподаватель" />
+            <TextBlock Text="{Binding ElementName=Root, Path=User.FullName}" />
+            <TextBlock Foreground="Gray" Text="{Binding ElementName=Root, Path=User.Role, Converter={StaticResource UserRole}}" />
         </StackPanel>
     </Grid>
 </UserControl>

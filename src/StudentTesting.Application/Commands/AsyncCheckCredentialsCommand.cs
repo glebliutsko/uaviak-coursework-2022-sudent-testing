@@ -2,6 +2,7 @@
 using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Application.ViewModels;
 using StudentTesting.Database;
+using System;
 using System.Threading.Tasks;
 
 namespace StudentTesting.Application.Commands
@@ -14,13 +15,19 @@ namespace StudentTesting.Application.Commands
         private readonly AuthorizeViewModel _viewModel;
         private readonly IShowMainWindowService _showWindowService;
         private readonly IRequestCaptchaService _requestCaptchaService;
+        private readonly Action _closeWindowAction;
 
-        public AsyncCheckCredentialsCommand(AuthorizeViewModel viewModel, StudentDbContext db, IShowMainWindowService showWindowService, IRequestCaptchaService requestCaptchaService)
+        public AsyncCheckCredentialsCommand(AuthorizeViewModel viewModel,
+                                            StudentDbContext db,
+                                            IShowMainWindowService showWindowService,
+                                            IRequestCaptchaService requestCaptchaService,
+                                            Action closeWindow)
         {
             _db = db;
             _viewModel = viewModel;
             _showWindowService = showWindowService;
             _requestCaptchaService = requestCaptchaService;
+            _closeWindowAction = closeWindow;
         }
 
         private void ClearField(bool onlyPassword = true)
@@ -55,7 +62,9 @@ namespace StudentTesting.Application.Commands
 
             ClearField(false);
             _viewModel.ErrorMessage = "";
+
             _showWindowService.ShowWindow(checker.User);
+            _closeWindowAction();
         }
     }
 }

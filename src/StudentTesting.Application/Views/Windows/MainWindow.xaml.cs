@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using StudentTesting.Database.Models;
+using System.Windows;
 
 namespace StudentTesting.Application.Views.Windows
 {
@@ -7,9 +8,14 @@ namespace StudentTesting.Application.Views.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private User _user;
+        public MainWindow(User user)
         {
+            _user = user;
+
             InitializeComponent();
+
+            UserView.User = _user;
         }
     }
 }
