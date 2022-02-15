@@ -6,7 +6,7 @@ using System;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class AuthorizeViewModel : ViewModelBase
+    public class AuthorizeViewModel : ViewModelBase, IRequestCloseViewModel
     {
         public event EventHandler OnRequestClose;
 
@@ -19,7 +19,13 @@ namespace StudentTesting.Application.ViewModels
             _showWindowService = showWindowService ?? new ShowMainWindowService(db);
             _requestCaptchaService = requestCaptchaService ?? new ShowCapthaWindowService();
 
-            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(this, db, _showWindowService, _requestCaptchaService, () => CloseWindow());
+            CheckCredentialsCommand = new AsyncCheckCredentialsCommand(
+                this,
+                db,
+                _showWindowService,
+                _requestCaptchaService,
+                () => OnRequestClose?.Invoke(this, new EventArgs())
+            );
         }
 
         #region Property
@@ -66,10 +72,5 @@ namespace StudentTesting.Application.ViewModels
         #region Command
         public IAsyncCommand CheckCredentialsCommand { get; }
         #endregion
-
-        private void CloseWindow()
-        {
-            OnRequestClose?.Invoke(this, new EventArgs());
-        }
     }
 }

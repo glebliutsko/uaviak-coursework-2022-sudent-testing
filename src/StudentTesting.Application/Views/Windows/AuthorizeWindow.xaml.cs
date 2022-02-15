@@ -1,34 +1,17 @@
 ﻿using StudentTesting.Application.ViewModels;
-using System;
-using System.Windows;
 
 namespace StudentTesting.Application.Views.Windows
 {
     /// <summary>
     /// Логика взаимодействия для LoginWindow.xaml
     /// </summary>
-    public partial class AuthorizeWindow : Window
+    public partial class AuthorizeWindow : ClosebleWindowBase
     {
-        private readonly AuthorizeViewModel _viewModel;
-        public AuthorizeWindow(AuthorizeViewModel viewModel)
+        public AuthorizeWindow(AuthorizeViewModel viewModel) : base(viewModel)
         {
-            _viewModel = viewModel;
-            DataContext = _viewModel;
+            DataContext = viewModel;
 
             InitializeComponent();
-        }
-
-        private void OnRequestClose(object sender, EventArgs args) =>
-            this.Close();
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            _viewModel.OnRequestClose += OnRequestClose;
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            _viewModel.OnRequestClose -= OnRequestClose;
         }
     }
 }

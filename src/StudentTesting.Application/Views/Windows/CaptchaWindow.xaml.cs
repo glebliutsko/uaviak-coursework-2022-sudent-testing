@@ -1,34 +1,17 @@
 ﻿using StudentTesting.Application.ViewModels;
-using System;
-using System.Windows;
 
 namespace StudentTesting.Application.Views.Windows
 {
     /// <summary>
     /// Логика взаимодействия для CaptchaWindow.xaml
     /// </summary>
-    public partial class CaptchaWindow : Window
+    public partial class CaptchaWindow : ClosebleWindowBase
     {
-        private readonly CaptchaViewModel _viewModel;
-        public CaptchaWindow(CaptchaViewModel viewModel)
+        public CaptchaWindow(CaptchaViewModel viewModel) : base(viewModel)
         {
-            _viewModel = viewModel;
-            DataContext = _viewModel;
+            DataContext = viewModel;
 
             InitializeComponent();
-        }
-
-        private void OnRequestClose(object sender, EventArgs args) =>
-            this.Close();
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            _viewModel.OnRequestClose -= OnRequestClose;
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            _viewModel.OnRequestClose += OnRequestClose;
         }
     }
 }

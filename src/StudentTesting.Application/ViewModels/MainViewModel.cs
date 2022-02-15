@@ -1,13 +1,16 @@
 ﻿using StudentTesting.Application.Views.Pages;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, IRequestCloseViewModel
     {
+        public event EventHandler OnRequestClose;
+
         public MainViewModel(StudentDbContext db, User user) : base(db)
         {
             User = user;
@@ -60,6 +63,7 @@ namespace StudentTesting.Application.ViewModels
 
         #region Content
         private UIElement _content;
+
         public UIElement Content
         {
             get => _content;

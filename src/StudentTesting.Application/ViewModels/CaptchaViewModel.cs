@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class CaptchaViewModel : OnPropertyChangeBase
+    public class CaptchaViewModel : OnPropertyChangeBase, IRequestCloseViewModel
     {
         public event EventHandler OnRequestClose;
         private ICapthaGenerator _capthaGenerator;
