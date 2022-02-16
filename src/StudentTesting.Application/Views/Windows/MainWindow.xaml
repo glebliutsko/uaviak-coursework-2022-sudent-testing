@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentTesting.Application.Views.Windows"
         xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
-        xmlns:controls="clr-namespace:StudentTesting.Application.Views.Controls"
+        xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
         xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
@@ -19,7 +19,7 @@
         <GroupBox Style="{StaticResource MaterialGroupBox}"
                   ap:Border.BorderCornerRadius="0 10 10 0"
                   Margin="0 5"
-                  Padding="5 10">
+                  Padding="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -39,7 +39,7 @@
                 </ListBox>
 
                 <StackPanel Grid.Row="1">
-                    <controls:UserViewer User="{Binding User}" />
+                    <uc:UserViewer User="{Binding User}" />
 
                     <Grid Margin="0 5 0 0">
                         <Grid.ColumnDefinitions>
@@ -63,6 +63,7 @@
         </GroupBox>
         
         <ContentControl Grid.Column="1"
-                        Content="{Binding Content}" />
+                        Content="{Binding Content}"
+                        Margin="5" />
     </Grid>
 </Window>

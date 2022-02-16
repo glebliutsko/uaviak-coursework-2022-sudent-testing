@@ -3,32 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:StudentTesting.Application.Views.Controls"
-             xmlns:converter="clr-namespace:StudentTesting.Application.Converter"
+             xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
              mc:Ignorable="d"
              x:Name="Root"
              d:DesignHeight="30" d:DesignWidth="150">
-    <UserControl.Resources>
-        <converter:ImageEmptyConvertor x:Key="DefaultAvatar" />
-        <converter:UserRoleConvertor x:Key="UserRole" />
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding ElementName=Root, Path=ActualHeight}" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Ellipse>
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="{Binding ElementName=Root,
-                                          Path=User.UserPic,
-                                          Converter={StaticResource DefaultAvatar}}" />
-            </Ellipse.Fill>
-        </Ellipse>
+        <uc:UserPic Image="{Binding ElementName=Root, Path=User.UserPic}" />
 
         <StackPanel Grid.Column="1" Margin="5 0">
             <TextBlock Text="{Binding ElementName=Root, Path=User.FullName}" />
-            <TextBlock Foreground="Gray" Text="{Binding ElementName=Root, Path=User.Role, Converter={StaticResource UserRole}}" />
+            <TextBlock Foreground="Gray" Text="{Binding ElementName=Root, Path=User.Role, Converter={StaticResource UserRoleConvertor}}" />
         </StackPanel>
     </Grid>
 </UserControl>

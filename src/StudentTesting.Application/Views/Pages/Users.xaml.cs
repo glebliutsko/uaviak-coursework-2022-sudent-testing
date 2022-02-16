@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudentTesting.Application.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,10 @@ namespace StudentTesting.Application.Views.Pages
     /// </summary>
     public partial class Users : UserControl
     {
-        public Users()
+        public Users(UsersViewModel viewModel)
         {
+            DataContext = viewModel;
+
             InitializeComponent();
         }
     }

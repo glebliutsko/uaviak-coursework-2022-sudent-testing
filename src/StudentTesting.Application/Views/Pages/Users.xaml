@@ -4,9 +4,84 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StudentTesting.Application.Views.Pages"
+             xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
              mc:Ignorable="d" 
+             xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
+             xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
+             d:DataContext="{d:DesignInstance vm:UsersViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border BorderBrush="Black" BorderThickness="1">
-        <TextBlock FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Пользователи" />
-    </Border>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GroupBox Style="{StaticResource MaterialGroupBox}"
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Header="Пользователи"
+                  Padding="10"
+                  Margin="0 0 2.5 0"
+                  ap:HeaderGroupBox.HeaderAligment="Center">
+            <ListBox ItemsSource="{Binding Users}"
+                     Style="{StaticResource MaterialListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="RootListBoxItem">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding ElementName=RootListBoxItem, Path=ActualHeight}" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <uc:UserPic Grid.Column="0" Image="{Binding UserPic}" />
+
+                            <StackPanel Grid.Column="1"
+                                        Margin="5 0 0 0">
+                                <TextBlock Text="{Binding Role, Converter={StaticResource UserRoleConvertor}}" />
+
+                                <TextBlock>
+                                    <TextBlock FontWeight="Bold">ФИО: </TextBlock>
+                                    <TextBlock Text="{Binding FullName}" />
+                                </TextBlock>
+
+                                <TextBlock>
+                                    <TextBlock FontWeight="Bold">№: </TextBlock>
+                                    <TextBlock Text="{Binding DocumentNumber}" />
+                                </TextBlock>
+
+                                <TextBlock>
+                                    <TextBlock FontWeight="Bold">Логин: </TextBlock>
+                                    <TextBlock Text="{Binding Login}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+
+        <GroupBox Style="{StaticResource MaterialGroupBox}"
+                  Grid.Column="1"
+                  Grid.Row="0"
+                  Margin="2.5 0 0 2.5"
+                  Header="Изменение пользователя"
+                  Padding="10">
+            
+        </GroupBox>
+
+        <GroupBox Style="{StaticResource MaterialGroupBox}"
+                  Grid.Column="1"
+                  Grid.Row="1"
+                  Header="Изменение пароля"
+                  Margin="2.5 2.5 0 0"
+                  Padding="10">
+
+        </GroupBox>
+    </Grid>
 </UserControl>

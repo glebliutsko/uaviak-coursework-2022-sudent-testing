@@ -81,7 +81,7 @@ namespace StudentTesting.Application.ViewModels
             MenuItems.Add(
                 new MenuItem(
                     "Пользователи",
-                    new Users()
+                    new Users(new UsersViewModel(_db))
                 )
             );
 

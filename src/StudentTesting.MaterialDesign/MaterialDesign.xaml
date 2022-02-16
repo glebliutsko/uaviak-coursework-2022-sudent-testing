@@ -5,5 +5,6 @@
         <ResourceDictionary Source="pack://application:,,,/StudentTesting.MaterialDesign;component/Styles/PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StudentTesting.MaterialDesign;component/Styles/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/StudentTesting.MaterialDesign;component/Styles/GroupBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/StudentTesting.MaterialDesign;component/Styles/ListBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
