@@ -7,12 +7,11 @@
                           xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
                           xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
                           mc:Ignorable="d"
-                          Loaded="Window_Loaded"
-                          Closed="Window_Closed"
                           d:DataContext="{d:DesignInstance vm:AuthorizeViewModel}"
                           Title="Авторизация"
                           ResizeMode="CanMinimize"
-                          Height="350" Width="260">
+                          Height="350" Width="260"
+                          Loaded="Window_Loaded">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -30,7 +29,7 @@
                   ap:HeaderGroupBox.HeaderAligment="Center"
                   ap:HeaderGroupBox.HeaderFontSize="16">
             <StackPanel>
-                <TextBox Style="{StaticResource MaterialTextBox}"
+                <TextBox x:Name="LoginTextBox" Style="{StaticResource MaterialTextBox}"
                          Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0 0 0 5"
                          ap:Hint.HintText="Логин">

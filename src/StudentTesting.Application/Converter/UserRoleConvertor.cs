@@ -11,6 +11,7 @@ namespace StudentTesting.Application.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var role = (UserRole)value;
+
             switch (role)
             {
                 case UserRole.STUDENT:

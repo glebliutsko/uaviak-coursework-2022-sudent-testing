@@ -8,80 +8,208 @@
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
              xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
+             xmlns:converter="clr-namespace:StudentTesting.Application.Converter"
              d:DataContext="{d:DesignInstance vm:UsersViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="FalseToCollapsed" FalseValue="Hidden" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
 
         <GroupBox Style="{StaticResource MaterialGroupBox}"
                   Grid.Column="0"
-                  Grid.Row="0"
-                  Grid.RowSpan="2"
                   Header="Пользователи"
                   Padding="10"
                   Margin="0 0 2.5 0"
                   ap:HeaderGroupBox.HeaderAligment="Center">
-            <ListBox ItemsSource="{Binding Users}"
-                     Style="{StaticResource MaterialListBox}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid x:Name="RootListBoxItem">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{Binding ElementName=RootListBoxItem, Path=ActualHeight}" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                            <uc:UserPic Grid.Column="0" Image="{Binding UserPic}" />
+                <ListBox Grid.Row="0" ItemsSource="{Binding Users}"
+                         SelectedItem="{Binding SelectedUser}"
+                         Style="{StaticResource MaterialListBox}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="RootListBoxItem">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding ElementName=RootListBoxItem, Path=ActualHeight}" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="1"
+                                <uc:UserPic Grid.Column="0" Image="{Binding UserPic}" />
+
+                                <StackPanel Grid.Column="1"
                                         Margin="5 0 0 0">
-                                <TextBlock Text="{Binding Role, Converter={StaticResource UserRoleConvertor}}" />
+                                    <TextBlock Text="{Binding Role, Converter={StaticResource UserRoleConvertor}}" />
 
-                                <TextBlock>
+                                    <TextBlock>
                                     <TextBlock FontWeight="Bold">ФИО: </TextBlock>
                                     <TextBlock Text="{Binding FullName}" />
                                 </TextBlock>
 
-                                <TextBlock>
+                                    <TextBlock>
                                     <TextBlock FontWeight="Bold">№: </TextBlock>
                                     <TextBlock Text="{Binding DocumentNumber}" />
                                 </TextBlock>
 
-                                <TextBlock>
+                                    <TextBlock>
                                     <TextBlock FontWeight="Bold">Логин: </TextBlock>
                                     <TextBlock Text="{Binding Login}" />
                                 </TextBlock>
-                            </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Grid.Row="1" Style="{StaticResource PrimaryMaterialButton}"
+                        Content="ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ" />
+            </Grid>
+        </GroupBox>
+
+        <ScrollViewer Grid.Column="1"
+                      Visibility="{Binding IsVisibleUserEdit, Converter={StaticResource FalseToCollapsed}}"
+                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <GroupBox Style="{StaticResource MaterialGroupBox}"
+                      Margin="2.5 0 0 2.5"
+                      Header="Изменение пользователя"
+                      Padding="10"
+                      VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <uc:UserPic Grid.Column="0"
+                                    Height="100"
+                                    Image="{Binding EditableUser.UserPic}" />
+
+                        <Grid Margin="5 0 0 0"
+                      Grid.Column="1" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Margin="0 0 0 10"
+                                   Text="Роль" />
+                            <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Margin="0 0 0 10"
+                                   Text="Логин" />
+                            <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Margin="0 0 0 10"
+                                   Text="Полное имя" />
+                            <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Margin="0 0 0 10"
+                                   Text="№ Документа" />
+
+                            <ComboBox Grid.Row="0" Grid.Column="1"
+                                      Margin="5 0 0 10"
+                                      ItemsSource="{Binding ListRoles}"
+                                      SelectedItem="{Binding EditableUser.Role}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource UserRoleConvertor}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBox Style="{StaticResource MaterialTextBox}" ap:Hint.HintText="Логин"
+                                     Grid.Row="1" Grid.Column="1"
+                                     Margin="5 0 0 10"
+                                     HorizontalContentAlignment="Left"
+                                     Text="{Binding EditableUser.Login}"/>
+                            <TextBox Style="{StaticResource MaterialTextBox}" ap:Hint.HintText="Полное имя"
+                                     Grid.Row="2" Grid.Column="1"
+                                     Margin="5 0 0 10"
+                                     HorizontalContentAlignment="Left"
+                                     Text="{Binding EditableUser.FullName}" />
+                            <TextBox Style="{StaticResource MaterialTextBox}" ap:Hint.HintText="№ Документа"
+                                     Grid.Row="3" Grid.Column="1"
+                                     Margin="5 0 0 10"
+                                     HorizontalContentAlignment="Left"
+                                     Text="{Binding EditableUser.DocumentNumber}" />
                         </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </GroupBox>
 
-        <GroupBox Style="{StaticResource MaterialGroupBox}"
-                  Grid.Column="1"
-                  Grid.Row="0"
-                  Margin="2.5 0 0 2.5"
-                  Header="Изменение пользователя"
-                  Padding="10">
-            
-        </GroupBox>
+                        <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1"
+                                    Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="(Изменено)"
+                                       Visibility="{Binding EditableUser.IsEdit, Converter={StaticResource FalseToCollapsed}}"
+                                       Foreground="Gray" 
+                                       VerticalAlignment="Center" />
+                            <Button Padding="15 3" Margin="20 0 5 0"
+                                Style="{StaticResource SecodaryMaterialButton}"
+                                Content="ОТМЕНИТЬ"/>
 
-        <GroupBox Style="{StaticResource MaterialGroupBox}"
-                  Grid.Column="1"
-                  Grid.Row="1"
+                            <Button Padding="15 3"
+                                Style="{StaticResource PrimaryMaterialButton}"
+                                Content="СОХРАНИТЬ"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Style="{StaticResource MaterialGroupBox}"
                   Header="Изменение пароля"
                   Margin="2.5 2.5 0 0"
                   Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-        </GroupBox>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0"
+                               Margin="0 0 0 10"
+                               Text="Пароль:" />
+                        <TextBlock Grid.Column="0" Grid.Row="1"
+                               Margin="0 0 0 10"
+                               Text="Повтор пароля:" />
+
+                        <PasswordBox Grid.Column="1" Grid.Row="0"
+                                 HorizontalContentAlignment="Left"
+                                 Style="{StaticResource MaterialPasswordBox}" ap:Hint.HintText="Пароль"
+                                 Margin="5 0 0 10"/>
+                        <PasswordBox Grid.Column="1" Grid.Row="1"
+                                 HorizontalContentAlignment="Left"
+                                 Style="{StaticResource MaterialPasswordBox}" ap:Hint.HintText="Повтор пароля"
+                                 Margin="5 0 0 10"/>
+
+                        <Button Style="{StaticResource PrimaryMaterialButton}"
+                            HorizontalAlignment="Right"
+                            Padding="5 3"
+                            Grid.Column="1" Grid.Row="4"
+                            Content="ИЗМЕНИТЬ" />
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

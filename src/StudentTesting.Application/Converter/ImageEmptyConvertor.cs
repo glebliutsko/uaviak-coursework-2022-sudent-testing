@@ -8,11 +8,7 @@ namespace StudentTesting.Application.Converter
 {
     public class ImageEmptyConvertor : IValueConverter
     {
-        private ImageSource _defaultImage;
-        public ImageEmptyConvertor()
-        {
-            _defaultImage = new BitmapImage(new Uri(@"pack://application:,,,/StudentTesting.Application;component/Resources/Images/DefaultUserPic.png"));
-        }
+        private static ImageSource _defaultImage = new BitmapImage(new Uri(@"pack://application:,,,/StudentTesting.Application;component/Resources/Images/DefaultUserPic.png"));
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -21,7 +17,7 @@ namespace StudentTesting.Application.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

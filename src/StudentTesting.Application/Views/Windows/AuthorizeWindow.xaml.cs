@@ -13,5 +13,10 @@ namespace StudentTesting.Application.Views.Windows
 
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LoginTextBox.Focus();
+        }
     }
 }
