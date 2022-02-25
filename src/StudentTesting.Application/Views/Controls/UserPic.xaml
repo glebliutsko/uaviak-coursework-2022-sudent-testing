@@ -6,14 +6,43 @@
              xmlns:local="clr-namespace:StudentTesting.Application.Views.Controls"
              mc:Ignorable="d"
              x:Name="Root"
+             MouseUp="Root_MouseUp"
              Width="{Binding ElementName=Root, Path=ActualHeight}"
              d:DesignHeight="250" d:DesignWidth="250">
+    <UserControl.Resources>
+        <Style x:Key="MouseOverStyle" TargetType="{x:Type FrameworkElement}">
+            <Setter Property="Visibility" Value="Hidden" />
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                   Value="True" />
+                        <Condition Binding="{Binding ClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource IsNullConvertor}}"
+                                   Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Visibility" Value="Visible" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <Ellipse Grid.Column="0">
+        <Ellipse>
             <Ellipse.Fill>
                 <ImageBrush ImageSource="{Binding ElementName=Root, Path=Image,
-                    Converter={StaticResource DefaultAvatarConvertor}}" />
+                            Converter={StaticResource DefaultAvatarConvertor}}"
+                            d:ImageSource="/Resources/Images/DefaultUserPic.png"/>
             </Ellipse.Fill>
         </Ellipse>
+
+        <Grid Style="{StaticResource MouseOverStyle}" d:Visibility="Visible">
+            <Ellipse Fill="#55999999" />
+
+            <Viewbox Style="{StaticResource MouseOverStyle}">
+                <Image Margin="30" Source="/Resources/Images/Edit.png" />
+            </Viewbox>
+        </Grid>
+        
     </Grid>
 </UserControl>

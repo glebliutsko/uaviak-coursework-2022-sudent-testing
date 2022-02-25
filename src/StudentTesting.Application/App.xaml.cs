@@ -1,4 +1,5 @@
-﻿using StudentTesting.Application.Services.Captcha;
+﻿using Microsoft.Data.SqlClient;
+using StudentTesting.Application.Services.Captcha;
 using StudentTesting.Application.ViewModels;
 using StudentTesting.Application.Views.Windows;
 using StudentTesting.Database;
@@ -16,20 +17,26 @@ namespace StudentTesting.Application
 
         private StudentDbContext GetDbContext()
         {
-#pragma warning disable CS0162
-            if (Configuration.INTEGRATED_SECURITY)
-                return new StudentDbContext(Configuration.ADDRESS_DB, Configuration.DATABASE);
-            else
-                return new StudentDbContext(Configuration.ADDRESS_DB, Configuration.USER_DB, Configuration.PASSWORD_DB, Configuration.DATABASE);
-#pragma warning restore CS0162 // Обнаружен недостижимый код
+            return Configuration.INTEGRATED_SECURITY
+                ? new StudentDbContext(Configuration.ADDRESS_DB, Configuration.DATABASE)
+                : new StudentDbContext(Configuration.ADDRESS_DB, Configuration.USER_DB, Configuration.PASSWORD_DB, Configuration.DATABASE);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            _db = GetDbContext();
-            _db.Groups.FirstOrDefault();
+            try
+            {
+                _db = GetDbContext();
+                _db.Groups.FirstOrDefault();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Ошибка подключения к БД\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+                return;
+            }
 
             var loginWindow = new AuthorizeWindow(new AuthorizeViewModel(_db));
             loginWindow.Show();

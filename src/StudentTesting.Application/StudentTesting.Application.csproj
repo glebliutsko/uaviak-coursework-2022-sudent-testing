@@ -11,8 +11,10 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\DefaultUserPic.png" />
+    <None Remove="Resources\Images\Edit.png" />
     <None Remove="Resources\Images\IconUaviak.png" />
     <None Remove="Resources\Images\Logout.png" />
+    <None Remove="Resources\Images\Trash.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,8 +25,10 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\DefaultUserPic.png" />
+    <Resource Include="Resources\Images\Edit.png" />
     <Resource Include="Resources\Images\IconUaviak.png" />
     <Resource Include="Resources\Images\Logout.png" />
+    <Resource Include="Resources\Images\Trash.png" />
   </ItemGroup>
 
   <ItemGroup>

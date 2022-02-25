@@ -10,6 +10,13 @@ namespace StudentTesting.Application.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // TODO: Тут происходит какая-то хуйня.
+            // Я хз как сюда может попадать строка при задании ComboBox.SelectItem = null
+            // Я пытался это пофиксить по нормальному, но у меня не получилось, поэтому тут костыль.
+            // ПОШЛО ОНО НАХУЙ, так работает и пофиг!!!
+            if (value is string)
+                return null;
+
             var role = (UserRole)value;
 
             switch (role)
@@ -25,7 +32,7 @@ namespace StudentTesting.Application.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

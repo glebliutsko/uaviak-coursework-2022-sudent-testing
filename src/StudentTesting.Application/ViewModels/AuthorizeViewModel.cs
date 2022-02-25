@@ -30,7 +30,7 @@ namespace StudentTesting.Application.ViewModels
 
         #region Property
         #region Login
-        private string _login = "";
+        private string _login = "d.popova";  // TODO: Не забыть удалить этот логин.
         public string Login
         {
             get => _login;
@@ -43,7 +43,7 @@ namespace StudentTesting.Application.ViewModels
         #endregion
 
         #region Password
-        private string _password = "";
+        private string _password = "password";  // TODO: Не забыть удалить этот пароль.
         public string Password
         {
             get => _password;

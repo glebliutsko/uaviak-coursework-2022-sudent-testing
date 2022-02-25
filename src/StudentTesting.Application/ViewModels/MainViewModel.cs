@@ -1,4 +1,6 @@
-﻿using StudentTesting.Application.Views.Pages;
+﻿using StudentTesting.Application.Services;
+using StudentTesting.Application.Services.FileDialog;
+using StudentTesting.Application.Views.Pages;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System;
@@ -81,7 +83,7 @@ namespace StudentTesting.Application.ViewModels
             MenuItems.Add(
                 new MenuItem(
                     "Пользователи",
-                    new Users(new UsersViewModel(_db))
+                    new Users(new UsersViewModel(_db, new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox))
                 )
             );
 

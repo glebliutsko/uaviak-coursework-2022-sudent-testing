@@ -3,4 +3,5 @@
                     xmlns:converter="clr-namespace:StudentTesting.Application.Converter">
     <converter:ImageEmptyConvertor x:Key="DefaultAvatarConvertor" />
     <converter:UserRoleConvertor x:Key="UserRoleConvertor" />
+    <converter:IsNullConverter x:Key="IsNullConvertor" />
 </ResourceDictionary>
