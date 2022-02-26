@@ -8,12 +8,10 @@
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
              xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
+             xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
              xmlns:converter="clr-namespace:StudentTesting.Application.Converter"
              d:DataContext="{d:DesignInstance vm:UsersViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <converter:BoolToVisibilityConverter x:Key="FalseToCollapsed" FalseValue="Hidden" />
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
@@ -75,107 +73,8 @@
         </GroupBox>
 
         <StackPanel Grid.Column="1" Margin="5 0 0 0"
-                    Visibility="{Binding IsVisibleUserEdit, Converter={StaticResource FalseToCollapsed}}">
-            <GroupBox Style="{StaticResource MaterialGroupBox}"
-                      Margin="0 0 0 5"
-                      Header="Изменение пользователя"
-                      Padding="10"
-                      VerticalAlignment="Top">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <uc:UserPic Grid.Column="0"
-                                Height="100"
-                                ClickCommand="{Binding EditUserPicCommand}"
-                                Image="{Binding EditableUser.UserPic}" />
-
-                    <Grid Margin="5 0 0 0"
-                          Grid.Column="1" VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Grid.Row="0" Grid.Column="0"
-                                   Margin="0 0 0 10"
-                                   Text="Роль" />
-                        <TextBlock Grid.Row="1" Grid.Column="0"
-                                   Margin="0 0 0 10"
-                                   Text="Логин" />
-                        <TextBlock Grid.Row="2" Grid.Column="0"
-                                   Margin="0 0 0 10"
-                                   Text="Полное имя" />
-                        <TextBlock Grid.Row="3" Grid.Column="0"
-                                   Margin="0 0 0 10"
-                                   Text="№ Документа" />
-
-                        <ComboBox Grid.Row="0" Grid.Column="1"
-                                  Margin="5 0 0 10"
-                                  ItemsSource="{Binding ListRoles, Mode=OneTime}"
-                                  SelectedItem="{Binding EditableUser.Role}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource UserRoleConvertor}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <TextBox Style="{StaticResource MaterialTextBox}" ap:Hint.HintText="Логин"
-                                 Grid.Row="1" Grid.Column="1"
-                                 Margin="5 0 0 10"
-                                 HorizontalContentAlignment="Left"
-                                 Text="{Binding EditableUser.Login}"/>
-                        <TextBox Style="{StaticResource MaterialTextBox}" ap:Hint.HintText="Полное имя"
-                                 Grid.Row="2" Grid.Column="1"
-                                 Margin="5 0 0 10"
-                                 HorizontalContentAlignment="Left"
-                                 Text="{Binding EditableUser.FullName}" />
-                        <TextBox Style="{StaticResource MaterialTextBox}" ap:Hint.HintText="№ Документа"
-                                 Grid.Row="3" Grid.Column="1"
-                                 Margin="5 0 0 10"
-                                 HorizontalContentAlignment="Left"
-                                 Text="{Binding EditableUser.DocumentNumber}" />
-                    </Grid>
-
-                    <Button Style="{StaticResource DangerousMaterialButton}"
-                            Padding="10 2"
-                            Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1"
-                            HorizontalAlignment="Left"
-                            Content="УДАЛИТЬ"
-                            Command="{Binding RemoveUserCommand}" Cursor="Hand" />
-
-                    <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1"
-                                Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="(Изменено)"
-                                   Visibility="{Binding EditableUser.IsEdit, Converter={StaticResource FalseToCollapsed}}"
-                                   Foreground="Gray" 
-                                   VerticalAlignment="Center" />
-                        <Button Padding="15 3" Margin="20 0 5 0"
-                                Style="{StaticResource SecodaryMaterialButton}"
-                                Command="{Binding UndoChangesCommand}"
-                                Content="ОТМЕНИТЬ"/>
-
-                        <Button Padding="15 3"
-                                Style="{StaticResource PrimaryMaterialButton}"
-                                Command="{Binding SaveChangesUserCommand}"
-                                Content="СОХРАНИТЬ"/>
-                    </StackPanel>
-                </Grid>
-            </GroupBox>
+                    Visibility="{Binding IsVisibleUserEdit, Converter={StaticResource FalseToCollapsedConverter}}">
+            <uc:UserEditor User="{Binding EditableUser}" />
 
             <GroupBox Style="{StaticResource MaterialGroupBox}"
                       Header="Изменение пароля"

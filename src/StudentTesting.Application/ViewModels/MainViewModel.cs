@@ -83,7 +83,7 @@ namespace StudentTesting.Application.ViewModels
             MenuItems.Add(
                 new MenuItem(
                     "Пользователи",
-                    new Users(new UsersViewModel(_db, new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox))
+                    new Users(new UsersViewModel(_db))
                 )
             );
 

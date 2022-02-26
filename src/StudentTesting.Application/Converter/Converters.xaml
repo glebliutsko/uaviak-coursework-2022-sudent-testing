@@ -4,4 +4,5 @@
     <converter:ImageEmptyConvertor x:Key="DefaultAvatarConvertor" />
     <converter:UserRoleConvertor x:Key="UserRoleConvertor" />
     <converter:IsNullConverter x:Key="IsNullConvertor" />
+    <converter:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" FalseValue="Hidden" />
 </ResourceDictionary>

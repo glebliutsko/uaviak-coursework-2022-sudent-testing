@@ -21,28 +21,9 @@ namespace StudentTesting.Application.Views.Controls
             DependencyProperty.Register("Image", typeof(ImageSource), typeof(UserPic), new PropertyMetadata(null));
         #endregion
 
-        #region ClickCommand
-        public ICommand ClickCommand
-        {
-            get { return (ICommand)GetValue(ClickCommandProperty); }
-            set { SetValue(ClickCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty ClickCommandProperty =
-            DependencyProperty.Register("ClickCommand", typeof(ICommand), typeof(UserPic), new PropertyMetadata(null));
-        #endregion
-
         public UserPic()
         {
             InitializeComponent();
-        }
-
-        private void Root_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            object parameter = null;
-
-            if (ClickCommand != null && ClickCommand.CanExecute(parameter))
-                ClickCommand.Execute(parameter);
         }
     }
 }
