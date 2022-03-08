@@ -1,15 +1,13 @@
 ﻿using StudentTesting.Application.ViewModels;
-using StudentTesting.Database.Models;
-using System.Windows;
 
 namespace StudentTesting.Application.Views.Windows
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : ClosebleWindowBase
     {
-        public MainWindow(MainViewModel viewModel)
+        public MainWindow(MainViewModel viewModel) : base(viewModel)
         {
             DataContext = viewModel;
 

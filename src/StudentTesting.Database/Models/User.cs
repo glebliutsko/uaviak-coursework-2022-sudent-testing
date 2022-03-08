@@ -22,12 +22,10 @@ namespace StudentTesting.Database.Models
 
         [Column(TypeName = "NVARCHAR")]
         [StringLength(64)]
-        [Required(AllowEmptyStrings = false)]
         public string PasswordHash { get; set; }
 
         [Column(TypeName = "NVARCHAR")]
         [StringLength(50)]
-        [Required(AllowEmptyStrings = false)]
         public string Salt { get; set; }
 
         [Column(TypeName = "NVARCHAR")]

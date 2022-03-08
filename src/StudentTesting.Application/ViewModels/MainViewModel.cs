@@ -1,11 +1,14 @@
-﻿using StudentTesting.Application.Services;
+﻿using StudentTesting.Application.Commands.Sync;
+using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Application.Views.Pages;
+using StudentTesting.Application.Views.Windows;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
@@ -19,6 +22,8 @@ namespace StudentTesting.Application.ViewModels
 
             GenerateMenuItem();
             SelectedMenuItem = MenuItems[0];
+
+            QuitCommand = new RelayCommand(x => Quit());
         }
 
         #region Property
@@ -78,7 +83,11 @@ namespace StudentTesting.Application.ViewModels
         #endregion
         #endregion
 
-        public void GenerateMenuItem()
+        #region Command
+        public ICommand QuitCommand { get; }
+        #endregion
+
+        private void GenerateMenuItem()
         {
             MenuItems.Add(
                 new MenuItem(
@@ -93,6 +102,14 @@ namespace StudentTesting.Application.ViewModels
                     new Tests()
                 )
             );
+        }
+
+        private void Quit()
+        {
+            var loginWindow = new AuthorizeWindow(new AuthorizeViewModel(_db));
+            loginWindow.Show();
+
+            OnRequestClose?.Invoke(this, new EventArgs());
         }
     }
 }

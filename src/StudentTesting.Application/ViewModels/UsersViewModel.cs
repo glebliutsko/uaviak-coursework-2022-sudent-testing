@@ -19,6 +19,8 @@ namespace StudentTesting.Application.ViewModels
         public UsersViewModel(StudentDbContext db)
             : base(db)
         {
+            AddNewUserCommand = new RelayCommand(x => AddNewUser());
+
             UpdateUsers();
         }
 
@@ -45,10 +47,11 @@ namespace StudentTesting.Application.ViewModels
             {
                 _selectedUser = value;
 
-                EditableUser = SelectedUser == null ? null : new EditerUserViewModel(_db, _selectedUser, new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox, UpdateUserCallback);
+                EditableUser = SelectedUser == null
+                    ? null
+                    : new EditerUserViewModel(_db, _selectedUser, new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox, UpdateUserCallback);
 
                 OnPropertyChange();
-                OnPropertyChange(nameof(IsVisibleUserEdit));
             }
         }
         #endregion
@@ -62,6 +65,7 @@ namespace StudentTesting.Application.ViewModels
             {
                 _editableUser = value;
                 OnPropertyChange();
+                OnPropertyChange(nameof(IsVisibleUserEdit));
             }
         }
         #endregion
@@ -69,9 +73,13 @@ namespace StudentTesting.Application.ViewModels
         #region IsVisibleUserEdit
         public bool IsVisibleUserEdit
         {
-            get => SelectedUser != null;
+            get => EditableUser != null;
         }
         #endregion
+        #endregion
+
+        #region Command
+        public ICommand AddNewUserCommand { get; }
         #endregion
 
         private void UpdateUsers()
@@ -90,6 +98,12 @@ namespace StudentTesting.Application.ViewModels
                 SelectedUser = null;
 
             await UpdateUsersAsync();
+        }
+
+        private void AddNewUser()
+        {
+            SelectedUser = null;
+            EditableUser = new EditerUserViewModel(_db, new User(), new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox, UpdateUserCallback, true);
         }
     }
 }

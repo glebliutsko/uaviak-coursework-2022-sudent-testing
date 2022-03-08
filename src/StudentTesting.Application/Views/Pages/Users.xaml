@@ -68,6 +68,7 @@
                 </ListBox>
 
                 <Button Grid.Row="1" Style="{StaticResource PrimaryMaterialButton}"
+                        Command="{Binding AddNewUserCommand}"
                         Content="ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ" />
             </Grid>
         </GroupBox>

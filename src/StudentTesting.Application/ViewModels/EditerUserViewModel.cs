@@ -29,12 +29,12 @@ namespace StudentTesting.Application.ViewModels
         private readonly Func<bool, Task> _userChanged;
         private User _user;
 
-        public EditerUserViewModel(StudentDbContext db, User user, IFileDialogService openUserPicDialog, Func<string, bool> requestConfirm, Func<bool, Task> userChanged) : base(db)
+        public EditerUserViewModel(StudentDbContext db, User user, IFileDialogService openUserPicDialog, Func<string, bool> requestConfirm, Func<bool, Task> userChanged, bool isNewUser = false) : base(db)
         {
             _openUserPicDialog = openUserPicDialog;
             _requestConfirm = requestConfirm;
             _userChanged = userChanged;
-            State = StateEditableUser.USER_NOT_CHANGED;
+            State = isNewUser ? StateEditableUser.USER_NEW : StateEditableUser.USER_NOT_CHANGED;
             _user = user;
 
             UndoChangesCommand = new RelayCommand(x => UndoChanges(), x => State != StateEditableUser.USER_NOT_CHANGED);
@@ -181,6 +181,7 @@ namespace StudentTesting.Application.ViewModels
             await _userChanged(false);
 
             ErrorMessage = null;
+            State = StateEditableUser.USER_NOT_CHANGED;
         }
         #endregion
 
