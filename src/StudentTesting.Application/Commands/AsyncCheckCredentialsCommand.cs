@@ -1,4 +1,5 @@
 ﻿using StudentTesting.Application.Commands.Async;
+using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Application.ViewModels;
 using StudentTesting.Database;
@@ -51,7 +52,7 @@ namespace StudentTesting.Application.Commands
                 return;
             }
 
-            var checker = await CheckerAuthorizeUser.SearchUserByLogin(_viewModel.Login, _db);
+            var checker = await PasswordUserService.SearchUserByLogin(_viewModel.Login, _db);
             if (checker == null || !checker.CheckPassword(_viewModel.Password))
             {
                 _countAttempts++;

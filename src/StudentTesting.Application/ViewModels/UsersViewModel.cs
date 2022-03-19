@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
-using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -45,35 +42,55 @@ namespace StudentTesting.Application.ViewModels
             get => _selectedUser;
             set
             {
-                _selectedUser = value;
-
-                EditableUser = SelectedUser == null
-                    ? null
-                    : new EditerUserViewModel(_db, _selectedUser, new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox, UpdateUserCallback);
-
-                OnPropertyChange();
+                SetProperty(ref _selectedUser, value);
+                UserEditable = value;
             }
         }
         #endregion
 
-        #region EditableUser
-        private EditerUserViewModel _editableUser = null;
-        public EditerUserViewModel EditableUser
+        #region UserEditable
+        private User _userEditable;
+        public User UserEditable
         {
-            get => _editableUser;
+            get => _userEditable;
             set
             {
-                _editableUser = value;
-                OnPropertyChange();
+                SetProperty(ref _userEditable, value);
                 OnPropertyChange(nameof(IsVisibleUserEdit));
+
+                UserInformationEditor = value == null
+                    ? null
+                    : new UserEditorViewModel(_db, value, new OpenFileDialogService(), MessageBoxService.ConfirmActionMessageBox, UpdateUserCallback);
+
+                PasswordEditor = value == null
+                    ? null
+                    : new PasswordEditorViewModel(_db, value, MessageBoxService.OkMessageBox);
             }
+        }
+        #endregion
+
+        #region UserInformationEditor
+        private UserEditorViewModel _userInformationEditor = null;
+        public UserEditorViewModel UserInformationEditor
+        {
+            get => _userInformationEditor;
+            set => SetProperty(ref _userInformationEditor, value);
+        }
+        #endregion
+
+        #region PasswordEditor
+        private PasswordEditorViewModel _passwordEditor;
+        public PasswordEditorViewModel PasswordEditor
+        {
+            get => _passwordEditor;
+            set => SetProperty(ref _passwordEditor, value);
         }
         #endregion
 
         #region IsVisibleUserEdit
         public bool IsVisibleUserEdit
         {
-            get => EditableUser != null;
+            get => UserEditable != null;
         }
         #endregion
         #endregion
@@ -103,7 +120,7 @@ namespace StudentTesting.Application.ViewModels
         private void AddNewUser()
         {
             SelectedUser = null;
-            EditableUser = new EditerUserViewModel(_db, new User(), new OpenFileDialogService(), AskUserService.ConfirmActionMessageBox, UpdateUserCallback, true);
+            UserEditable = new User();
         }
     }
 }

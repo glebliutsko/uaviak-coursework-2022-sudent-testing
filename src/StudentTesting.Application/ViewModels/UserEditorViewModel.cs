@@ -1,4 +1,5 @@
-﻿using StudentTesting.Application.Commands.Async;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Application.Utils;
@@ -22,19 +23,21 @@ namespace StudentTesting.Application.ViewModels
         USER_NEW = 2
     }
 
-    public partial class EditerUserViewModel : ViewModelBase
+    public partial class UserEditorViewModel : ViewModelBase
     {
         private readonly IFileDialogService _openUserPicDialog;
         private readonly Func<string, bool> _requestConfirm;
         private readonly Func<bool, Task> _userChanged;
         private User _user;
 
-        public EditerUserViewModel(StudentDbContext db, User user, IFileDialogService openUserPicDialog, Func<string, bool> requestConfirm, Func<bool, Task> userChanged, bool isNewUser = false) : base(db)
+        public UserEditorViewModel(StudentDbContext db, User user, IFileDialogService openUserPicDialog, Func<string, bool> requestConfirm, Func<bool, Task> userChanged) : base(db)
         {
             _openUserPicDialog = openUserPicDialog;
             _requestConfirm = requestConfirm;
             _userChanged = userChanged;
-            State = isNewUser ? StateEditableUser.USER_NEW : StateEditableUser.USER_NOT_CHANGED;
+            State = _db.Entry(user).State == EntityState.Detached
+                ? StateEditableUser.USER_NEW
+                : StateEditableUser.USER_NOT_CHANGED;
             _user = user;
 
             UndoChangesCommand = new RelayCommand(x => UndoChanges(), x => State != StateEditableUser.USER_NOT_CHANGED);
