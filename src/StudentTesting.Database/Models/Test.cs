@@ -19,8 +19,12 @@ namespace StudentTesting.Database.Models
         public string Description { get; set; }
 
         [ForeignKey("User")]
-        public int IdCreator { get; set; }
+        public int CreatorId { get; set; }
         public User Creator { get; set; }
+
+        [ForeignKey("Subject")]
+        public int SubjectId { get; set; }
+        public Subject Subject { get; set; }
 
         public ICollection<Group> AllowGroups { get; set; }
         public ICollection<Attachment> Attachments { get; set; }

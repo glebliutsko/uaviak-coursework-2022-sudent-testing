@@ -23,7 +23,7 @@ namespace StudentTesting.Database.Models
         public int Score { get; set; }
 
         [ForeignKey("Test")]
-        public int IdTest { get; set; }
+        public int TestId { get; set; }
         public Test Test { get; set; }
 
         [Column(TypeName = "NVARCHAR(50)")]

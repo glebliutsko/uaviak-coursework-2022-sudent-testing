@@ -16,7 +16,7 @@ namespace StudentTesting.Database.Models
         public bool IsCorrect { get; set; }
 
         [ForeignKey("Question")]
-        public int? IdQuestion { get; set; }
+        public int? QuestionId { get; set; }
         public Question Question { get; set; }
 
         public ICollection<Attachment> Attachments { get; set; }

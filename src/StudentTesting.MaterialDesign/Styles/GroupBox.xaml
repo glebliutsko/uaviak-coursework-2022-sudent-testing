@@ -7,6 +7,8 @@
         <Setter Property="Background" Value="#ffffff" />
         <Setter Property="ap:Border.BorderCornerRadius" Value="10" />
 
+        <Setter Property="Padding" Value="10" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">

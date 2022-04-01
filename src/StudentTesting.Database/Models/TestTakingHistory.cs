@@ -10,11 +10,11 @@ namespace StudentTesting.Database.Models
         public int Score { get; set; }
 
         [ForeignKey("Test")]
-        public int IdTest { get; set; }
+        public int TestId { get; set; }
         public Test Test { get; set; }
 
         [ForeignKey("User")]
-        public int IsUser { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }

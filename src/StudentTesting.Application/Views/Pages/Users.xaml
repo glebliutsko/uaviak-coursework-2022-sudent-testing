@@ -75,7 +75,7 @@
 
         <StackPanel Grid.Column="1" Margin="5 0 0 0"
                     Visibility="{Binding IsVisibleUserEdit, Converter={StaticResource FalseToCollapsedConverter}}">
-            <uc:UserEditor User="{Binding UserInformationEditor}" />
+            <uc:UserEditor User="{Binding UserInformationEditor}" Margin="0 0 0 5" />
             <uc:PasswordEditor Password="{Binding PasswordEditor}" />
         </StackPanel>
     </Grid>

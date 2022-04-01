@@ -42,11 +42,12 @@ namespace StudentTesting.Database.Models
         public UserRole Role { get; set; }
 
         [ForeignKey("Group")]
-        public int? IdGroup { get; set; }
+        public int? GroupId { get; set; }
         public Group Group { get; set; }
 
         public byte[] UserPic { get; set; }
 
         public ICollection<Question> Questions { get; set; }
+        public ICollection<TestTakingHistory> TestTakingHistories { get; set; }
     }
 }

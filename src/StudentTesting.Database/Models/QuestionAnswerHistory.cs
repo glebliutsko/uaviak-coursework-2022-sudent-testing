@@ -10,7 +10,7 @@ namespace StudentTesting.Database.Models
         public int Id { get; set; }
 
         [ForeignKey("TestTakingHistory")]
-        public int IdTestTakingHistory { get; set; }
+        public int TestTakingHistoryId { get; set; }
         public TestTakingHistory TestTakingHistory { get; set; }
 
         public ICollection<Answer> Answers { get; set; }

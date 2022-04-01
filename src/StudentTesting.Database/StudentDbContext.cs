@@ -36,6 +36,7 @@ namespace StudentTesting.Database
         public DbSet<Test> Tests { get; set; }
         public DbSet<TestTakingHistory> TestTakingHistory { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
         #endregion
 
         #region Configuration
@@ -58,6 +59,12 @@ namespace StudentTesting.Database
                 .HasMany(x => x.Attachments)
                 .WithMany(x => x.Answers)
                 .UsingEntity(x => x.ToTable("AttachmentsAnswer"));
+
+            // N:1 User and TestTakingHistory
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.TestTakingHistories)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

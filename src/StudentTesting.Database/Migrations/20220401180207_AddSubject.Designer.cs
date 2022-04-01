@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentTesting.Database;
 
 namespace StudentTesting.Database.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    partial class StudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220401180207_AddSubject")]
+    partial class AddSubject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,15 +107,15 @@ namespace StudentTesting.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("IdQuestion")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("QuestionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("IdQuestion");
 
                     b.ToTable("Answers");
                 });
@@ -171,13 +173,13 @@ namespace StudentTesting.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("IdTest")
+                        .HasColumnType("int");
+
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -189,7 +191,7 @@ namespace StudentTesting.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("IdTest");
 
                     b.HasIndex("UserId");
 
@@ -203,12 +205,12 @@ namespace StudentTesting.Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("TestTakingHistoryId")
+                    b.Property<int>("IdTestTakingHistory")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestTakingHistoryId");
+                    b.HasIndex("IdTestTakingHistory");
 
                     b.ToTable("QuestionAnswerHistory");
                 });
@@ -239,14 +241,17 @@ namespace StudentTesting.Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CreatorId")
+                    b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int>("IdCreator")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdSubject")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -258,7 +263,7 @@ namespace StudentTesting.Database.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("SubjectId");
+                    b.HasIndex("IdSubject");
 
                     b.ToTable("Tests");
                 });
@@ -270,20 +275,20 @@ namespace StudentTesting.Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("IdTest")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsUser")
+                        .HasColumnType("int");
+
                     b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("IdTest");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("IsUser");
 
                     b.ToTable("TestTakingHistory");
                 });
@@ -305,7 +310,7 @@ namespace StudentTesting.Database.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("NVARCHAR(100)");
 
-                    b.Property<int?>("GroupId")
+                    b.Property<int?>("IdGroup")
                         .HasColumnType("int");
 
                     b.Property<string>("Login")
@@ -330,7 +335,7 @@ namespace StudentTesting.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("IdGroup");
 
                     b.ToTable("Users");
                 });
@@ -414,7 +419,7 @@ namespace StudentTesting.Database.Migrations
                 {
                     b.HasOne("StudentTesting.Database.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("IdQuestion");
 
                     b.Navigation("Question");
                 });
@@ -423,7 +428,7 @@ namespace StudentTesting.Database.Migrations
                 {
                     b.HasOne("StudentTesting.Database.Models.Test", "Test")
                         .WithMany("Questions")
-                        .HasForeignKey("TestId")
+                        .HasForeignKey("IdTest")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -438,7 +443,7 @@ namespace StudentTesting.Database.Migrations
                 {
                     b.HasOne("StudentTesting.Database.Models.TestTakingHistory", "TestTakingHistory")
                         .WithMany()
-                        .HasForeignKey("TestTakingHistoryId")
+                        .HasForeignKey("IdTestTakingHistory")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -449,13 +454,11 @@ namespace StudentTesting.Database.Migrations
                 {
                     b.HasOne("StudentTesting.Database.Models.User", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatorId");
 
                     b.HasOne("StudentTesting.Database.Models.Subject", "Subject")
                         .WithMany("Tests")
-                        .HasForeignKey("SubjectId")
+                        .HasForeignKey("IdSubject")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -468,14 +471,14 @@ namespace StudentTesting.Database.Migrations
                 {
                     b.HasOne("StudentTesting.Database.Models.Test", "Test")
                         .WithMany()
-                        .HasForeignKey("TestId")
+                        .HasForeignKey("IdTest")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StudentTesting.Database.Models.User", "User")
-                        .WithMany("TestTakingHistories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany()
+                        .HasForeignKey("IsUser")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Test");
@@ -487,7 +490,7 @@ namespace StudentTesting.Database.Migrations
                 {
                     b.HasOne("StudentTesting.Database.Models.Group", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("IdGroup");
 
                     b.Navigation("Group");
                 });
@@ -515,8 +518,6 @@ namespace StudentTesting.Database.Migrations
             modelBuilder.Entity("StudentTesting.Database.Models.User", b =>
                 {
                     b.Navigation("Questions");
-
-                    b.Navigation("TestTakingHistories");
                 });
 #pragma warning restore 612, 618
         }
