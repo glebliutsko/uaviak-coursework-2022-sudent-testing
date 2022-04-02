@@ -9,17 +9,6 @@ namespace StudentTesting.Application.Views.Controls
     /// </summary>
     public partial class PasswordEditor : UserControl
     {
-        #region Password
-        public PasswordEditorViewModel Password
-        {
-            get { return (PasswordEditorViewModel)GetValue(PasswordProperty); }
-            set { SetValue(PasswordProperty, value); }
-        }
-
-        public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("Password", typeof(PasswordEditorViewModel), typeof(PasswordEditor), new PropertyMetadata(null));
-        #endregion
-
         public PasswordEditor()
         {
             InitializeComponent();

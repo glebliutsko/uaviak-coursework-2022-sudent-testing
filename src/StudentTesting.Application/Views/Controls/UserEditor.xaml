@@ -9,6 +9,8 @@
     xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
     xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
     xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
+    xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
+    d:DataContext="{d:DesignInstance vm:UserEditorViewModel}"
     d:DesignWidth="500">
     <GroupBox
         Style="{StaticResource MaterialGroupBox}"
@@ -29,8 +31,8 @@
 
             <uc:CircleImageButton
                 Height="100"
-                Source="{Binding User.UserPic, ElementName=Root, Converter={StaticResource DefaultAvatarConvertor}}"
-                ClickCommand="{Binding User.EditUserPicCommand, ElementName=Root}" />
+                Source="{Binding UserPic, Converter={StaticResource DefaultAvatarConvertor}}"
+                ClickCommand="{Binding EditUserPicCommand}" />
 
             <Grid
                 Margin="5 0 0 0"
@@ -75,7 +77,7 @@
                     Grid.Column="1"
                     Margin="5 0 0 10"
                     ItemsSource="{x:Static utils:ListUserRoles.Roles}"
-                    SelectedItem="{Binding User.Role, ElementName=Root, UpdateSourceTrigger=PropertyChanged}">
+                    SelectedItem="{Binding Role, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock
@@ -90,7 +92,7 @@
                     Grid.Column="1"
                     Margin="5 0 0 10"
                     HorizontalContentAlignment="Left"
-                    Text="{Binding User.Login, ElementName=Root, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     Style="{StaticResource MaterialTextBox}"
                     ap:Hint.HintText="Полное имя"
@@ -98,7 +100,7 @@
                     Grid.Column="1"
                     Margin="5 0 0 10"
                     HorizontalContentAlignment="Left"
-                    Text="{Binding User.FullName, ElementName=Root, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     Style="{StaticResource MaterialTextBox}"
                     ap:Hint.HintText="№ Документа"
@@ -106,7 +108,7 @@
                     Grid.Column="1"
                     Margin="5 0 0 10"
                     HorizontalContentAlignment="Left"
-                    Text="{Binding User.DocumentNumber, ElementName=Root, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding DocumentNumber, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
             <Button
@@ -117,7 +119,7 @@
                 Grid.Row="1"
                 HorizontalAlignment="Left"
                 Content="УДАЛИТЬ"
-                Command="{Binding User.RemoveUserCommand, ElementName=Root}"
+                Command="{Binding RemoveUserCommand}"
                 Cursor="Hand" />
 
             <StackPanel
@@ -129,26 +131,26 @@
                 <TextBlock
                     Text="(Изменено)"
                     Foreground="Gray"
-                    Visibility="{Binding User.State, ElementName=Root, Converter={StaticResource VisibleIfEditConverter}}"
+                    Visibility="{Binding State, Converter={StaticResource VisibleIfEditConverter}}"
                     VerticalAlignment="Center" />
                 <Button
                     Padding="15 3"
                     Margin="20 0 5 0"
                     Style="{StaticResource SecodaryMaterialButton}"
-                    Command="{Binding User.UndoChangesCommand, ElementName=Root}"
+                    Command="{Binding UndoChangesCommand}"
                     Content="ОТМЕНИТЬ"
                     Cursor="Hand" />
 
                 <Button
                     Padding="15 3"
                     Style="{StaticResource PrimaryMaterialButton}"
-                    Command="{Binding User.SaveChangesUserCommand, ElementName=Root}"
+                    Command="{Binding SaveChangesUserCommand}"
                     Content="СОХРАНИТЬ" />
             </StackPanel>
 
             <TextBlock
                 Style="{StaticResource ErrorTextBlock}"
-                Text="{Binding User.ErrorMessage, ElementName=Root}"
+                Text="{Binding ErrorMessage}"
                 d:Text="Ошибка"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"

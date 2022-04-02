@@ -47,7 +47,8 @@
         <StackPanel
             Grid.Column="1"
             Grid.Row="1">
-
+            
+            <uc:InformationTestEditor />
         </StackPanel>
     </Grid>
 </UserControl>

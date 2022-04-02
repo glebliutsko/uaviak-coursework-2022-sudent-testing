@@ -9,7 +9,7 @@
     d:DesignWidth="600">
     <GroupBox
         Style="{StaticResource MaterialGroupBox}"
-        Header="Редактирование информации о тесте">
+        Header="Краткая информация">
         <Grid
             x:Name="BaseInformationGrid">
             <Grid.ColumnDefinitions>
@@ -19,7 +19,7 @@
             </Grid.ColumnDefinitions>
 
             <uc:CircleImageButton
-                Source="/Resources/Images/ImagePlaceholder.png"
+                Source="{Binding Picture}"
                 Margin="5" />
 
             <Grid
