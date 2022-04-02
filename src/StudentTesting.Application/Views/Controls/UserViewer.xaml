@@ -13,11 +13,14 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <uc:UserPic Image="{Binding ElementName=Root, Path=User.UserPic}" />
+        <uc:CircleImage d:Source="/Resources/Images/DefaultUserPic.png"
+                        Source="{Binding ElementName=Root, Path=User.UserPic}" />
 
         <StackPanel Grid.Column="1" Margin="5 0">
-            <TextBlock Text="{Binding ElementName=Root, Path=User.FullName}" />
-            <TextBlock Foreground="Gray" Text="{Binding ElementName=Root, Path=User.Role, Converter={StaticResource UserRoleConvertor}}" />
+            <TextBlock Text="{Binding ElementName=Root, Path=User.FullName}"
+                       d:Text="Фамилия Имя" />
+            <TextBlock Foreground="Gray" Text="{Binding ElementName=Root, Path=User.Role, Converter={StaticResource UserRoleConvertor}}"
+                       d:Text="Студент" />
         </StackPanel>
     </Grid>
 </UserControl>

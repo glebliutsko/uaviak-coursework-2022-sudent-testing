@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StudentTesting.Application\StudentTesting.Application.csproj" />
     <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
-    <ProjectReference Include="..\StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj" />
   </ItemGroup>
 
   <ItemGroup>

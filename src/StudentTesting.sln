@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.MaterialDesign", "StudentTesting.MaterialDesign\StudentTesting.MaterialDesign.csproj", "{B37A2820-AB36-48CF-BEC1-6BB4652333E4}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.Database", "StudentTesting.Database\StudentTesting.Database.csproj", "{1C1BBCFC-F8F1-464D-95D4-98503E16DFB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.Database.InitalData", "StudentTesting.Database.InitalData\StudentTesting.Database.InitalData.csproj", "{18995CAF-BC02-45F2-AC71-966BEE192A4A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.SecurityPassword", "StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj", "{1C30093B-8256-4354-A789-49B0F191033D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentTesting.Application.Tests", "StudentTesting.Application.Tests\StudentTesting.Application.Tests.csproj", "{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}"
 EndProject
@@ -37,10 +35,6 @@ Global
 		{18995CAF-BC02-45F2-AC71-966BEE192A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18995CAF-BC02-45F2-AC71-966BEE192A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18995CAF-BC02-45F2-AC71-966BEE192A4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C30093B-8256-4354-A789-49B0F191033D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C30093B-8256-4354-A789-49B0F191033D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C30093B-8256-4354-A789-49B0F191033D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C30093B-8256-4354-A789-49B0F191033D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B0397E6-114E-48F2-9AD7-6BDF8CBD8EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -18,6 +18,8 @@ namespace StudentTesting.Database.Models
         [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
+        public byte[] Picture { get; set; }
+
         [ForeignKey("User")]
         public int CreatorId { get; set; }
         public User Creator { get; set; }

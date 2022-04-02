@@ -24,21 +24,9 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Grid Height="100"
-                  Name="UserPicGrid"
-                  MouseUp="UserPicGrid_Click">
-                <uc:UserPic Grid.Column="0"
-                            Image="{Binding User.UserPic, ElementName=Root}" />
-
-                <Grid d:Visibility="Visible"
-                      Visibility="{Binding IsMouseOver, ElementName=UserPicGrid, Converter={StaticResource FalseToCollapsedConverter}}">
-                    <Ellipse Fill="#55999999" />
-
-                    <Viewbox>
-                        <Image Margin="30" Source="/Resources/Images/Edit.png" />
-                    </Viewbox>
-                </Grid>
-            </Grid>
+            <uc:CircleImageButton Height="100"
+                                  Source="{Binding User.UserPic, ElementName=Root, Converter={StaticResource DefaultAvatarConvertor}}"
+                                  ClickCommand="{Binding User.EditUserPicCommand, ElementName=Root}"/>
 
             <Grid Margin="5 0 0 0"
                   Grid.Column="1" VerticalAlignment="Top">

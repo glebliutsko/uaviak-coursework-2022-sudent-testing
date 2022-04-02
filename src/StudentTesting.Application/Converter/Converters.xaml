@@ -1,7 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converter="clr-namespace:StudentTesting.Application.Converter">
-    <converter:ImageEmptyConvertor x:Key="DefaultAvatarConvertor" />
+    <converter:ImageEmptyConvertor x:Key="DefaultAvatarConvertor"
+                                   PlaceholderImage="pack://application:,,,/StudentTesting.Application;component/Resources/Images/DefaultUserPic.png" />
+    <converter:ImageEmptyConvertor x:Key="ImagePlaceholderConverter"
+                                   PlaceholderImage="pack://application:,,,/StudentTesting.Application;component/Resources/Images/ImagePlaceholder.png" />
+
     <converter:UserRoleConvertor x:Key="UserRoleConvertor" />
     <converter:IsNullConverter x:Key="IsNullConvertor" />
     <converter:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" FalseValue="Hidden" />

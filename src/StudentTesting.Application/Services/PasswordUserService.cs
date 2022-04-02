@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentTesting.Application.SecurityPassword;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
-using StudentTesting.SecurityPassword;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;

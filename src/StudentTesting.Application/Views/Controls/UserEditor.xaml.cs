@@ -33,13 +33,5 @@ namespace StudentTesting.Application.Views.Controls
         {
             InitializeComponent();
         }
-
-        private void UserPicGrid_Click(object sender, MouseButtonEventArgs e)
-        {
-            object parameter = null;
-
-            if (User.EditUserPicCommand != null && User.EditUserPicCommand.CanExecute(parameter))
-                User.EditUserPicCommand.Execute(parameter);
-        }
     }
 }

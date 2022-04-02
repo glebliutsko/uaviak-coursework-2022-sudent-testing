@@ -1,5 +1,5 @@
 ﻿using StudentTesting.Database.Models;
-using StudentTesting.SecurityPassword;
+using StudentTesting.Application.SecurityPassword;
 using System;
 using System.Security.Cryptography;
 

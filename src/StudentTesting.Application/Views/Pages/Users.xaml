@@ -3,13 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:StudentTesting.Application.Views.Pages"
              xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
              xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
-             xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
-             xmlns:converter="clr-namespace:StudentTesting.Application.Converter"
              d:DataContext="{d:DesignInstance vm:UsersViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -41,7 +38,7 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
-                                <uc:UserPic Grid.Column="0" Image="{Binding UserPic}" />
+                                <uc:CircleImage Grid.Column="0" Source="{Binding UserPic, Converter={StaticResource DefaultAvatarConvertor}}" />
 
                                 <StackPanel Grid.Column="1"
                                         Margin="5 0 0 0">

@@ -13,22 +13,38 @@
     <None Remove="Resources\Images\DefaultUserPic.png" />
     <None Remove="Resources\Images\Edit.png" />
     <None Remove="Resources\Images\IconUaviak.png" />
+    <None Remove="Resources\Images\ImagePlaceholder.png" />
     <None Remove="Resources\Images\Logout.png" />
     <None Remove="Resources\Images\Trash.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
-    <ProjectReference Include="..\StudentTesting.MaterialDesign\StudentTesting.MaterialDesign.csproj" />
-    <ProjectReference Include="..\StudentTesting.SecurityPassword\StudentTesting.SecurityPassword.csproj" />
+    <Resource Include="Resources\Images\ImagePlaceholder.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Images\DefaultUserPic.png" />
-    <Resource Include="Resources\Images\Edit.png" />
-    <Resource Include="Resources\Images\IconUaviak.png" />
-    <Resource Include="Resources\Images\Logout.png" />
-    <Resource Include="Resources\Images\Trash.png" />
+    <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
+    <ProjectReference Include="..\StudentTesting.MaterialDesign\StudentTesting.MaterialDesign.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\DefaultUserPic.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Edit.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\IconUaviak.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Logout.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Trash.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
