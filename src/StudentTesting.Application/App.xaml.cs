@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using StudentTesting.Application.Services.Captcha;
 using StudentTesting.Application.ViewModels;
 using StudentTesting.Application.Views.Windows;
 using StudentTesting.Database;

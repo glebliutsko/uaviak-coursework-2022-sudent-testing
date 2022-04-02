@@ -1,7 +1,5 @@
 ﻿using StudentTesting.Application.Utils;
 using StudentTesting.Database;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace StudentTesting.Application.ViewModels
 {

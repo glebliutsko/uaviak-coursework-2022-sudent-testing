@@ -19,7 +19,7 @@ namespace StudentTesting.Application.Services.Captcha
         {
             _stringGenerator = stringGenerator ?? new RandomStringGenerator();
             _font = font ?? new Font("Comic Sans MS", 24);
-            
+
             _rnd = new Random();
         }
 

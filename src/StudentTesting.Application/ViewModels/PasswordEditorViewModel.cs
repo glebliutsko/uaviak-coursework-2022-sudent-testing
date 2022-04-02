@@ -4,7 +4,6 @@ using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {

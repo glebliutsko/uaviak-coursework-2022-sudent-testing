@@ -1,12 +1,108 @@
-﻿<UserControl x:Class="StudentTesting.Application.Views.Controls.InformationTestEditor"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:StudentTesting.Application.Views.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="600">
-    <Grid>
-            
-    </Grid>
+﻿<UserControl
+    x:Class="StudentTesting.Application.Views.Controls.InformationTestEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
+    mc:Ignorable="d"
+    d:DesignWidth="600">
+    <GroupBox
+        Style="{StaticResource MaterialGroupBox}"
+        Header="Редактирование информации о тесте">
+        <Grid
+            x:Name="BaseInformationGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <uc:CircleImageButton
+                Source="/Resources/Images/ImagePlaceholder.png"
+                Margin="5" />
+
+            <Grid
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition
+                        Height="50" />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Text="Название"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0 0 10 0" />
+                <TextBlock
+                    Text="Описание"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0 0 10 0" />
+                <TextBlock
+                    Text="Предмет"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0 0 10 0" />
+
+                <TextBox
+                    Style="{StaticResource MaterialTextBox}"
+                    Text="{Binding Title}"
+                    d:Text="Решение квадратных уравнений"
+                    HorizontalContentAlignment="Left"
+                    Margin="0 0 0 5"
+                    Grid.Row="0"
+                    Grid.Column="1" />
+
+                <TextBox
+                    Style="{StaticResource MaterialTextBox}"
+                    Text="{Binding Description}"
+                    HorizontalContentAlignment="Left"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    Margin="0 0 0 5"
+                    Grid.Row="1"
+                    Grid.Column="1">
+                    <d:TextBox.Text>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sagittis tristique neque, vel feugiat ipsum ornare nec. Sed ut mi massa. Fusce faucibus vel quam interdum maximus. Praesent in purus at eros egestas tempus sed sit amet lectus. Aenean sapien lacus, molestie a dapibus quis, laoreet in ligula. Maecenas consequat massa nec nunc volutpat dapibus. Praesent id magna ac lacus placerat ullamcorper in eu ligula. Aenean non consectetur augue. Curabitur hendrerit sem nisi, ac lobortis sem tincidunt a. Morbi id sodales turpis. Cras non mollis ligula.
+                    </d:TextBox.Text>
+                </TextBox>
+
+                <ComboBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0 0 0 5" />
+
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="0 10 0 0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+
+                    <Button
+                        Style="{StaticResource SecodaryMaterialButton}"
+                        Content="ОТМЕНИТЬ"
+                        Padding="15 3"
+                        Margin="0 0 5 0" />
+
+                    <Button
+                        Style="{StaticResource PrimaryMaterialButton}"
+                        Content="СОХРАНИТЬ"
+                        Padding="15 3" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </GroupBox>
 </UserControl>

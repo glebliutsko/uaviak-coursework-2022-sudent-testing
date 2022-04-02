@@ -2,7 +2,6 @@
 using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Services.FileDialog;
-using StudentTesting.Application.Utils;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System;
@@ -12,7 +11,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static StudentTesting.Application.Utils.EditerUserViewModel;
 
 namespace StudentTesting.Application.ViewModels
 {

@@ -1,6 +1,4 @@
 ﻿using StudentTesting.Application.Commands.Sync;
-using StudentTesting.Application.Services;
-using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Application.Views.Pages;
 using StudentTesting.Application.Views.Windows;
 using StudentTesting.Database;
