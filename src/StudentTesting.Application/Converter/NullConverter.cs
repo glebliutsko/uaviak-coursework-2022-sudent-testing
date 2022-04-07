@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace StudentTesting.Application.Converter
 {
-    public class NullConverter<T>  : IValueConverter
+    public class NullConverter<T> : IValueConverter
     {
         public T ValueIfNull { get; set; }
         public T ValueIfNotNull { get; set; }

@@ -1,6 +1,4 @@
-﻿using StudentTesting.Application.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace StudentTesting.Application.Views.Controls
 {

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTesting.Application.Commands.Sync;
-using StudentTesting.Application.Services;
-using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System.Collections.ObjectModel;
