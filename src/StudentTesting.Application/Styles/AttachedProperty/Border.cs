@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace StudentTesting.MaterialDesign.AttachedProperty
+namespace StudentTesting.Application.Styles.AttachedProperty
 {
     public class Border
     {

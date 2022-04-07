@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty">
+    xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty">
     <Style
         x:Key="MaterialButton"
         TargetType="{x:Type Button}">

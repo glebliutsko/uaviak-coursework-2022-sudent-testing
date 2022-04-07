@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
     xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
-    xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
+    xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
     xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
     d:DataContext="{d:DesignInstance vm:UserEditorViewModel}"
     d:DesignWidth="500">

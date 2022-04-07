@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace StudentTesting.MaterialDesign.AttachedProperty
+namespace StudentTesting.Application.Styles.AttachedProperty
 {
     public static class ExecuteCommand
     {
@@ -23,7 +23,7 @@ namespace StudentTesting.MaterialDesign.AttachedProperty
         #region ContentLoading
         public static object GetLoadingContent(DependencyObject obj)
         {
-            return (object)obj.GetValue(LoadingContentProperty);
+            return obj.GetValue(LoadingContentProperty);
         }
 
         public static void SetLoadingContent(DependencyObject obj, object value)

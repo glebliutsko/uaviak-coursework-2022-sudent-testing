@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace StudentTesting.MaterialDesign.AttachedProperty
+namespace StudentTesting.Application.Styles.AttachedProperty
 {
     public static class NormalPasswordBox
     {
@@ -54,7 +54,7 @@ namespace StudentTesting.MaterialDesign.AttachedProperty
             var passwordBox = (PasswordBox)sender;
             passwordBox.PasswordChanged -= PasswordChanged;
 
-            if (!(bool)GetIsUpdating(passwordBox))
+            if (!GetIsUpdating(passwordBox))
             {
                 passwordBox.Password = (string)e.NewValue;
             }

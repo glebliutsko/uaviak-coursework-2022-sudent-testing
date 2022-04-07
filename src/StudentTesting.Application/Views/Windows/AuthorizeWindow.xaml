@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:StudentTesting.Application.Views.Windows"
-    xmlns:ap="clr-namespace:StudentTesting.MaterialDesign.AttachedProperty;assembly=StudentTesting.MaterialDesign"
+    xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
     xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vm:AuthorizeViewModel}"
