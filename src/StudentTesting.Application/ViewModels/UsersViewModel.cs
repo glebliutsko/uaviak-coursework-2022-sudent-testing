@@ -43,7 +43,8 @@ namespace StudentTesting.Application.ViewModels
             set
             {
                 SetProperty(ref _selectedUser, value);
-                UserEditable = value;
+                if (value != null)
+                    UserEditable = value;
             }
         }
         #endregion
@@ -56,15 +57,14 @@ namespace StudentTesting.Application.ViewModels
             set
             {
                 SetProperty(ref _userEditable, value);
-                OnPropertyChange(nameof(IsVisibleUserEdit));
 
                 UserInformationEditor = value == null
                     ? null
-                    : new UserEditorViewModel(_db, value, new OpenFileDialogService(), MessageBoxService.ConfirmActionMessageBox, UpdateUserCallback);
+                    : new UserEditorViewModel(_db, value, UpdateUserCallback);
 
                 PasswordEditor = value == null
                     ? null
-                    : new PasswordEditorViewModel(_db, value, MessageBoxService.OkMessageBox);
+                    : new PasswordEditorViewModel(_db, value);
             }
         }
         #endregion
@@ -86,13 +86,6 @@ namespace StudentTesting.Application.ViewModels
             set => SetProperty(ref _passwordEditor, value);
         }
         #endregion
-
-        #region IsVisibleUserEdit
-        public bool IsVisibleUserEdit
-        {
-            get => UserEditable != null;
-        }
-        #endregion
         #endregion
 
         #region Command
@@ -112,7 +105,10 @@ namespace StudentTesting.Application.ViewModels
         private async Task UpdateUserCallback(bool isUnselect)
         {
             if (isUnselect)
+            {
                 SelectedUser = null;
+                UserEditable = null;
+            }
 
             await UpdateUsersAsync();
         }

@@ -12,10 +12,10 @@ namespace StudentTesting.Application.ViewModels
         private readonly User _user;
         private readonly Action<string> _showSuccess;
 
-        public PasswordEditorViewModel(StudentDbContext db, User user, Action<string> showSuccess) : base(db)
+        public PasswordEditorViewModel(StudentDbContext db, User user) : base(db)
         {
             _user = user;
-            _showSuccess = showSuccess;
+            _showSuccess = MessageBoxService.OkMessageBox;
 
             UpdatePasswordCommand = new RelayAsyncCommand(x => UpdatePassword());
         }

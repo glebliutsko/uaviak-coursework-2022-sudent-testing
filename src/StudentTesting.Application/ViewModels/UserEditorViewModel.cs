@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Commands.Sync;
+using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
@@ -14,13 +15,6 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public enum StateEditableUser
-    {
-        USER_NOT_CHANGED = 0,
-        USER_CHANGED = 1,
-        USER_NEW = 2
-    }
-
     public partial class UserEditorViewModel : ViewModelBase
     {
         private readonly IFileDialogService _openUserPicDialog;
@@ -28,26 +22,26 @@ namespace StudentTesting.Application.ViewModels
         private readonly Func<bool, Task> _userChanged;
         private User _user;
 
-        public UserEditorViewModel(StudentDbContext db, User user, IFileDialogService openUserPicDialog, Func<string, bool> requestConfirm, Func<bool, Task> userChanged) : base(db)
+        public UserEditorViewModel(StudentDbContext db, User user, Func<bool, Task> userChanged) : base(db)
         {
-            _openUserPicDialog = openUserPicDialog;
-            _requestConfirm = requestConfirm;
+            _openUserPicDialog = new OpenFileDialogService();
+            _requestConfirm = MessageBoxService.ConfirmActionMessageBox;
             _userChanged = userChanged;
-            State = _db.Entry(user).State == EntityState.Detached
-                ? StateEditableUser.USER_NEW
-                : StateEditableUser.USER_NOT_CHANGED;
             _user = user;
+            State = _db.Entry(_user).State == EntityState.Detached
+                ? StateEditable.NEW
+                : StateEditable.NOT_CHANGED;
 
-            UndoChangesCommand = new RelayCommand(x => UndoChanges(), x => State != StateEditableUser.USER_NOT_CHANGED);
+            UndoChangesCommand = new RelayCommand(x => UndoChanges(), x => State != StateEditable.NOT_CHANGED);
             EditUserPicCommand = new RelayAsyncCommand(x => EditUserPic());
             RemoveUserCommand = new RelayAsyncCommand(x => Remove());
-            SaveChangesUserCommand = new RelayAsyncCommand(x => SaveChanges(), x => State != StateEditableUser.USER_NOT_CHANGED);
+            SaveChangesUserCommand = new RelayAsyncCommand(x => SaveChanges(), x => State != StateEditable.NOT_CHANGED);
         }
 
         #region Property
         #region State
-        private StateEditableUser _state;
-        public StateEditableUser State
+        private StateEditable _state;
+        public StateEditable State
         {
             get => _state;
             private set => SetProperty(ref _state, value);
@@ -119,7 +113,7 @@ namespace StudentTesting.Application.ViewModels
         #region Action
         private void UndoChanges()
         {
-            if (State == StateEditableUser.USER_NOT_CHANGED)
+            if (State == StateEditable.NOT_CHANGED)
                 return;
 
             SetProperty(ref _role, null, nameof(Role));
@@ -128,7 +122,7 @@ namespace StudentTesting.Application.ViewModels
             SetProperty(ref _documentNumber, null, nameof(DocumentNumber));
             SetProperty(ref _userPic, null, nameof(UserPic));
 
-            State = StateEditableUser.USER_NOT_CHANGED;
+            State = StateEditable.NOT_CHANGED;
         }
 
         private async Task EditUserPic()
@@ -146,7 +140,7 @@ namespace StudentTesting.Application.ViewModels
 
         private async Task Remove()
         {
-            if (State == StateEditableUser.USER_NEW)
+            if (State == StateEditable.NEW)
                 return;
 
             if (!_requestConfirm($"Вы действительно хотите удалить пользователя {Login}?"))
@@ -159,7 +153,7 @@ namespace StudentTesting.Application.ViewModels
 
         private async Task SaveChanges()
         {
-            if (State == StateEditableUser.USER_NOT_CHANGED)
+            if (State == StateEditable.NOT_CHANGED)
                 return;
 
             if (new List<object> { Role, Login, FullName, DocumentNumber }.Any(x => x == null) ||
@@ -175,14 +169,14 @@ namespace StudentTesting.Application.ViewModels
             _user.DocumentNumber = DocumentNumber;
             _user.UserPic = UserPic;
 
-            if (State == StateEditableUser.USER_NEW)
+            if (State == StateEditable.NEW)
                 await _db.Users.AddAsync(_user);
 
             await _db.SaveChangesAsync();
             await _userChanged(false);
 
             ErrorMessage = null;
-            State = StateEditableUser.USER_NOT_CHANGED;
+            State = StateEditable.NOT_CHANGED;
         }
         #endregion
 
@@ -191,8 +185,8 @@ namespace StudentTesting.Application.ViewModels
             if (!SetProperty(ref member, value, propertyName))
                 return false;
 
-            if (State != StateEditableUser.USER_NEW)
-                State = StateEditableUser.USER_CHANGED;
+            if (State != StateEditable.NEW)
+                State = StateEditable.CHANGED;
             return true;
         }
     }

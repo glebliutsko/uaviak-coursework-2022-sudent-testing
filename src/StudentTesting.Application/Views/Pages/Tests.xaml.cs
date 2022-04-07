@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using StudentTesting.Application.ViewModels;
+using System.Windows.Controls;
 
 namespace StudentTesting.Application.Views.Pages
 {
@@ -7,8 +8,10 @@ namespace StudentTesting.Application.Views.Pages
     /// </summary>
     public partial class Tests : UserControl
     {
-        public Tests()
+        public Tests(TestsViewModel testsViewModel)
         {
+            DataContext = testsViewModel;
+
             InitializeComponent();
         }
     }

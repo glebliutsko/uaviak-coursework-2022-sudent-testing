@@ -97,7 +97,7 @@ namespace StudentTesting.Application.ViewModels
             MenuItems.Add(
                 new MenuItem(
                     "Тесты",
-                    new Tests()
+                    new Tests(new TestsViewModel(_db))
                 )
             );
         }

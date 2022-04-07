@@ -6,13 +6,13 @@ using System.Windows.Data;
 
 namespace StudentTesting.Application.Converter
 {
-    [ValueConversion(typeof(StateEditableUser), typeof(Visibility))]
+    [ValueConversion(typeof(StateEditable), typeof(Visibility))]
     class StateEditableUserToVisblilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var state = (StateEditableUser)value;
-            return state == StateEditableUser.USER_CHANGED ? Visibility.Visible : Visibility.Collapsed;
+            var state = (StateEditable)value;
+            return state == StateEditable.CHANGED ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
