@@ -18,7 +18,7 @@
 
         <uc:CircleImage
             d:Source="/Resources/Images/DefaultUserPic.png"
-            Source="{Binding ElementName=Root, Path=User.UserPic}" />
+            Source="{Binding ElementName=Root, Path=User.UserPic, Converter={StaticResource DefaultAvatarConvertor}}" />
 
         <StackPanel
             Grid.Column="1"

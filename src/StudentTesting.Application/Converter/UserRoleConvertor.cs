@@ -15,7 +15,7 @@ namespace StudentTesting.Application.Converter
             // Я пытался это пофиксить по нормальному, но у меня не получилось, поэтому тут костыль.
             // ПОШЛО ОНО НАХУЙ, так работает и пофиг!!!
             if (value is string)
-                return null;
+                return value;
 
             var role = (UserRole)value;
 

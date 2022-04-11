@@ -19,14 +19,16 @@ namespace StudentTesting.Application.ViewModels
     {
         private readonly IFileDialogService _openUserPicDialog;
         private readonly Func<string, bool> _requestConfirm;
-        private readonly Func<bool, Task> _userChanged;
+        private readonly Func<Task> _updateUsersList;
+        private readonly Action _unselectUser;
         private User _user;
 
-        public UserEditorViewModel(StudentDbContext db, User user, Func<bool, Task> userChanged) : base(db)
+        public UserEditorViewModel(StudentDbContext db, User user, Func<Task> updateUsersList, Action unselectUser) : base(db)
         {
             _openUserPicDialog = new OpenFileDialogService();
             _requestConfirm = MessageBoxService.ConfirmActionMessageBox;
-            _userChanged = userChanged;
+            _updateUsersList = updateUsersList;
+            _unselectUser = unselectUser;
             _user = user;
             State = _db.Entry(_user).State == EntityState.Detached
                 ? StateEditable.NEW
@@ -34,7 +36,7 @@ namespace StudentTesting.Application.ViewModels
 
             UndoChangesCommand = new RelayCommand(x => UndoChanges(), x => State != StateEditable.NOT_CHANGED);
             EditUserPicCommand = new RelayAsyncCommand(x => EditUserPic());
-            RemoveUserCommand = new RelayAsyncCommand(x => Remove());
+            RemoveUserCommand = new RelayAsyncCommand(x => Remove(), x => State != StateEditable.NEW);
             SaveChangesUserCommand = new RelayAsyncCommand(x => SaveChanges(), x => State != StateEditable.NOT_CHANGED);
         }
 
@@ -49,6 +51,9 @@ namespace StudentTesting.Application.ViewModels
         #endregion
 
         #region Role
+
+        // TODO: Сделать анселекст при поздании модели, если это новый пользователь.
+        // Мб надо как-то изменить модель БД. Возможно поставить Nullable для User.Role, ну или я хуй его знает.
         private UserRole? _role = null;
         public UserRole Role
         {
@@ -113,6 +118,12 @@ namespace StudentTesting.Application.ViewModels
         #region Action
         private void UndoChanges()
         {
+            if (State == StateEditable.NEW)
+            {
+                _unselectUser();
+                return;
+            }
+
             if (State == StateEditable.NOT_CHANGED)
                 return;
 
@@ -148,7 +159,9 @@ namespace StudentTesting.Application.ViewModels
 
             _db.Users.Remove(_user);
             await _db.SaveChangesAsync();
-            await _userChanged(true);
+
+            await _updateUsersList();
+            _unselectUser();
         }
 
         private async Task SaveChanges()
@@ -173,7 +186,7 @@ namespace StudentTesting.Application.ViewModels
                 await _db.Users.AddAsync(_user);
 
             await _db.SaveChangesAsync();
-            await _userChanged(false);
+            await _updateUsersList();
 
             ErrorMessage = null;
             State = StateEditable.NOT_CHANGED;

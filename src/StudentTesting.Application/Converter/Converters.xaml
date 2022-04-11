@@ -27,7 +27,7 @@
     <converter:BoolToVisibilityConverter
         x:Key="FalseToCollapsedConverter"
         FalseValue="Hidden" />
-    
+
     <converter:StateEditableUserToVisblilityConverter
         x:Key="VisibleIfEditConverter" />
 </ResourceDictionary>

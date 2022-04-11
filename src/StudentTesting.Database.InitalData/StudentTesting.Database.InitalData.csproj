@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentTesting.Application\StudentTesting.Application.csproj" />
-    <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <ProjectReference Include="..\StudentTesting.Application\StudentTesting.Application.csproj" />
+    <ProjectReference Include="..\StudentTesting.Database\StudentTesting.Database.csproj" />
   </ItemGroup>
 
 </Project>

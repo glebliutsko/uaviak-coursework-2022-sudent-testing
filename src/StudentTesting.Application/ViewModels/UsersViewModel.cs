@@ -58,7 +58,7 @@ namespace StudentTesting.Application.ViewModels
 
                 UserInformationEditor = value == null
                     ? null
-                    : new UserEditorViewModel(_db, value, UpdateUserCallback);
+                    : new UserEditorViewModel(_db, value, UpdateUsersAsync, UnselectUser);
 
                 PasswordEditor = value == null
                     ? null
@@ -100,15 +100,10 @@ namespace StudentTesting.Application.ViewModels
             Users = new ObservableCollection<User>(await _db.Users.ToListAsync());
         }
 
-        private async Task UpdateUserCallback(bool isUnselect)
+        private void UnselectUser()
         {
-            if (isUnselect)
-            {
-                SelectedUser = null;
-                UserEditable = null;
-            }
-
-            await UpdateUsersAsync();
+            SelectedUser = null;
+            UserEditable = null;
         }
 
         private void AddNewUser()
