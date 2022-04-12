@@ -51,11 +51,8 @@ namespace StudentTesting.Application.ViewModels
         #endregion
 
         #region Role
-
-        // TODO: Сделать анселекст при поздании модели, если это новый пользователь.
-        // Мб надо как-то изменить модель БД. Возможно поставить Nullable для User.Role, ну или я хуй его знает.
         private UserRole? _role = null;
-        public UserRole Role
+        public UserRole? Role
         {
             get => _role ?? _user.Role;
             set => SetUserProperty(ref _role, value);

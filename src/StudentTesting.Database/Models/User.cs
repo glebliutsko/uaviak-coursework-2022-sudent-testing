@@ -39,7 +39,8 @@ namespace StudentTesting.Database.Models
         public string DocumentNumber { get; set; }
 
         [Column(TypeName = "NVARCHAR(50)")]
-        public UserRole Role { get; set; }
+        [Required]
+        public UserRole? Role { get; set; }
 
         [ForeignKey("Group")]
         public int? GroupId { get; set; }
