@@ -1,7 +1,7 @@
 ﻿using StudentTesting.Application.Commands.Sync;
+using StudentTesting.Application.Utils;
 using StudentTesting.Application.Views.Pages;
 using StudentTesting.Application.Views.Windows;
-using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -10,11 +10,11 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class MainViewModel : ViewModelBase, IRequestCloseViewModel
+    public class MainViewModel : OnPropertyChangeBase, IRequestCloseViewModel
     {
         public event EventHandler OnRequestClose;
 
-        public MainViewModel(StudentDbContext db, User user) : base(db)
+        public MainViewModel(User user)
         {
             User = user;
 
@@ -90,22 +90,22 @@ namespace StudentTesting.Application.ViewModels
             MenuItems.Add(
                 new MenuItem(
                     "Пользователи",
-                    new Users(new UsersViewModel(_db))
+                    new Users(new UsersViewModel())
                 )
             );
 
             MenuItems.Add(
                 new MenuItem(
                     "Тесты",
-                    new Tests(new TestsViewModel(_db))
+                    new Tests(new TestsViewModel())
                 )
             );
         }
 
         private void Quit()
         {
-            var loginWindow = new AuthorizeWindow(new AuthorizeViewModel(_db));
-            loginWindow.Show();
+            System.Windows.Application.Current.MainWindow = new AuthorizeWindow(new AuthorizeViewModel());
+            System.Windows.Application.Current.MainWindow.Show();
 
             OnRequestClose?.Invoke(this, new EventArgs());
         }

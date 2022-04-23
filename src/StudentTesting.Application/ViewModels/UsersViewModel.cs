@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTesting.Application.Commands.Sync;
-using StudentTesting.Database;
+using StudentTesting.Application.Database;
+using StudentTesting.Application.Utils;
 using StudentTesting.Database.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,10 +10,9 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class UsersViewModel : ViewModelBase
+    public class UsersViewModel : OnPropertyChangeBase
     {
-        public UsersViewModel(StudentDbContext db)
-            : base(db)
+        public UsersViewModel()
         {
             AddNewUserCommand = new RelayCommand(x => AddNewUser());
 
@@ -58,11 +58,11 @@ namespace StudentTesting.Application.ViewModels
 
                 UserInformationEditor = value == null
                     ? null
-                    : new UserEditorViewModel(_db, value, UpdateUsersAsync, UnselectUser);
+                    : new UserEditorViewModel(value, UpdateUsersAsync, UnselectUser);
 
                 PasswordEditor = value == null
                     ? null
-                    : new PasswordEditorViewModel(_db, value);
+                    : new PasswordEditorViewModel(value);
             }
         }
         #endregion
@@ -92,12 +92,12 @@ namespace StudentTesting.Application.ViewModels
 
         private void UpdateUsers()
         {
-            Users = new ObservableCollection<User>(_db.Users.ToList());
+            Users = new ObservableCollection<User>(DbContextKeeper.Saved.Users.ToList());
         }
 
         private async Task UpdateUsersAsync()
         {
-            Users = new ObservableCollection<User>(await _db.Users.ToListAsync());
+            Users = new ObservableCollection<User>(await DbContextKeeper.Saved.Users.ToListAsync());
         }
 
         private void UnselectUser()

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Commands.Sync;
+using StudentTesting.Application.Database;
 using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.FileDialog;
-using StudentTesting.Database;
+using StudentTesting.Application.Utils;
 using StudentTesting.Database.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public partial class UserEditorViewModel : ViewModelBase
+    public partial class UserEditorViewModel : OnPropertyChangeBase
     {
         private readonly IFileDialogService _openUserPicDialog;
         private readonly Func<string, bool> _requestConfirm;
@@ -23,14 +24,14 @@ namespace StudentTesting.Application.ViewModels
         private readonly Action _unselectUser;
         private User _user;
 
-        public UserEditorViewModel(StudentDbContext db, User user, Func<Task> updateUsersList, Action unselectUser) : base(db)
+        public UserEditorViewModel(User user, Func<Task> updateUsersList, Action unselectUser)
         {
             _openUserPicDialog = new OpenFileDialogService();
             _requestConfirm = MessageBoxService.ConfirmActionMessageBox;
             _updateUsersList = updateUsersList;
             _unselectUser = unselectUser;
             _user = user;
-            State = _db.Entry(_user).State == EntityState.Detached
+            State = DbContextKeeper.Saved.Entry(_user).State == EntityState.Detached
                 ? StateEditable.NEW
                 : StateEditable.NOT_CHANGED;
 
@@ -154,8 +155,8 @@ namespace StudentTesting.Application.ViewModels
             if (!_requestConfirm($"Вы действительно хотите удалить пользователя {Login}?"))
                 return;
 
-            _db.Users.Remove(_user);
-            await _db.SaveChangesAsync();
+            DbContextKeeper.Saved.Users.Remove(_user);
+            await DbContextKeeper.Saved.SaveChangesAsync();
 
             await _updateUsersList();
             _unselectUser();
@@ -180,9 +181,9 @@ namespace StudentTesting.Application.ViewModels
             _user.UserPic = UserPic;
 
             if (State == StateEditable.NEW)
-                await _db.Users.AddAsync(_user);
+                await DbContextKeeper.Saved.Users.AddAsync(_user);
 
-            await _db.SaveChangesAsync();
+            await DbContextKeeper.Saved.SaveChangesAsync();
             await _updateUsersList();
 
             ErrorMessage = null;

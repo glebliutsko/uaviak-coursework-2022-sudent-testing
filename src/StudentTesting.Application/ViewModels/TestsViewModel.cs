@@ -1,5 +1,6 @@
 ﻿using StudentTesting.Application.Commands.Sync;
-using StudentTesting.Database;
+using StudentTesting.Application.Database;
+using StudentTesting.Application.Utils;
 using StudentTesting.Database.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class TestsViewModel : ViewModelBase
+    public class TestsViewModel : OnPropertyChangeBase
     {
-        public TestsViewModel(StudentDbContext db) : base(db)
+        public TestsViewModel()
         {
             UpdateTests();
 
@@ -51,7 +52,7 @@ namespace StudentTesting.Application.ViewModels
 
                 InformationTestEditor = value == null
                     ? null
-                    : new InformationTestEditorViewModel(_db, value);
+                    : new InformationTestEditorViewModel(value);
             }
         }
         #endregion
@@ -71,7 +72,7 @@ namespace StudentTesting.Application.ViewModels
         #endregion
         private void UpdateTests()
         {
-            Tests = new ObservableCollection<Test>(_db.Tests.ToList());
+            Tests = new ObservableCollection<Test>(DbContextKeeper.Saved.Tests.ToList());
         }
 
         private void AddNewTest()

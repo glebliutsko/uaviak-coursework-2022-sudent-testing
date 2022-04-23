@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentTesting.Application.Database;
 using StudentTesting.Application.SecurityPassword;
-using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System.Linq;
 using System.Security.Cryptography;
@@ -18,26 +18,24 @@ namespace StudentTesting.Application.Services
         };
 
         private readonly PasswordHasher _passwordHasher;
-        private readonly StudentDbContext _db;
 
-        public PasswordUserService(User user, StudentDbContext db)
+        public PasswordUserService(User user)
         {
-            _db = db;
             User = user;
 
             _passwordHasher = new PasswordHasher(SHA256.Create(), new RandomizedSaltGenerator(10));
         }
 
-        public static async Task<PasswordUserService> SearchUserByLogin(string login, StudentDbContext db)
+        public static async Task<PasswordUserService> SearchUserByLogin(string login)
         {
-            User user = await db.Users
+            User user = await DbContextKeeper.Saved.Users
                 .Where(x => x.Login == login)
                 .FirstOrDefaultAsync();
 
             if (user == null)
                 return null;
 
-            return new PasswordUserService(user, db);
+            return new PasswordUserService(user);
         }
 
         public bool CheckPassword(string password) =>
@@ -48,7 +46,7 @@ namespace StudentTesting.Application.Services
             SaltedHash saltedHash = _passwordHasher.ComputeSaltedHashWithRandomSalt(newPassword);
             User.PasswordHash = saltedHash.Hash;
             User.Salt = saltedHash.Salt;
-            await _db.SaveChangesAsync();
+            await DbContextKeeper.Saved.SaveChangesAsync();
         }
     }
 }

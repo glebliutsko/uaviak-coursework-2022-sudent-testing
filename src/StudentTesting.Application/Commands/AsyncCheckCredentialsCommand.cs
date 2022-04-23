@@ -2,7 +2,6 @@
 using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Application.ViewModels;
-using StudentTesting.Database;
 using System;
 using System.Threading.Tasks;
 
@@ -12,19 +11,16 @@ namespace StudentTesting.Application.Commands
     {
         private int _countAttempts = 0;
 
-        private readonly StudentDbContext _db;
         private readonly AuthorizeViewModel _viewModel;
         private readonly IShowMainWindowService _showWindowService;
         private readonly IRequestCaptchaService _requestCaptchaService;
         private readonly Action _closeWindowAction;
 
         public AsyncCheckCredentialsCommand(AuthorizeViewModel viewModel,
-                                            StudentDbContext db,
                                             IShowMainWindowService showWindowService,
                                             IRequestCaptchaService requestCaptchaService,
                                             Action closeWindow)
         {
-            _db = db;
             _viewModel = viewModel;
             _showWindowService = showWindowService;
             _requestCaptchaService = requestCaptchaService;
@@ -52,7 +48,7 @@ namespace StudentTesting.Application.Commands
                 return;
             }
 
-            var checker = await PasswordUserService.SearchUserByLogin(_viewModel.Login, _db);
+            var checker = await PasswordUserService.SearchUserByLogin(_viewModel.Login);
             if (checker == null || !checker.CheckPassword(_viewModel.Password))
             {
                 _countAttempts++;

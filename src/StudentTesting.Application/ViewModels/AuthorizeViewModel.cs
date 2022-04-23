@@ -1,27 +1,25 @@
 ﻿using StudentTesting.Application.Commands;
 using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Services.Authorize;
-using StudentTesting.Database;
+using StudentTesting.Application.Utils;
 using System;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class AuthorizeViewModel : ViewModelBase, IRequestCloseViewModel
+    public class AuthorizeViewModel : OnPropertyChangeBase, IRequestCloseViewModel
     {
         public event EventHandler OnRequestClose;
 
         private readonly IShowMainWindowService _showWindowService;
         private readonly IRequestCaptchaService _requestCaptchaService;
 
-        public AuthorizeViewModel(StudentDbContext db, IShowMainWindowService showWindowService = null, IRequestCaptchaService requestCaptchaService = null)
-            : base(db)
+        public AuthorizeViewModel(IShowMainWindowService showWindowService = null, IRequestCaptchaService requestCaptchaService = null)
         {
-            _showWindowService = showWindowService ?? new ShowMainWindowService(db);
+            _showWindowService = showWindowService ?? new ShowMainWindowService();
             _requestCaptchaService = requestCaptchaService ?? new ShowCapthaWindowService();
 
             CheckCredentialsCommand = new AsyncCheckCredentialsCommand(
                 this,
-                db,
                 _showWindowService,
                 _requestCaptchaService,
                 () => OnRequestClose?.Invoke(this, new EventArgs())

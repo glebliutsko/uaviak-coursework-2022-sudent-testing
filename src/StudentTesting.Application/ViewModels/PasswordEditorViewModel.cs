@@ -1,18 +1,18 @@
 ﻿using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Services;
-using StudentTesting.Database;
+using StudentTesting.Application.Utils;
 using StudentTesting.Database.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class PasswordEditorViewModel : ViewModelBase
+    public class PasswordEditorViewModel : OnPropertyChangeBase
     {
         private readonly User _user;
         private readonly Action<string> _showSuccess;
 
-        public PasswordEditorViewModel(StudentDbContext db, User user) : base(db)
+        public PasswordEditorViewModel(User user)
         {
             _user = user;
             _showSuccess = MessageBoxService.OkMessageBox;
@@ -66,7 +66,7 @@ namespace StudentTesting.Application.ViewModels
                 return;
             }
 
-            var _passwordService = new PasswordUserService(_user, _db);
+            var _passwordService = new PasswordUserService(_user);
             await _passwordService.SetNewPassword(Password);
 
             Password = "";

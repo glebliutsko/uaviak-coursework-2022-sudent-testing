@@ -1,8 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using StudentTesting.Application.Database;
 using StudentTesting.Application.ViewModels;
 using StudentTesting.Application.Views.Windows;
-using StudentTesting.Database;
-using System.Linq;
 using System.Windows;
 
 namespace StudentTesting.Application
@@ -12,38 +10,30 @@ namespace StudentTesting.Application
     /// </summary>
     public partial class App : System.Windows.Application
     {
-        private StudentDbContext _db;
-
-        private StudentDbContext GetDbContext()
-        {
-            return Configuration.INTEGRATED_SECURITY
-                ? new StudentDbContext(Configuration.ADDRESS_DB, Configuration.DATABASE)
-                : new StudentDbContext(Configuration.ADDRESS_DB, Configuration.USER_DB, Configuration.PASSWORD_DB, Configuration.DATABASE);
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            try
+            bool result = Configuration.INTEGRATED_SECURITY switch
             {
-                _db = GetDbContext();
-                _db.Groups.FirstOrDefault();
-            }
-            catch (SqlException ex)
+                true => DbContextKeeper.ConnectionOpen(Configuration.ADDRESS_DB, Configuration.DATABASE),
+                false => DbContextKeeper.ConnectionOpen(Configuration.ADDRESS_DB, Configuration.USER_DB, Configuration.PASSWORD_DB, Configuration.DATABASE)
+            };
+
+            if (!result)
             {
-                MessageBox.Show($"Ошибка подключения к БД\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ошибка подключения к БД", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown();
                 return;
             }
 
-            var loginWindow = new AuthorizeWindow(new AuthorizeViewModel(_db));
-            loginWindow.Show();
+            Current.MainWindow = new AuthorizeWindow(new AuthorizeViewModel());
+            Current.MainWindow.Show();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            _db.Dispose();
+            DbContextKeeper.ConnectionClose();
         }
     }
 }

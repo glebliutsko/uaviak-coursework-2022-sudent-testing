@@ -1,17 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentTesting.Database;
+using StudentTesting.Application.Database;
+using StudentTesting.Application.Utils;
 using StudentTesting.Database.Models;
 using System.Runtime.CompilerServices;
 
 namespace StudentTesting.Application.ViewModels
 {
-    public class InformationTestEditorViewModel : ViewModelBase
+    public class InformationTestEditorViewModel : OnPropertyChangeBase
     {
         private Test _test;
-        public InformationTestEditorViewModel(StudentDbContext db, Test test) : base(db)
+        public InformationTestEditorViewModel(Test test)
         {
             _test = test;
-            State = _db.Entry(_test).State == EntityState.Detached
+            State = DbContextKeeper.Saved.Entry(_test).State == EntityState.Detached
                 ? StateEditable.NEW
                 : StateEditable.NOT_CHANGED;
         }
