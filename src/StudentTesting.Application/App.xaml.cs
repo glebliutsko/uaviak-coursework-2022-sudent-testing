@@ -14,11 +14,13 @@ namespace StudentTesting.Application
         {
             base.OnStartup(e);
 
-            bool result = Configuration.INTEGRATED_SECURITY switch
-            {
-                true => DbContextKeeper.ConnectionOpen(Configuration.ADDRESS_DB, Configuration.DATABASE),
-                false => DbContextKeeper.ConnectionOpen(Configuration.ADDRESS_DB, Configuration.USER_DB, Configuration.PASSWORD_DB, Configuration.DATABASE)
-            };
+            var progressWindow = new ProgressWindow("Подключение к БД");
+            progressWindow.Show();
+
+            bool result = InitializeDatabase();
+
+            progressWindow.Close();
+
 
             if (!result)
             {
@@ -26,9 +28,18 @@ namespace StudentTesting.Application
                 Shutdown();
                 return;
             }
-
             Current.MainWindow = new AuthorizeWindow(new AuthorizeViewModel());
             Current.MainWindow.Show();
+            ShutdownMode = ShutdownMode.OnMainWindowClose;
+        }
+
+        private static bool InitializeDatabase()
+        {
+            return Configuration.INTEGRATED_SECURITY switch
+            {
+                true => DbContextKeeper.ConnectionOpen(Configuration.ADDRESS_DB, Configuration.DATABASE),
+                false => DbContextKeeper.ConnectionOpen(Configuration.ADDRESS_DB, Configuration.USER_DB, Configuration.PASSWORD_DB, Configuration.DATABASE)
+            };
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
