@@ -87,19 +87,25 @@ namespace StudentTesting.Application.ViewModels
 
         private void GenerateMenuItem()
         {
-            MenuItems.Add(
-                new MenuItem(
-                    "Пользователи",
-                    new Users(new UsersViewModel())
-                )
-            );
-
-            MenuItems.Add(
-                new MenuItem(
-                    "Тесты",
-                    new Tests(new TestsViewModel())
-                )
-            );
+            if (User.Role == UserRole.TEACHER)
+            {
+                MenuItems.Add(
+                    new MenuItem(
+                        "Пользователи",
+                        new Users(new UsersViewModel())
+                    )
+                );
+                MenuItems.Add(
+                    new MenuItem(
+                        "Курсы",
+                        null
+                    )
+                );
+            }
+            else
+            {
+                
+            }
         }
 
         private void Quit()
