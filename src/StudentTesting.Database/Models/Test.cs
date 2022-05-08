@@ -9,8 +9,7 @@ namespace StudentTesting.Database.Models
         [Key]
         public int Id { get; set; }
 
-        [Column]
-        [StringLength(100)]
+        [Column(TypeName = "NVARCHAR(100)")]
         [Required(AllowEmptyStrings = false)]
         public string Title { get; set; }
 
@@ -20,15 +19,10 @@ namespace StudentTesting.Database.Models
 
         public byte[] Picture { get; set; }
 
-        [ForeignKey("User")]
-        public int CreatorId { get; set; }
-        public User Creator { get; set; }
+        [ForeignKey("Course")]
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
 
-        [ForeignKey("Subject")]
-        public int SubjectId { get; set; }
-        public Subject Subject { get; set; }
-
-        public ICollection<Group> AllowGroups { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
         public ICollection<Question> Questions { get; set; }
     }

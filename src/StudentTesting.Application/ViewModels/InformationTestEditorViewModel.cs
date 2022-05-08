@@ -46,10 +46,10 @@ namespace StudentTesting.Application.ViewModels
         #endregion
 
         #region Subject
-        private Subject _subject = null;
-        public Subject Subject
+        private Course _subject = null;
+        public Course Subject
         {
-            get => _subject ?? _test.Subject;
+            get => _subject ?? _test.Course;
             set => SetUserProperty(ref _subject, value);
         }
         #endregion

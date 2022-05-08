@@ -48,7 +48,7 @@ namespace StudentTesting.Database.Models
 
         public byte[] UserPic { get; set; }
 
-        public ICollection<Test> CreatedTests { get; set; }
-        public ICollection<TestTakingHistory> TestTakingHistories { get; set; }
+        public ICollection<Attempt> Attempts { get; set; }
+        public ICollection<Course> AvaibleCourseForEdit { get; set; }
     }
 }

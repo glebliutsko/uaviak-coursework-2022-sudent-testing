@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTesting.Database.Models;
+using System.Collections.Generic;
 
 namespace StudentTesting.Database
 {
@@ -32,11 +33,11 @@ namespace StudentTesting.Database
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<QuestionAnswerHistory> QuestionAnswerHistory { get; set; }
+        public DbSet<QuestionAttemt> QuestionAttemts { get; set; }
         public DbSet<Test> Tests { get; set; }
-        public DbSet<TestTakingHistory> TestTakingHistory { get; set; }
+        public DbSet<Attempt> Attempts { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Course> Courses { get; set; }
         #endregion
 
         #region Configuration
@@ -46,24 +47,50 @@ namespace StudentTesting.Database
             modelBuilder.Entity<Question>()
                 .HasMany(x => x.Attachments)
                 .WithMany(x => x.Questions)
-                .UsingEntity(x => x.ToTable("AttachmentsQuestion"));
+                .UsingEntity<Dictionary<string, object>>(
+                    "AttachmentsQuestion",
+                    x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
+                    x => x.HasOne<Question>().WithMany().OnDelete(DeleteBehavior.Cascade));
 
             // m2m Attachments and Tests = AttachmentsTest
             modelBuilder.Entity<Test>()
                 .HasMany(x => x.Attachments)
                 .WithMany(x => x.Tests)
-                .UsingEntity(x => x.ToTable("AttachmentsTest"));
+                .UsingEntity<Dictionary<string, object>>(
+                   "AttachmentsTest",
+                   x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
+                   x => x.HasOne<Test>().WithMany().OnDelete(DeleteBehavior.Cascade));
 
             // m2m Attachments and Answers = AttachmentsAnswer
             modelBuilder.Entity<Answer>()
                 .HasMany(x => x.Attachments)
                 .WithMany(x => x.Answers)
-                .UsingEntity(x => x.ToTable("AttachmentsAnswer"));
+                .UsingEntity<Dictionary<string, object>>(
+                    "AttachmentsAnswer",
+                    x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
+                    x => x.HasOne<Answer>().WithMany().OnDelete(DeleteBehavior.Cascade));
+
+            // m2m Courses and Users = TeacherEditorCourse
+            modelBuilder.Entity<Course>()
+                .HasMany(x => x.AvaibleForEdit)
+                .WithMany(x => x.AvaibleCourseForEdit)
+                .UsingEntity(x => x.ToTable("TeacherEditorCourse"));
+
+            // m2m Courses and Groups = GroupsEditorsCourse
+            modelBuilder.Entity<Course>()
+                .HasMany(x => x.AvaibleForPassing)
+                .WithMany(x => x.AvaibleCourses)
+                .UsingEntity(x => x.ToTable("GroupsEditorsCourse"));
 
             // N:1 User and TestTakingHistory
             modelBuilder.Entity<User>()
-                .HasMany(x => x.TestTakingHistories)
-                .WithOne(x => x.User)
+                .HasMany(x => x.Attempts)
+                .WithOne(x => x.Student)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<QuestionAttemt>()
+                .HasOne(x => x.ToQuestion)
+                .WithMany(x => x.Attempts)
                 .OnDelete(DeleteBehavior.NoAction);
         }
 

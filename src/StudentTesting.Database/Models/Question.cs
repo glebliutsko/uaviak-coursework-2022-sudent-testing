@@ -31,5 +31,6 @@ namespace StudentTesting.Database.Models
 
         public ICollection<Answer> Answers { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<QuestionAttemt> Attempts { get; set; }
     }
 }

@@ -9,13 +9,11 @@ namespace StudentTesting.Database.Models
         [Key]
         public int Id { get; set; }
 
-        [Column(TypeName = "NVARCHAR")]
-        [StringLength(100)]
+        [Column(TypeName = "NVARCHAR(100)")]
         [Required(AllowEmptyStrings = false)]
         public string Title { get; set; }
 
-        [Column(TypeName = "NVARCHAR")]
-        [StringLength(100)]
+        [Column(TypeName = "NVARCHAR(100)")]
         [Required(AllowEmptyStrings = false)]
         public string Mime { get; set; }
         public byte[] File { get; set; }

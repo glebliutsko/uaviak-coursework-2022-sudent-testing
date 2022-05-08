@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudentTesting.Database.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitalMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +13,8 @@ namespace StudentTesting.Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
-                    Mime = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
+                    Title = table.Column<string>(type: "NVARCHAR(100)", nullable: false),
+                    Mime = table.Column<string>(type: "NVARCHAR(100)", nullable: false),
                     File = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
@@ -22,16 +23,77 @@ namespace StudentTesting.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "NVARCHAR(50)", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Picture = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Groups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "NVARCHAR(30)", maxLength: 30, nullable: false)
+                    Number = table.Column<string>(type: "NVARCHAR(30)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "NVARCHAR(100)", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Picture = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tests_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupsEditorsCourse",
+                columns: table => new
+                {
+                    AvaibleCoursesId = table.Column<int>(type: "int", nullable: false),
+                    AvaibleForPassingId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupsEditorsCourse", x => new { x.AvaibleCoursesId, x.AvaibleForPassingId });
+                    table.ForeignKey(
+                        name: "FK_GroupsEditorsCourse_Courses_AvaibleCoursesId",
+                        column: x => x.AvaibleCoursesId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupsEditorsCourse_Groups_AvaibleForPassingId",
+                        column: x => x.AvaibleForPassingId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,41 +103,21 @@ namespace StudentTesting.Database.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Login = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
-                    PasswordHash = table.Column<string>(type: "NVARCHAR(64)", maxLength: 64, nullable: false),
+                    PasswordHash = table.Column<string>(type: "NVARCHAR(64)", maxLength: 64, nullable: true),
+                    Salt = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: true),
                     FullName = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
                     DocumentNumber = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
                     Role = table.Column<string>(type: "NVARCHAR(50)", nullable: false),
-                    IdGroup = table.Column<int>(type: "int", nullable: true)
+                    GroupId = table.Column<int>(type: "int", nullable: true),
+                    UserPic = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Groups_IdGroup",
-                        column: x => x.IdGroup,
+                        name: "FK_Users_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    IdCreator = table.Column<int>(type: "int", nullable: false),
-                    CreatorId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tests_Users_CreatorId",
-                        column: x => x.CreatorId,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -94,35 +136,10 @@ namespace StudentTesting.Database.Migrations
                         name: "FK_AttachmentsTest_Attachments_AttachmentsId",
                         column: x => x.AttachmentsId,
                         principalTable: "Attachments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AttachmentsTest_Tests_TestsId",
                         column: x => x.TestsId,
-                        principalTable: "Tests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GroupTest",
-                columns: table => new
-                {
-                    AllowGroupsId = table.Column<int>(type: "int", nullable: false),
-                    AvailableTestsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupTest", x => new { x.AllowGroupsId, x.AvailableTestsId });
-                    table.ForeignKey(
-                        name: "FK_GroupTest_Groups_AllowGroupsId",
-                        column: x => x.AllowGroupsId,
-                        principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GroupTest_Tests_AvailableTestsId",
-                        column: x => x.AvailableTestsId,
                         principalTable: "Tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -137,49 +154,64 @@ namespace StudentTesting.Database.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "TEXT", nullable: false),
                     Score = table.Column<int>(type: "int", nullable: false),
-                    IdTest = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "NVARCHAR(50)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    TestId = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "NVARCHAR(50)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questions_Tests_IdTest",
-                        column: x => x.IdTest,
+                        name: "FK_Questions_Tests_TestId",
+                        column: x => x.TestId,
                         principalTable: "Tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Questions_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TestTakingHistory",
+                name: "Attempts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Score = table.Column<int>(type: "int", nullable: false),
-                    IdTest = table.Column<int>(type: "int", nullable: false),
-                    IsUser = table.Column<int>(type: "int", nullable: false)
+                    TestId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestTakingHistory", x => x.Id);
+                    table.PrimaryKey("PK_Attempts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TestTakingHistory_Tests_IdTest",
-                        column: x => x.IdTest,
+                        name: "FK_Attempts_Tests_TestId",
+                        column: x => x.TestId,
                         principalTable: "Tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TestTakingHistory_Users_IsUser",
-                        column: x => x.IsUser,
+                        name: "FK_Attempts_Users_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeacherEditorCourse",
+                columns: table => new
+                {
+                    AvaibleCourseForEditId = table.Column<int>(type: "int", nullable: false),
+                    AvaibleForEditId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherEditorCourse", x => new { x.AvaibleCourseForEditId, x.AvaibleForEditId });
+                    table.ForeignKey(
+                        name: "FK_TeacherEditorCourse_Courses_AvaibleCourseForEditId",
+                        column: x => x.AvaibleCourseForEditId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherEditorCourse_Users_AvaibleForEditId",
+                        column: x => x.AvaibleForEditId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -193,14 +225,14 @@ namespace StudentTesting.Database.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "TEXT", nullable: false),
                     IsCorrect = table.Column<bool>(type: "bit", nullable: false),
-                    IdQuestion = table.Column<int>(type: "int", nullable: true)
+                    QuestionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answers_Questions_IdQuestion",
-                        column: x => x.IdQuestion,
+                        name: "FK_Answers_Questions_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -220,8 +252,7 @@ namespace StudentTesting.Database.Migrations
                         name: "FK_AttachmentsQuestion_Attachments_AttachmentsId",
                         column: x => x.AttachmentsId,
                         principalTable: "Attachments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AttachmentsQuestion_Questions_QuestionsId",
                         column: x => x.QuestionsId,
@@ -231,22 +262,28 @@ namespace StudentTesting.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuestionAnswerHistory",
+                name: "QuestionAttemts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdTestTakingHistory = table.Column<int>(type: "int", nullable: false)
+                    AttemptId = table.Column<int>(type: "int", nullable: false),
+                    ToQuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionAnswerHistory", x => x.Id);
+                    table.PrimaryKey("PK_QuestionAttemts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionAnswerHistory_TestTakingHistory_IdTestTakingHistory",
-                        column: x => x.IdTestTakingHistory,
-                        principalTable: "TestTakingHistory",
+                        name: "FK_QuestionAttemts_Attempts_AttemptId",
+                        column: x => x.AttemptId,
+                        principalTable: "Attempts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionAttemts_Questions_ToQuestionId",
+                        column: x => x.ToQuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -269,43 +306,42 @@ namespace StudentTesting.Database.Migrations
                         name: "FK_AttachmentsAnswer_Attachments_AttachmentsId",
                         column: x => x.AttachmentsId,
                         principalTable: "Attachments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnswerQuestionAnswerHistory",
+                name: "AnswerQuestionAttemt",
                 columns: table => new
                 {
                     AnswersId = table.Column<int>(type: "int", nullable: false),
-                    TestTakingHistoriesId = table.Column<int>(type: "int", nullable: false)
+                    QuestionAttemtsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnswerQuestionAnswerHistory", x => new { x.AnswersId, x.TestTakingHistoriesId });
+                    table.PrimaryKey("PK_AnswerQuestionAttemt", x => new { x.AnswersId, x.QuestionAttemtsId });
                     table.ForeignKey(
-                        name: "FK_AnswerQuestionAnswerHistory_Answers_AnswersId",
+                        name: "FK_AnswerQuestionAttemt_Answers_AnswersId",
                         column: x => x.AnswersId,
                         principalTable: "Answers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnswerQuestionAnswerHistory_QuestionAnswerHistory_TestTakingHistoriesId",
-                        column: x => x.TestTakingHistoriesId,
-                        principalTable: "QuestionAnswerHistory",
+                        name: "FK_AnswerQuestionAttemt_QuestionAttemts_QuestionAttemtsId",
+                        column: x => x.QuestionAttemtsId,
+                        principalTable: "QuestionAttemts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnswerQuestionAnswerHistory_TestTakingHistoriesId",
-                table: "AnswerQuestionAnswerHistory",
-                column: "TestTakingHistoriesId");
+                name: "IX_AnswerQuestionAttemt_QuestionAttemtsId",
+                table: "AnswerQuestionAttemt",
+                column: "QuestionAttemtsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answers_IdQuestion",
+                name: "IX_Answers_QuestionId",
                 table: "Answers",
-                column: "IdQuestion");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AttachmentsAnswer_AttachmentsId",
@@ -323,50 +359,55 @@ namespace StudentTesting.Database.Migrations
                 column: "TestsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupTest_AvailableTestsId",
-                table: "GroupTest",
-                column: "AvailableTestsId");
+                name: "IX_Attempts_StudentId",
+                table: "Attempts",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionAnswerHistory_IdTestTakingHistory",
-                table: "QuestionAnswerHistory",
-                column: "IdTestTakingHistory");
+                name: "IX_Attempts_TestId",
+                table: "Attempts",
+                column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_IdTest",
+                name: "IX_GroupsEditorsCourse_AvaibleForPassingId",
+                table: "GroupsEditorsCourse",
+                column: "AvaibleForPassingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionAttemts_AttemptId",
+                table: "QuestionAttemts",
+                column: "AttemptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionAttemts_ToQuestionId",
+                table: "QuestionAttemts",
+                column: "ToQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_TestId",
                 table: "Questions",
-                column: "IdTest");
+                column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_UserId",
-                table: "Questions",
-                column: "UserId");
+                name: "IX_TeacherEditorCourse_AvaibleForEditId",
+                table: "TeacherEditorCourse",
+                column: "AvaibleForEditId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_CreatorId",
+                name: "IX_Tests_CourseId",
                 table: "Tests",
-                column: "CreatorId");
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestTakingHistory_IdTest",
-                table: "TestTakingHistory",
-                column: "IdTest");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TestTakingHistory_IsUser",
-                table: "TestTakingHistory",
-                column: "IsUser");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_IdGroup",
+                name: "IX_Users_GroupId",
                 table: "Users",
-                column: "IdGroup");
+                column: "GroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AnswerQuestionAnswerHistory");
+                name: "AnswerQuestionAttemt");
 
             migrationBuilder.DropTable(
                 name: "AttachmentsAnswer");
@@ -378,10 +419,13 @@ namespace StudentTesting.Database.Migrations
                 name: "AttachmentsTest");
 
             migrationBuilder.DropTable(
-                name: "GroupTest");
+                name: "GroupsEditorsCourse");
 
             migrationBuilder.DropTable(
-                name: "QuestionAnswerHistory");
+                name: "TeacherEditorCourse");
+
+            migrationBuilder.DropTable(
+                name: "QuestionAttemts");
 
             migrationBuilder.DropTable(
                 name: "Answers");
@@ -390,19 +434,22 @@ namespace StudentTesting.Database.Migrations
                 name: "Attachments");
 
             migrationBuilder.DropTable(
-                name: "TestTakingHistory");
+                name: "Attempts");
 
             migrationBuilder.DropTable(
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Tests");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "Tests");
+
+            migrationBuilder.DropTable(
                 name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
         }
     }
 }

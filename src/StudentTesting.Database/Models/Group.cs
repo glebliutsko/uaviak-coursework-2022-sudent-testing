@@ -9,12 +9,11 @@ namespace StudentTesting.Database.Models
         [Key]
         public int Id { get; set; }
 
-        [Column(TypeName = "NVARCHAR")]
-        [StringLength(30)]
+        [Column(TypeName = "NVARCHAR(30)")]
         [Required(AllowEmptyStrings = false)]
         public string Number { get; set; }
 
+        public ICollection<Course> AvaibleCourses { get; set; }
         public ICollection<User> Students { get; set; }
-        public ICollection<Test> AvailableTests { get; set; }
     }
 }

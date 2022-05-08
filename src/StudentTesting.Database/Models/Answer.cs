@@ -21,6 +21,6 @@ namespace StudentTesting.Database.Models
 
         public ICollection<Attachment> Attachments { get; set; }
 
-        public ICollection<QuestionAnswerHistory> TestTakingHistories { get; set; }
+        public ICollection<QuestionAttemt> QuestionAttemts { get; set; }
     }
 }
