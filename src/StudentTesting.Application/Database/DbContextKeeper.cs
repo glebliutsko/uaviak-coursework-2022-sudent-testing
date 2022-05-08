@@ -27,9 +27,10 @@ namespace StudentTesting.Application.Database
 
         public static void ConnectionClose()
         {
-            if (IsConnected)
+            if (!IsConnected)
                 return;
 
+            Saved.Dispose();
             Saved = null;
         }
     }
