@@ -1,8 +1,10 @@
 ﻿using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Utils;
 using StudentTesting.Application.ViewModels.Authorize;
+using StudentTesting.Application.ViewModels.Course;
 using StudentTesting.Application.ViewModels.UserEditer;
 using StudentTesting.Application.Views.Authorize;
+using StudentTesting.Application.Views.Course;
 using StudentTesting.Application.Views.UserEditer;
 using StudentTesting.Database.Models;
 using System;
@@ -101,8 +103,8 @@ namespace StudentTesting.Application.ViewModels.Main
                 MenuItems.Add(
                     new MenuItem(
                         "Курсы",
-                        vm => null,
-                        null
+                        vm => new CoursesListUserControl((CoursesListViewModel)vm),
+                        new CoursesListViewModel()
                     )
                 );
             }

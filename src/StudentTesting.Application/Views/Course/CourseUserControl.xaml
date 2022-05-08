@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="StudentTesting.Application.Views.Course.CourseUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StudentTesting.Application.Views.Course"
+             mc:Ignorable="d" 
+             d:DesignWidth="170"
+             d:Background="White">
+    <UserControl.Resources>
+        <Style
+            x:Key="IlluminationTextBlock"
+            TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding ElementName=RootGrid, Path=IsMouseOver}"
+                    Value="True">
+                    <Setter
+                        Property="Foreground"
+                        Value="Blue" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid
+        x:Name="RootGrid"
+        Cursor="Hand"
+        Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="130" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Source="{Binding Picture, Converter={StaticResource ImagePlaceholderConverter}}"
+            Stretch="UniformToFill"
+            Grid.Row="0"
+            d:Source="/Resources/Images/ImagePlaceholder.png" />
+
+        <TextBlock
+            Style="{StaticResource IlluminationTextBlock}"
+            Grid.Row="1"
+            TextAlignment="Center"
+            FontWeight="Bold"
+            FontSize="16"
+            Text="{Binding Title}"
+            d:Text="Заголовок" />
+        <TextBlock
+            Style="{StaticResource IlluminationTextBlock}"
+            Grid.Row="2"
+            TextWrapping="Wrap"
+            Text="{Binding Description}"
+            d:Text="Что-то там описание теста. Ла-ла-ла. Я думаю, что столько достаточно." />
+    </Grid>
+</UserControl>

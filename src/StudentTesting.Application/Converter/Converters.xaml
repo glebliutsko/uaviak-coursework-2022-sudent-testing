@@ -30,4 +30,9 @@
 
     <converter:StateEditableUserToVisblilityConverter
         x:Key="VisibleIfEditConverter" />
+
+    <converter:WidthToColumnConverter
+        x:Key="WidthToColumn170pxConverter"
+        MinColumn="170" />
+
 </ResourceDictionary>
