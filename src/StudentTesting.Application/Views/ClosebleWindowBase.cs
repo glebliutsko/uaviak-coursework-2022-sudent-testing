@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace StudentTesting.Application.Views.Windows
+namespace StudentTesting.Application.Views
 {
     public class ClosebleWindowBase : Window
     {

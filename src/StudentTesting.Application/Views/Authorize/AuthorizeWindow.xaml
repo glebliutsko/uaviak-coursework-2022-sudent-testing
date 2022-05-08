@@ -1,10 +1,10 @@
-﻿<local:ClosebleWindowBase
-    x:Class="StudentTesting.Application.Views.Windows.AuthorizeWindow"
+﻿<views:ClosebleWindowBase
+    x:Class="StudentTesting.Application.Views.Authorize.AuthorizeWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:StudentTesting.Application.Views.Windows"
+    xmlns:views="clr-namespace:StudentTesting.Application.Views"
     xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
     xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
     mc:Ignorable="d"
@@ -83,4 +83,4 @@
             Content="ВОСТАНОВИТЬ ПАРОЛЬ"
             Margin="5 0" />
     </Grid>
-</local:ClosebleWindowBase>
+</views:ClosebleWindowBase>

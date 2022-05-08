@@ -1,6 +1,7 @@
 ﻿using StudentTesting.Application.Database;
-using StudentTesting.Application.ViewModels;
-using StudentTesting.Application.Views.Windows;
+using StudentTesting.Application.ViewModels.Authorize;
+using StudentTesting.Application.Views;
+using StudentTesting.Application.Views.Authorize;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -50,7 +51,7 @@ namespace StudentTesting.Application
 
             _configuration = new Configuration.Configuration(GetDefaultPathConfigurationFile());
 
-            if(!InitilizeDatabase())
+            if (!InitilizeDatabase())
             {
                 Shutdown();
                 return;

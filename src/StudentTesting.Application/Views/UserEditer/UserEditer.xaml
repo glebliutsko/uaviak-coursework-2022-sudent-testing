@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="StudentTesting.Application.Views.Controls.UserEditor"
+    x:Class="StudentTesting.Application.Views.UserEditer.UserEditer"
     x:Name="Root"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,8 +9,8 @@
     xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
     xmlns:uc="clr-namespace:StudentTesting.Application.Views.Controls"
     xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
-    xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels"
-    d:DataContext="{d:DesignInstance vm:UserEditorViewModel}"
+    xmlns:vm="clr-namespace:StudentTesting.Application.ViewModels.UserEditer"
+    d:DataContext="{d:DesignInstance vm:UserEditerViewModel}"
     d:DesignWidth="500">
     <GroupBox
         Style="{StaticResource MaterialGroupBox}"

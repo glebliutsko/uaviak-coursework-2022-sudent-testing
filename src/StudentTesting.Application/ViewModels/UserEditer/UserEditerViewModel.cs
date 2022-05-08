@@ -14,9 +14,9 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace StudentTesting.Application.ViewModels
+namespace StudentTesting.Application.ViewModels.UserEditer
 {
-    public partial class UserEditorViewModel : OnPropertyChangeBase
+    public partial class UserEditerViewModel : OnPropertyChangeBase
     {
         private readonly IFileDialogService _openUserPicDialog;
         private readonly Func<string, bool> _requestConfirm;
@@ -24,7 +24,7 @@ namespace StudentTesting.Application.ViewModels
         private readonly Action _unselectUser;
         private User _user;
 
-        public UserEditorViewModel(User user, Func<Task> updateUsersList, Action unselectUser)
+        public UserEditerViewModel(User user, Func<Task> updateUsersList, Action unselectUser)
         {
             _openUserPicDialog = new OpenFileDialogService();
             _requestConfirm = MessageBoxService.ConfirmActionMessageBox;

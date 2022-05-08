@@ -4,7 +4,7 @@ using StudentTesting.Application.Services.Authorize;
 using StudentTesting.Application.Utils;
 using System;
 
-namespace StudentTesting.Application.ViewModels
+namespace StudentTesting.Application.ViewModels.Authorize
 {
     public class AuthorizeViewModel : OnPropertyChangeBase, IRequestCloseViewModel
     {
@@ -28,7 +28,7 @@ namespace StudentTesting.Application.ViewModels
 
         #region Property
         #region Login
-        private string _login = "d.popova";  // TODO: Не забыть удалить этот логин.
+        private string _login = "teacher";  // TODO: Не забыть удалить этот логин.
         public string Login
         {
             get => _login;

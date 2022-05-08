@@ -1,6 +1,6 @@
-﻿using StudentTesting.Application.ViewModels;
+﻿using StudentTesting.Application.ViewModels.Authorize;
 
-namespace StudentTesting.Application.Views.Windows
+namespace StudentTesting.Application.Views.Authorize
 {
     /// <summary>
     /// Логика взаимодействия для LoginWindow.xaml

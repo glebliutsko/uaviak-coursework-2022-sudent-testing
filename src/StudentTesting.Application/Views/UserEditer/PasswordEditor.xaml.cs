@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace StudentTesting.Application.Views.Controls
+namespace StudentTesting.Application.Views.UserEditer
 {
     /// <summary>
     /// Interaction logic for PasswordEditor.xaml

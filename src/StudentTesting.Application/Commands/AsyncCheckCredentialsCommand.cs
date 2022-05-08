@@ -1,7 +1,7 @@
 ﻿using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.Authorize;
-using StudentTesting.Application.ViewModels;
+using StudentTesting.Application.ViewModels.Authorize;
 using System;
 using System.Threading.Tasks;
 

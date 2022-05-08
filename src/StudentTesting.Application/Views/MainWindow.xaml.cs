@@ -1,6 +1,6 @@
-﻿using StudentTesting.Application.ViewModels;
+﻿using StudentTesting.Application.ViewModels.Main;
 
-namespace StudentTesting.Application.Views.Windows
+namespace StudentTesting.Application.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

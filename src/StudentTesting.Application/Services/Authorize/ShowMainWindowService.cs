@@ -1,5 +1,5 @@
-﻿using StudentTesting.Application.ViewModels;
-using StudentTesting.Application.Views.Windows;
+﻿using StudentTesting.Application.ViewModels.Main;
+using StudentTesting.Application.Views;
 using StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.Services.Authorize

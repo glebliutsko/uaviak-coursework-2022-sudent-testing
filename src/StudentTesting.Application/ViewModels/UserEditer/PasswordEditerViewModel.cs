@@ -5,14 +5,14 @@ using StudentTesting.Database.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace StudentTesting.Application.ViewModels
+namespace StudentTesting.Application.ViewModels.UserEditer
 {
-    public class PasswordEditorViewModel : OnPropertyChangeBase
+    public class PasswordEditerViewModel : OnPropertyChangeBase
     {
         private readonly User _user;
         private readonly Action<string> _showSuccess;
 
-        public PasswordEditorViewModel(User user)
+        public PasswordEditerViewModel(User user)
         {
             _user = user;
             _showSuccess = MessageBoxService.OkMessageBox;

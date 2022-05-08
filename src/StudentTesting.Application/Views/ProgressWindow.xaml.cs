@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace StudentTesting.Application.Views.Windows
+namespace StudentTesting.Application.Views
 {
     /// <summary>
     /// Interaction logic for ProgressWindow.xaml

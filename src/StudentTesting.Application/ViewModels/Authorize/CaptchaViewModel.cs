@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace StudentTesting.Application.ViewModels
+namespace StudentTesting.Application.ViewModels.Authorize
 {
     public class CaptchaViewModel : OnPropertyChangeBase, IRequestCloseViewModel
     {

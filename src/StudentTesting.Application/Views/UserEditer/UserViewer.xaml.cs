@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace StudentTesting.Application.Views.Controls
+namespace StudentTesting.Application.Views.UserEditer
 {
     /// <summary>
     /// Логика взаимодействия для UserViewer.xaml

@@ -1,14 +1,16 @@
 ﻿using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Utils;
-using StudentTesting.Application.Views.Pages;
-using StudentTesting.Application.Views.Windows;
+using StudentTesting.Application.ViewModels.Authorize;
+using StudentTesting.Application.ViewModels.UserEditer;
+using StudentTesting.Application.Views.Authorize;
+using StudentTesting.Application.Views.UserEditer;
 using StudentTesting.Database.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace StudentTesting.Application.ViewModels
+namespace StudentTesting.Application.ViewModels.Main
 {
     public class MainViewModel : OnPropertyChangeBase, IRequestCloseViewModel
     {
@@ -92,19 +94,21 @@ namespace StudentTesting.Application.ViewModels
                 MenuItems.Add(
                     new MenuItem(
                         "Пользователи",
-                        new Users(new UsersViewModel())
+                        vm => new Users((UsersViewModel)vm),
+                        new UsersViewModel()
                     )
                 );
                 MenuItems.Add(
                     new MenuItem(
                         "Курсы",
+                        vm => null,
                         null
                     )
                 );
             }
             else
             {
-                
+
             }
         }
 

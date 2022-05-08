@@ -1,5 +1,5 @@
-﻿using StudentTesting.Application.ViewModels;
-using StudentTesting.Application.Views.Windows;
+﻿using StudentTesting.Application.ViewModels.Authorize;
+using StudentTesting.Application.Views.Authorize;
 
 namespace StudentTesting.Application.Services.Authorize
 {

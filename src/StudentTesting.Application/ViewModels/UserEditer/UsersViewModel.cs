@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace StudentTesting.Application.ViewModels
+namespace StudentTesting.Application.ViewModels.UserEditer
 {
     public class UsersViewModel : OnPropertyChangeBase
     {
@@ -58,18 +58,18 @@ namespace StudentTesting.Application.ViewModels
 
                 UserInformationEditor = value == null
                     ? null
-                    : new UserEditorViewModel(value, UpdateUsersAsync, UnselectUser);
+                    : new UserEditerViewModel(value, UpdateUsersAsync, UnselectUser);
 
                 PasswordEditor = value == null
                     ? null
-                    : new PasswordEditorViewModel(value);
+                    : new PasswordEditerViewModel(value);
             }
         }
         #endregion
 
         #region UserInformationEditor
-        private UserEditorViewModel _userInformationEditor = null;
-        public UserEditorViewModel UserInformationEditor
+        private UserEditerViewModel _userInformationEditor = null;
+        public UserEditerViewModel UserInformationEditor
         {
             get => _userInformationEditor;
             set => SetProperty(ref _userInformationEditor, value);
@@ -77,8 +77,8 @@ namespace StudentTesting.Application.ViewModels
         #endregion
 
         #region PasswordEditor
-        private PasswordEditorViewModel _passwordEditor;
-        public PasswordEditorViewModel PasswordEditor
+        private PasswordEditerViewModel _passwordEditor;
+        public PasswordEditerViewModel PasswordEditor
         {
             get => _passwordEditor;
             set => SetProperty(ref _passwordEditor, value);
