@@ -36,7 +36,7 @@ namespace StudentTesting.Application.Views.Course
 
         private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (ClickCommand.CanExecute(ClickCommandParameter))
+            if (ClickCommand?.CanExecute(ClickCommandParameter) == true)
                 ClickCommand.Execute(ClickCommandParameter);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Services.FileDialog;
+using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
 using System;
 using System.IO;
@@ -10,7 +11,7 @@ using DBModel = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.ViewModels.Course
 {
-    public class AddCourseViewModel : OnPropertyChangeBase, IRequestCloseViewModel
+    public class AddCourseViewModel : OnPropertyChangeBase, IRequestCloseViewModel, IWindowDialogViewModel<DBModel.Course>
     {
         public event EventHandler OnRequestClose;
 

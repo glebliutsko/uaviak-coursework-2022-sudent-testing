@@ -104,7 +104,7 @@ namespace StudentTesting.Application.ViewModels.Main
                     new MenuItem(
                         "Курсы",
                         vm => new CoursesListUserControl((CoursesListViewModel)vm),
-                        new CoursesListViewModel()
+                        new CoursesListViewModel(User)
                     )
                 );
             }
