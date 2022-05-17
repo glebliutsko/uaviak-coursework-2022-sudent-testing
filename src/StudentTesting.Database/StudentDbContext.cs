@@ -70,12 +70,6 @@ namespace StudentTesting.Database
                     x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
                     x => x.HasOne<Answer>().WithMany().OnDelete(DeleteBehavior.Cascade));
 
-            // m2m Courses and Users = TeacherEditorCourse
-            modelBuilder.Entity<Course>()
-                .HasMany(x => x.AvaibleForEdit)
-                .WithMany(x => x.AvaibleCourseForEdit)
-                .UsingEntity(x => x.ToTable("TeacherEditorCourse"));
-
             // m2m Courses and Groups = GroupsEditorsCourse
             modelBuilder.Entity<Course>()
                 .HasMany(x => x.AvaibleForPassing)

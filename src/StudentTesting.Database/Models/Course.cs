@@ -18,9 +18,11 @@ namespace StudentTesting.Database.Models
 
         public byte[] Picture { get; set; }
 
-        public ICollection<Group> AvaibleForPassing { get; set; }
-        public ICollection<User> AvaibleForEdit { get; set; }
+        [ForeignKey("OwnerCource")]
+        public int OwnerCourceId { get; set; }
+        public User OwnerCource { get; set; }
 
+        public ICollection<Group> AvaibleForPassing { get; set; }
         public ICollection<Test> Tests { get; set; }
     }
 }
