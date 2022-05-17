@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:StudentTesting.Application.Views.Course"
              mc:Ignorable="d" 
              d:DesignWidth="170"
-             d:Background="White">
+             d:Background="White"
+             MouseUp="UserControl_MouseUp">
     <UserControl.Resources>
         <Style
             x:Key="IlluminationTextBlock"

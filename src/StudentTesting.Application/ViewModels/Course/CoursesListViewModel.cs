@@ -1,10 +1,10 @@
-﻿using StudentTesting.Application.Utils;
-using System;
-using System.Collections.Generic;
+﻿using StudentTesting.Application.Commands.Sync;
+using StudentTesting.Application.Database;
+using StudentTesting.Application.Utils;
+using StudentTesting.Application.Views.Course;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using DbModels = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.ViewModels.Course
@@ -13,18 +13,16 @@ namespace StudentTesting.Application.ViewModels.Course
     {
         public CoursesListViewModel()
         {
-            Courses = new ObservableCollection<DbModels.Course>();
-            Courses.Add(new DbModels.Course { Title = "Математика", Description = "Тесты по математике. 2 класс. Иванова А.А.", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Русский язык", Description = "Тесты по русскому", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
-            Courses.Add(new DbModels.Course { Title = "Геограия", Description = "Тесты по географии", Picture = null });
+            UpdateCource();
+
+            AddCourceCommand = new RelayCommand(x => AddCource());
+            OpenCourceCommand = new RelayCommand(x => OpenCource((DbModels.Course)x));
         }
+
+        #region Command
+        public ICommand AddCourceCommand { get; }
+        public ICommand OpenCourceCommand { get; }
+        #endregion
 
         #region Property
         #region Courses
@@ -37,5 +35,20 @@ namespace StudentTesting.Application.ViewModels.Course
         }
         #endregion
         #endregion
+
+        private void UpdateCource()
+        {
+            Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.ToList());
+        }
+
+        public void AddCource()
+        {
+            new AddCourseWindowDialog(new AddCourseViewModel()).ShowDialog();
+        }
+
+        public void OpenCource(DbModels.Course course)
+        {
+            
+        }
     }
 }

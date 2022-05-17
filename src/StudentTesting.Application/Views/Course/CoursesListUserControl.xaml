@@ -35,7 +35,9 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:CourseUserControl
-                                DataContext="{Binding }" />
+                                DataContext="{Binding }"
+                                ClickCommand="{Binding OpenCourceCommand}"
+                                ClickCommandParameter="{Binding }"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -43,6 +45,7 @@
             
             <Button
                 Grid.Row="1"
+                Command="{Binding AddCourceCommand}"
                 Style="{StaticResource PrimaryMaterialButton}"
                 Content="ДОБАВИТЬ КУРС"
                 Margin="5 10 0 5" />

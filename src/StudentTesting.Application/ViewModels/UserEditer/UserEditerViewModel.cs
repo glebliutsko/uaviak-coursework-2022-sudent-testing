@@ -36,9 +36,9 @@ namespace StudentTesting.Application.ViewModels.UserEditer
                 : StateEditable.NOT_CHANGED;
 
             UndoChangesCommand = new RelayCommand(x => UndoChanges(), x => State != StateEditable.NOT_CHANGED);
-            EditUserPicCommand = new RelayAsyncCommand(x => EditUserPic());
-            RemoveUserCommand = new RelayAsyncCommand(x => Remove(), x => State != StateEditable.NEW);
-            SaveChangesUserCommand = new RelayAsyncCommand(x => SaveChanges(), x => State != StateEditable.NOT_CHANGED);
+            EditUserPicCommand = new RelayAsyncCommand(async x => await EditUserPic());
+            RemoveUserCommand = new RelayAsyncCommand(async x => await Remove(), x => State != StateEditable.NEW);
+            SaveChangesUserCommand = new RelayAsyncCommand(async x => await SaveChanges(), x => State != StateEditable.NOT_CHANGED);
         }
 
         #region Property
