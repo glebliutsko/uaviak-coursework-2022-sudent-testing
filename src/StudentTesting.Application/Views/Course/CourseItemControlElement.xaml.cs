@@ -7,7 +7,7 @@ namespace StudentTesting.Application.Views.Course
     /// <summary>
     /// Interaction logic for CourseUserControl.xaml
     /// </summary>
-    public partial class CourseUserControl : UserControl
+    public partial class CourseItemControlElement : UserControl
     {
         #region ClickCommand
         public ICommand ClickCommand
@@ -17,7 +17,7 @@ namespace StudentTesting.Application.Views.Course
         }
 
         public static readonly DependencyProperty ClickCommandProperty =
-            DependencyProperty.Register("ClickCommand", typeof(ICommand), typeof(CourseUserControl), new PropertyMetadata(null));
+            DependencyProperty.Register("ClickCommand", typeof(ICommand), typeof(CourseItemControlElement), new PropertyMetadata(null));
 
         public object ClickCommandParameter
         {
@@ -26,10 +26,10 @@ namespace StudentTesting.Application.Views.Course
         }
 
         public static readonly DependencyProperty ClickCommandParameterProperty =
-            DependencyProperty.Register("ClickCommandParameter", typeof(object), typeof(CourseUserControl), new PropertyMetadata(null));
+            DependencyProperty.Register("ClickCommandParameter", typeof(object), typeof(CourseItemControlElement), new PropertyMetadata(null));
         #endregion
 
-        public CourseUserControl()
+        public CourseItemControlElement()
         {
             InitializeComponent();
         }

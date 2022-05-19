@@ -2,6 +2,7 @@
 using StudentTesting.Application.Database;
 using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
+using StudentTesting.Application.Views.Course;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -58,7 +59,7 @@ namespace StudentTesting.Application.ViewModels.Course
 
         public void OpenCource(DbModels.Course course)
         {
-            MessageBox.Show(course.Description);
+            new CourseWindow(new CourseViewModel()).Show();
         }
 
         public void UpdateData()
