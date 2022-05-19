@@ -29,7 +29,6 @@ namespace StudentTesting.Database.Models
         public TypeQuestion Type { get; set; }
 
         public ICollection<Answer> Answers { get; set; }
-        public ICollection<Attachment> Attachments { get; set; }
         public ICollection<QuestionAttemt> Attempts { get; set; }
     }
 }

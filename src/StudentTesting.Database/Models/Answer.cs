@@ -18,8 +18,6 @@ namespace StudentTesting.Database.Models
         public int? QuestionId { get; set; }
         public Question Question { get; set; }
 
-        public ICollection<Attachment> Attachments { get; set; }
-
         public ICollection<QuestionAttemt> QuestionAttemts { get; set; }
     }
 }

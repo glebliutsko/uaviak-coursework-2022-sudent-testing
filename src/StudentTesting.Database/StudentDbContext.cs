@@ -30,7 +30,6 @@ namespace StudentTesting.Database
 
         #region Tables
         public DbSet<Answer> Answers { get; set; }
-        public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionAttemt> QuestionAttemts { get; set; }
@@ -43,33 +42,6 @@ namespace StudentTesting.Database
         #region Configuration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // m2m Attachments and Questions = AttachmentsQuestion
-            modelBuilder.Entity<Question>()
-                .HasMany(x => x.Attachments)
-                .WithMany(x => x.Questions)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AttachmentsQuestion",
-                    x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
-                    x => x.HasOne<Question>().WithMany().OnDelete(DeleteBehavior.Cascade));
-
-            // m2m Attachments and Tests = AttachmentsTest
-            modelBuilder.Entity<Test>()
-                .HasMany(x => x.Attachments)
-                .WithMany(x => x.Tests)
-                .UsingEntity<Dictionary<string, object>>(
-                   "AttachmentsTest",
-                   x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
-                   x => x.HasOne<Test>().WithMany().OnDelete(DeleteBehavior.Cascade));
-
-            // m2m Attachments and Answers = AttachmentsAnswer
-            modelBuilder.Entity<Answer>()
-                .HasMany(x => x.Attachments)
-                .WithMany(x => x.Answers)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AttachmentsAnswer",
-                    x => x.HasOne<Attachment>().WithMany().OnDelete(DeleteBehavior.NoAction),
-                    x => x.HasOne<Answer>().WithMany().OnDelete(DeleteBehavior.Cascade));
-
             // m2m Courses and Groups = GroupsEditorsCourse
             modelBuilder.Entity<Course>()
                 .HasMany(x => x.AvaibleForPassing)

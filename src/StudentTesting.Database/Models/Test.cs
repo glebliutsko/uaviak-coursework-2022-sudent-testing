@@ -22,7 +22,6 @@ namespace StudentTesting.Database.Models
         public int CourseId { get; set; }
         public Course Course { get; set; }
 
-        public ICollection<Attachment> Attachments { get; set; }
         public ICollection<Question> Questions { get; set; }
     }
 }
