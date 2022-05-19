@@ -2,28 +2,27 @@
 using StudentTesting.Application.Database;
 using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
-using StudentTesting.Database.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using DbModels = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.ViewModels.Course
 {
-    public class CoursesListViewModel : OnPropertyChangeBase
+    public class CoursesListViewModel : OnPropertyChangeBase, IDataVisualizationViewModel
     {
         private readonly IWindowDialogService<DbModels.Course> newCourseService =
             new AddCourseWindowDialogService();
 
-        private readonly User _user;
+        private readonly DbModels.User _user;
 
         public CoursesListViewModel(DbModels.User user)
         {
-            UpdateCource();
+            _user = user;
 
             AddCourceCommand = new RelayCommand(x => AddCource());
-            OpenCourseCommand = new RelayCommand(x => OpenCource((DbModels.Course)x));
-            _user = user;
+            OpenCourseCommand = new RelayCommand(x => OpenCource((DbModels.Course)x), x => x != null);
         }
 
         #region Command
@@ -43,11 +42,6 @@ namespace StudentTesting.Application.ViewModels.Course
         #endregion
         #endregion
 
-        private void UpdateCource()
-        {
-            Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.ToList());
-        }
-
         public void AddCource()
         {
             if (!newCourseService.Show())
@@ -59,12 +53,17 @@ namespace StudentTesting.Application.ViewModels.Course
             DbContextKeeper.Saved.Courses.Add(newCourseService.Result);
             DbContextKeeper.Saved.SaveChanges();
 
-            UpdateCource();
+            UpdateData();
         }
 
         public void OpenCource(DbModels.Course course)
         {
+            MessageBox.Show(course.Description);
+        }
 
+        public void UpdateData()
+        {
+            Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.Where(x => x.OwnerCourceId == _user.Id).ToList());
         }
     }
 }

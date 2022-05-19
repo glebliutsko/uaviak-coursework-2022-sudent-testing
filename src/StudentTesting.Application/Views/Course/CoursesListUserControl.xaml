@@ -37,7 +37,7 @@
                         <DataTemplate>
                             <local:CourseUserControl
                                 DataContext="{Binding }"
-                                ClickCommand="{Binding OpenCourseCommand}"
+                                ClickCommand="{Binding DataContext.OpenCourseCommand, ElementName=Root}"
                                 ClickCommandParameter="{Binding }"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

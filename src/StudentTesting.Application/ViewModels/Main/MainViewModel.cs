@@ -65,6 +65,7 @@ namespace StudentTesting.Application.ViewModels.Main
                 _selectedMenuItem = value;
                 OnPropertyChange();
 
+                _selectedMenuItem.Update();
                 Content = value.Content;
             }
         }

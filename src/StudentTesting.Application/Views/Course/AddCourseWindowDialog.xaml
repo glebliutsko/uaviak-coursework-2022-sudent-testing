@@ -5,48 +5,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:StudentTesting.Application.Views"
-    xmlns:controls="clr-namespace:StudentTesting.Application.Views.Controls"
-    xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
     mc:Ignorable="d"
     xmlns:vmcourse="clr-namespace:StudentTesting.Application.ViewModels.Course"
+    xmlns:local="clr-namespace:StudentTesting.Application.Views.Course"
     d:DataContext="{d:DesignInstance vmcourse:AddCourseViewModel}"
     Title="Новый курс"
     Height="450"
-    Width="300">
+    MinHeight="350"
+    Width="300"
+    MinWidth="230">
     <Grid
         Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition
                 Height="Auto" />
-            <RowDefinition />
-            <RowDefinition
-                Height="Auto" />
         </Grid.RowDefinitions>
 
-        <controls:CircleImageButton
-            Source="{Binding Picture, Converter={StaticResource ImagePlaceholderConverter}}"
-            ClickCommand="{Binding ChangePictureCommand}"
-            Grid.Row="0" />
-
-        <TextBox
-            Grid.Row="1"
-            Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-            Margin="0 10 0 0"
-            FontSize="18"
-            Style="{StaticResource MaterialTextBox}"
-            ap:Hint.HintText="Название" />
-
-        <TextBox
-            Grid.Row="2"
-            Text="{Binding Description}"
-            HorizontalContentAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap"
-            AcceptsReturn="True"
-            Style="{StaticResource MaterialTextBox}"
-            ap:Hint.HintText="Описание" />
-
+        <local:CourseInformationEditerUserControl
+            ChangePictureCommand="{Binding ChangePictureCommand}"
+            Picture="{Binding Picture}"
+            Title="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            Description="{Binding Description, Mode=TwoWay}"/>
+        
         <Button
             Grid.Row="3"
             Style="{StaticResource PrimaryMaterialButton}"

@@ -10,13 +10,11 @@ using System.Windows.Input;
 
 namespace StudentTesting.Application.ViewModels.UserEditer
 {
-    public class UsersViewModel : OnPropertyChangeBase
+    public class UsersViewModel : OnPropertyChangeBase, IDataVisualizationViewModel
     {
         public UsersViewModel()
         {
             AddNewUserCommand = new RelayCommand(x => AddNewUser());
-
-            UpdateUsers();
         }
 
         #region Property
@@ -90,11 +88,6 @@ namespace StudentTesting.Application.ViewModels.UserEditer
         public ICommand AddNewUserCommand { get; }
         #endregion
 
-        private void UpdateUsers()
-        {
-            Users = new ObservableCollection<User>(DbContextKeeper.Saved.Users.ToList());
-        }
-
         private async Task UpdateUsersAsync()
         {
             Users = new ObservableCollection<User>(await DbContextKeeper.Saved.Users.ToListAsync());
@@ -110,6 +103,11 @@ namespace StudentTesting.Application.ViewModels.UserEditer
         {
             SelectedUser = null;
             UserEditable = new User();
+        }
+
+        public void UpdateData()
+        {
+            Users = new ObservableCollection<User>(DbContextKeeper.Saved.Users.ToList());
         }
     }
 }

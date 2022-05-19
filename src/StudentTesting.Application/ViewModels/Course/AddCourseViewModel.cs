@@ -24,7 +24,7 @@ namespace StudentTesting.Application.ViewModels.Course
         {
             _openUserPicDialog = new OpenFileDialogService();
             SaveCommand = new RelayCommand(x => Save(), x => !string.IsNullOrEmpty(Title));
-            ChangePictureCommand = new RelayAsyncCommand(async x => await ChangePicture());
+            ChangePictureCommand = new RelayCommand(x => ChangePicture());
         }
 
         #region Property
@@ -59,15 +59,15 @@ namespace StudentTesting.Application.ViewModels.Course
 
         #region Command
         public ICommand SaveCommand { get; }
-        public IAsyncCommand ChangePictureCommand { get; }
+        public ICommand ChangePictureCommand { get; }
         #endregion
 
-        private async Task ChangePicture()
+        private void ChangePicture()
         {
             try
             {
                 string filename = _openUserPicDialog.Show("Image Files|*.jpg;*.jpeg;*.png");
-                Picture = await File.ReadAllBytesAsync(filename);
+                Picture = File.ReadAllBytes(filename);
             }
             catch (UserCancelSelectFileException)
             {
