@@ -17,8 +17,7 @@ namespace StudentTesting.Database.Models
         public int Id { get; set; }
         public int Order { get; set; }
 
-        [Column(TypeName = "TEXT")]
-        [Required(AllowEmptyStrings = true)]
+        [Column(TypeName = "NTEXT")]
         public string Content { get; set; }
         public int Score { get; set; }
 

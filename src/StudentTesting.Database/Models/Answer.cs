@@ -9,8 +9,7 @@ namespace StudentTesting.Database.Models
         [Key]
         public int Id { get; set; }
 
-        [Column(TypeName = "TEXT")]
-        [Required(AllowEmptyStrings = true)]
+        [Column(TypeName = "NTEXT")]
         public string Content { get; set; }
 
         public bool IsCorrect { get; set; }

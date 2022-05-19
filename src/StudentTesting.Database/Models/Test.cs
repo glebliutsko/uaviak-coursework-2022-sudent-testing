@@ -13,8 +13,7 @@ namespace StudentTesting.Database.Models
         [Required(AllowEmptyStrings = false)]
         public string Title { get; set; }
 
-        [Column(TypeName = "TEXT")]
-        [Required(AllowEmptyStrings = true)]
+        [Column(TypeName = "NTEXT")]
         public string Description { get; set; }
 
         public byte[] Picture { get; set; }

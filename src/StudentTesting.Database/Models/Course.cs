@@ -13,7 +13,7 @@ namespace StudentTesting.Database.Models
         [Column(TypeName = "NVARCHAR(50)")]
         public string Title { get; set; }
 
-        [Column(TypeName = "TEXT")]
+        [Column(TypeName = "NTEXT")]
         public string Description { get; set; }
 
         public byte[] Picture { get; set; }
