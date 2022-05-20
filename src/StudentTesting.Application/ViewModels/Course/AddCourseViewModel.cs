@@ -23,6 +23,7 @@ namespace StudentTesting.Application.ViewModels.Course
         public AddCourseViewModel()
         {
             _openUserPicDialog = new OpenFileDialogService();
+
             SaveCommand = new RelayCommand(x => Save(), x => !string.IsNullOrEmpty(Title));
             ChangePictureCommand = new RelayCommand(x => ChangePicture());
         }

@@ -13,7 +13,6 @@
         x:Name="MainGrid"
         Cursor="Hand"
         HorizontalAlignment="Center">
-
         <uc:CircleImage
             Grid.Column="0"
             Source="{Binding Source, ElementName=Root}"

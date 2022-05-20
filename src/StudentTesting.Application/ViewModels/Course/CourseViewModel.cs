@@ -1,5 +1,6 @@
-﻿using StudentTesting.Application.Utils;
-using StudentTesting.Database.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentTesting.Application.Database;
+using StudentTesting.Application.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,83 +11,27 @@ using DbModel = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.ViewModels.Course
 {
-    public class CourseViewModel : OnPropertyChangeBase
+    public class CourseViewModel : OnPropertyChangeBase, IDataVisualizationViewModel
     {
+        public CourseViewModel(DbModel.Course course)
+        {
+            Course = course;
+        }
+
         #region Property
-        #region Tests
-        private ObservableCollection<DbModel.Test> _tests;
-
-        public CourseViewModel()
+        #region Course
+        private DbModel.Course _course;
+        public DbModel.Course Course
         {
-            Tests = new ObservableCollection<DbModel.Test>();
-            Tests.Add(new Test
-            {
-                Title = "Квадратные уравнения",
-                Description = "Повторение темы квадратных уравнений. Вычисление дискриминанта."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-            Tests.Add(new Test
-            {
-                Title = "Матрицы",
-                Description = "Сложение и умножение матриц."
-            });
-        }
-
-        public ObservableCollection<DbModel.Test> Tests
-        {
-            get => _tests;
-            set => SetProperty(ref _tests, value);
+            get => _course;
+            set => SetProperty(ref _course, value);
         }
         #endregion
         #endregion
+
+        public void UpdateData()
+        {
+            Course = DbContextKeeper.Saved.Courses.Include(x => x.Tests).FirstOrDefault(x => x.Id == Course.Id);
+        }
     }
 }

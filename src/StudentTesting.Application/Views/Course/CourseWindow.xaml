@@ -52,7 +52,10 @@
                     <RowDefinition
                         Height="Auto" />
                 </Grid.RowDefinitions>
-                <local:CourseInformationEditerUserControl />
+                <local:CourseInformationEditerUserControl
+                    Picture="{Binding Course.Picture}"
+                    Title="{Binding Course.Title}"
+                    Description="{Binding Course.Description}" />
 
                 <StackPanel
                     Grid.Row="1">
@@ -86,7 +89,7 @@
                 <StackPanel>
                     <ItemsControl
                         Style="{StaticResource TestsItemControl}"
-                        ItemsSource="{Binding Tests}">
+                        ItemsSource="{Binding Course.Tests}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel

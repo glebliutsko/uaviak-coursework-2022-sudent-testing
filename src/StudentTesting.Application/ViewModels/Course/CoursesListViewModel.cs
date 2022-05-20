@@ -59,7 +59,10 @@ namespace StudentTesting.Application.ViewModels.Course
 
         public void OpenCource(DbModels.Course course)
         {
-            new CourseWindow(new CourseViewModel()).Show();
+            var viewModel = new CourseViewModel(course);
+            viewModel.UpdateData();
+
+            new CourseWindow(viewModel).Show();
         }
 
         public void UpdateData()
