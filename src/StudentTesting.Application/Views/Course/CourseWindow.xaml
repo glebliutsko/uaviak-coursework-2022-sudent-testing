@@ -89,7 +89,8 @@
                         ItemsSource="{Binding Tests}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel>
+                                <StackPanel
+                                    Margin="0 0 0 5">
                                     <uccourse:TestItemControlElement 
                                         Title="{Binding Title}"
                                         Description="{Binding Description}" />

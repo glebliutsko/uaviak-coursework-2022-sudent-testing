@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:vmcourse="clr-namespace:StudentTesting.Application.ViewModels.Course"
     xmlns:local="clr-namespace:StudentTesting.Application.Views.Course"
+    xmlns:behaviors="clr-namespace:StudentTesting.Application.Behaviors"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     d:DataContext="{d:DesignInstance vmcourse:CoursesListViewModel}"
     mc:Ignorable="d"
     d:DesignHeight="450"
@@ -36,9 +38,13 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:CourseItemControlElement
-                                DataContext="{Binding }"
-                                ClickCommand="{Binding DataContext.OpenCourseCommand, ElementName=Root}"
-                                ClickCommandParameter="{Binding }"/>
+                                DataContext="{Binding }">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:ClickCommandBehavior
+                                        Command="{Binding DataContext.OpenCourseCommand, ElementName=Root}"
+                                        CommandParameter="{Binding }" />
+                                </i:Interaction.Behaviors>
+                            </local:CourseItemControlElement>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
