@@ -4,12 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="clr-namespace:StudentTesting.Application.Views.Icons"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:StudentTesting.Application.Behaviors"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="300"
     x:Name="Root"
-    Cursor="Hand"
-    MouseUp="Root_MouseUp">
+    Cursor="Hand">
     <UserControl.Resources>
         <Style
             x:Key="IlluminationTextBlock"
@@ -24,17 +26,73 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-    </UserControl.Resources>
-    <StackPanel>
-        <TextBlock
-            Style="{StaticResource IlluminationTextBlock}"
-            FontSize="18"
-            Text="{Binding ElementName=Root, Path=Title}"
-            FontWeight="Bold"
-            d:Text="Заголовок"/>
+        <Style
+            TargetType="{x:Type icons:DeleteIcon}">
+            <Setter
+                Property="Visibility"
+                Value="Hidden" />
+            <Setter
+                Property="Color"
+                Value="Black" />
 
-        <TextBlock
-            Text="{Binding ElementName=Root, Path=Description}"
-            d:Text="Описание" />
-    </StackPanel>
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding ElementName=IconContainer, Path=IsMouseOver}"
+                    Value="True">
+                    <Setter
+                        Property="Visibility"
+                        Value="Visible" />
+                    
+                    <Setter
+                        Property="Color"
+                        Value="Red" />
+                </DataTrigger>
+
+                <DataTrigger
+                    Binding="{Binding ElementName=Root, Path=IsMouseOver}"
+                    Value="True">
+                    <Setter
+                        Property="Visibility"
+                        Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <i:Interaction.Behaviors>
+                <behaviors:ClickCommandBehavior
+                    Command="{Binding ElementName=Root, Path=ClickCommand}"
+                    CommandParameter="{Binding ElementName=Root, Path=ClickCommandParameter}" />
+            </i:Interaction.Behaviors>
+            <TextBlock
+                Style="{StaticResource IlluminationTextBlock}"
+                FontSize="18"
+                Text="{Binding ElementName=Root, Path=Title}"
+                FontWeight="Bold"
+                d:Text="Заголовок" />
+
+            <TextBlock
+                Text="{Binding ElementName=Root, Path=Description}"
+                d:Text="Описание" />
+        </StackPanel>
+
+        <Grid
+            Grid.Column="1"
+            Background="White"
+            x:Name="IconContainer">
+            <i:Interaction.Behaviors>
+                <behaviors:ClickCommandBehavior
+                    Command="{Binding ElementName=Root, Path=DeleteCommand}"
+                    CommandParameter="{Binding ElementName=Root, Path=ClickCommandParameter}" />
+            </i:Interaction.Behaviors>
+            <icons:DeleteIcon
+                Margin="0 5" />
+        </Grid>
+    </Grid>
 </UserControl>

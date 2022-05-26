@@ -1,0 +1,20 @@
+﻿<UserControl
+    x:Class="StudentTesting.Application.Views.Icons.DeleteIcon"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StudentTesting.Application.Views.Icons"
+    mc:Ignorable="d"
+    x:Name="Root">
+    <Viewbox
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Stretch="Uniform">
+        <Path
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Name="path10"
+            d:Fill="#FF000000"
+            Fill="{Binding ElementName=Root, Path=Color}"
+            Data="M 7 0 6 1 H 0 v 2 h 1.109375 l 1.7832031 15.255859 v 0.0078 C 3.023602 19.250335 3.8803207 20 4.875 20 h 8.248047 c 0.994679 0 1.851398 -0.749678 1.982422 -1.736328 l 0.002 -0.0078 L 16.890625 3 H 18 V 1 H 12 L 11 0 Z M 3.125 3 h 11.75 L 13.123047 18 H 4.875 Z" />
+    </Viewbox>
+</UserControl>

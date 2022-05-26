@@ -12,6 +12,7 @@
     <Viewbox>
         <Path
             Stroke="{Binding ElementName=Root, Path=Color}"
+            d:Stroke="Black"
             StrokeThickness="5"
             Width="100"
             Height="100">

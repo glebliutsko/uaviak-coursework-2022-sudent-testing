@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using StudentTesting.Application.Services.Captcha;
-using StudentTesting.Application.ViewModels;
 using System.Windows.Media;
 
 namespace StudentTesting.Application.Tests.ViewModels

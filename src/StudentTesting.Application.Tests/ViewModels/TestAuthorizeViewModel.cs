@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using StudentTesting.Application.Services.Authorize;
-using StudentTesting.Application.ViewModels;
 using StudentTesting.Database;
 using StudentTesting.Database.Models;
 using System.Threading.Tasks;

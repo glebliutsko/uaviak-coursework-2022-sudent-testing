@@ -1,5 +1,7 @@
 ﻿using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Database;
+using StudentTesting.Application.Services;
+using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
 using System;
 using System.Collections.ObjectModel;
@@ -15,6 +17,7 @@ namespace StudentTesting.Application.ViewModels.Course
         public event Action CourseChanged;
 
         private readonly DbModel.Course _course;
+        private readonly AddTestWindowDialogService _windowDialogService = new AddTestWindowDialogService();
 
         public CourseViewModel(DbModel.Course course)
         {
@@ -22,7 +25,9 @@ namespace StudentTesting.Application.ViewModels.Course
             CourseEditer = new CourseEditerViewModel(_course);
             CourseEditer.CourseChange += () => CourseChanged?.Invoke();
 
-            RemoveCommand = new RelayCommand(x => Remove());
+            RemoveCourseCommand = new RelayCommand(x => Remove());
+            AddTestCommand = new RelayCommand(x => AddTest());
+            RemoveTestCommand = new RelayCommand(x => RemoveTests((DbModel.Test)x));
         }
 
         #region Property
@@ -46,7 +51,9 @@ namespace StudentTesting.Application.ViewModels.Course
         #endregion
 
         #region Command
-        public ICommand RemoveCommand { get; }
+        public ICommand RemoveCourseCommand { get; }
+        public ICommand AddTestCommand { get; }
+        public ICommand RemoveTestCommand { get; }
         #endregion
 
         private void Remove()
@@ -56,6 +63,31 @@ namespace StudentTesting.Application.ViewModels.Course
 
             CourseChanged?.Invoke();
             OnRequestClose?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void AddTest()
+        {
+            if (!_windowDialogService.Show())
+                return;
+
+            var result = _windowDialogService.Result;
+            result.Course = _course;
+
+            DbContextKeeper.Saved.Tests.Add(result);
+            DbContextKeeper.Saved.SaveChanges();
+
+            UpdateData();
+        }
+
+        private void RemoveTests(DbModel.Test test)
+        {
+            if (MessageBoxService.ConfirmActionMessageBox("Удалить тест?"))
+            {
+                DbContextKeeper.Saved.Tests.Remove(test);
+                DbContextKeeper.Saved.SaveChanges();
+
+                UpdateData();
+            }    
         }
 
         public void UpdateData()

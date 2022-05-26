@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentTesting.Database.Models;
-using System.Collections.Generic;
 
 namespace StudentTesting.Database
 {

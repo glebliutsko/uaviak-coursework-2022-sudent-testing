@@ -1,7 +1,5 @@
 ﻿using StudentTesting.Application.ViewModels.Course;
 using StudentTesting.Application.Views.Course;
-using System;
-using System.Windows;
 using DBModel = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.Services.WindowDialog

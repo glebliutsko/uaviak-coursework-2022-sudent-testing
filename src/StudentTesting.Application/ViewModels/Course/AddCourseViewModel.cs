@@ -1,11 +1,9 @@
-﻿using StudentTesting.Application.Commands.Async;
-using StudentTesting.Application.Commands.Sync;
+﻿using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Services.FileDialog;
 using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using DBModel = StudentTesting.Database.Models;
 
