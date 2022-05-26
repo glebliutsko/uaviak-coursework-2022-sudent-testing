@@ -8,7 +8,8 @@
     mc:Ignorable="d"
     x:Name="Root"
     d:DesignHeight="150"
-    Width="{Binding ActualHeight, ElementName=Root}">
+    Width="{Binding ActualHeight, ElementName=Root}"
+    MouseUp="MainGrid_MouseUp">
     <Grid
         x:Name="MainGrid"
         Cursor="Hand"

@@ -5,7 +5,6 @@ using StudentTesting.Application.Utils;
 using StudentTesting.Application.Views.Course;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using DbModels = StudentTesting.Database.Models;
 
@@ -61,6 +60,7 @@ namespace StudentTesting.Application.ViewModels.Course
         {
             var viewModel = new CourseViewModel(course);
             viewModel.UpdateData();
+            viewModel.CourseChanged += UpdateData;
 
             new CourseWindow(viewModel).Show();
         }
