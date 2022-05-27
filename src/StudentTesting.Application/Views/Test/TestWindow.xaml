@@ -1,0 +1,233 @@
+﻿<Window
+    x:Class="StudentTesting.Application.Views.Test.TestWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vmtest="clr-namespace:StudentTesting.Application.ViewModels.Test"
+    xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
+    xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
+    xmlns:icons="clr-namespace:StudentTesting.Application.Views.Icons"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance vmtest:TestViewModel}"
+    Title="{Binding Test.Title, Converter={StaticResource TestCourseConverter}}"
+    Height="450"
+    Width="800">
+    <Window.Resources>
+        <Style
+            x:Key="ImageButton"
+            TargetType="{x:Type Button}"
+            BasedOn="{StaticResource EmptyButtom}">
+            <Setter
+                Property="Height"
+                Value="30" />
+            <Setter
+                Property="Width"
+                Value="30" />
+            <Setter
+                Property="Margin"
+                Value="0 0 0 10" />
+        </Style>
+
+        <Style
+            x:Key="AddTestButtonIcon"
+            TargetType="icons:AddIcon">
+
+            <Setter
+                Property="Color"
+                Value="Black" />
+
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}"
+                    Value="True">
+                    <Setter
+                        Property="Color"
+                        Value="Blue" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="DeleteTestButtonIcon"
+            TargetType="icons:DeleteIcon">
+
+            <Setter
+                Property="Color"
+                Value="Black" />
+
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}"
+                    Value="True">
+                    <Setter
+                        Property="Color"
+                        Value="Blue" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid
+        Margin="0 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="250" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox
+            ap:Border.BorderCornerRadius="0 10 10 0"
+            Grid.Column="0"
+            Style="{StaticResource MaterialGroupBox}">
+            <TextBlock
+                Text="Тут должно быть редактирование названия и описания, но его нет :)."
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                HorizontalAlignment="Center"
+                FontSize="18">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform
+                        Angle="-90" />
+                </TextBlock.LayoutTransform>
+            </TextBlock>
+        </GroupBox>
+
+        <Grid
+            Grid.Column="1"
+            Margin="10 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition
+                    Height="150" />
+            </Grid.RowDefinitions>
+
+            <GroupBox
+                Grid.Row="0"
+                Style="{StaticResource MaterialGroupBox}"
+                ap:Border.BorderCornerRadius="10 0 0 10"
+                Margin="0 0 0 10"
+                HeaderStringFormat="Вопрос №{0}"
+                Header="{Binding SelectedIndexQuestion, Converter={StaticResource HumanIndexConverter}}"
+                d:Header="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition
+                            Height="Auto" />
+                    </Grid.RowDefinitions>
+
+
+                    <DockPanel
+                        Margin="0 5 0 0"
+                        Grid.Row="0">
+                        <ComboBox
+                            DockPanel.Dock="Left"
+                            Width="150"
+                            SelectedItem="{Binding SelectedQuestion.Type}"
+                            ItemsSource="{x:Static utils:EnumUtils.TypeQuestions}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Text="{Binding Converter={StaticResource TypeQuestionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBox
+                            DockPanel.Dock="Right"
+                            Width="50"
+                            HorizontalAlignment="Right"
+                            Style="{StaticResource MaterialTextBox}"
+                            ap:Hint.HintText="Баллы"
+                            Text="{Binding SelectedQuestion.Score}" />
+                    </DockPanel>
+
+                    <Border
+                        Grid.Row="1"
+                        Background="Red" />
+
+                    <DockPanel
+                        Grid.Row="2"
+                        Margin="0 5 0 0">
+                        <Button
+                            DockPanel.Dock="Left"
+                            Style="{StaticResource PrimaryMaterialButton}"
+                            Command="{Binding PreviousQuestionCommand}"
+                            HorizontalAlignment="Left"
+                            Content="НАЗАД"
+                            Padding="10 2" />
+                        <Button
+                            DockPanel.Dock="Right"
+                            Style="{StaticResource PrimaryMaterialButton}"
+                            Command="{Binding NextQuestionCommand}"
+                            HorizontalAlignment="Right"
+                            Content="ВПЕРЁД"
+                            Padding="10 2" />
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox
+                Grid.Row="1"
+                Style="{StaticResource MaterialGroupBox}"
+                ap:Border.BorderCornerRadius="10 0 0 10"
+                d:Header="Вопросы">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition
+                            Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ListBox
+                        Grid.Column="0"
+                        ItemsControl.AlternationCount="999"
+                        Style="{StaticResource MaterialListBox}"
+                        ItemsSource="{Binding Questions}"
+                        SelectedIndex="{Binding SelectedIndexQuestion}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel
+                                    IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <ItemContainerTemplate>
+                                <Border
+                                    Width="30"
+                                    Height="30"
+                                    Background="Transparent">
+                                    <TextBlock
+                                        FontSize="24"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Text="{Binding Path=(ItemsControl.AlternationIndex),
+                                    RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}},
+                                    Mode=OneWay,
+                                    Converter={StaticResource HumanIndexConverter}}" />
+                                </Border>
+                            </ItemContainerTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel
+                        Grid.Column="1">
+                        <Button
+                            Style="{StaticResource ImageButton}"
+                            Command="{Binding AddQuestionCommand}">
+                            <icons:AddIcon
+                                Style="{StaticResource AddTestButtonIcon}" />
+                        </Button>
+
+                        <Button
+                            Style="{StaticResource ImageButton}"
+                            Command="{Binding RemoveQuestionCommand}">
+                            <icons:DeleteIcon
+                                Style="{StaticResource DeleteTestButtonIcon}" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

@@ -40,6 +40,7 @@
                             <ContentControl
                                 x:Name="Header"
                                 Grid.Row="0"
+                                ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                 Content="{TemplateBinding Header}"
                                 HorizontalAlignment="{TemplateBinding ap:HeaderGroupBox.HeaderAligment}"
                                 FontSize="{TemplateBinding ap:HeaderGroupBox.HeaderFontSize}"

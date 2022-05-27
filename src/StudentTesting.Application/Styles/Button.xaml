@@ -4,6 +4,37 @@
     xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
     xmlns:icnos="clr-namespace:StudentTesting.Application.Views.Icons">
     <Style
+        x:Key="EmptyButtom"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="OverridesDefaultStyle"
+            Value="True" />
+
+        <Setter
+            Property="Background"
+            Value="Transparent" />
+
+        <Setter
+            Property="Cursor"
+            Value="Hand" />
+
+        <Setter
+            Property="Template">
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type Button}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}">
+                        <ContentControl
+                            Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
         x:Key="MaterialButton"
         TargetType="{x:Type Button}">
         <Setter
@@ -202,12 +233,12 @@
                     <StackPanel
                         Background="{TemplateBinding Background}"
                         Orientation="Horizontal">
-                        
+
                         <icnos:AddIcon
                             Background="White"
                             Color="{TemplateBinding Foreground}"
                             Height="20" />
-                        
+
                         <ContentControl
                             TabIndex="-1"
                             VerticalAlignment="Center"

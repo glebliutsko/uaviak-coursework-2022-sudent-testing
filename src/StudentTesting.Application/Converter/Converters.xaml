@@ -38,4 +38,15 @@
     <converter:TitleConverter
         x:Key="TitleCourseConverter"
         Preffix="Курс" />
+
+    <converter:TitleConverter
+        x:Key="TestCourseConverter"
+        Preffix="Тест" />
+
+    <converter:AddNumberConverter
+        x:Key="HumanIndexConverter"
+        Term="1" />
+
+    <converter:TypeQuestionConverter
+        x:Key="TypeQuestionConverter" />
 </ResourceDictionary>

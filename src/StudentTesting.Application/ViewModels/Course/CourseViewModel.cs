@@ -3,6 +3,8 @@ using StudentTesting.Application.Database;
 using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
+using StudentTesting.Application.ViewModels.Test;
+using StudentTesting.Application.Views.Test;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -27,7 +29,8 @@ namespace StudentTesting.Application.ViewModels.Course
 
             RemoveCourseCommand = new RelayCommand(x => Remove());
             AddTestCommand = new RelayCommand(x => AddTest());
-            RemoveTestCommand = new RelayCommand(x => RemoveTests((DbModel.Test)x));
+            OpenTestCommand = new RelayCommand(x => OpenTest((DbModel.Test)x));
+            RemoveTestCommand = new RelayCommand(x => RemoveTest((DbModel.Test)x));
         }
 
         #region Property
@@ -53,6 +56,7 @@ namespace StudentTesting.Application.ViewModels.Course
         #region Command
         public ICommand RemoveCourseCommand { get; }
         public ICommand AddTestCommand { get; }
+        public ICommand OpenTestCommand { get; }
         public ICommand RemoveTestCommand { get; }
         #endregion
 
@@ -63,6 +67,14 @@ namespace StudentTesting.Application.ViewModels.Course
 
             CourseChanged?.Invoke();
             OnRequestClose?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OpenTest(DbModel.Test test)
+        {
+            var viewModel = new TestViewModel(test);
+            viewModel.UpdateData();
+
+            new TestWindow(viewModel).Show();
         }
 
         private void AddTest()
@@ -79,7 +91,7 @@ namespace StudentTesting.Application.ViewModels.Course
             UpdateData();
         }
 
-        private void RemoveTests(DbModel.Test test)
+        private void RemoveTest(DbModel.Test test)
         {
             if (MessageBoxService.ConfirmActionMessageBox("Удалить тест?"))
             {

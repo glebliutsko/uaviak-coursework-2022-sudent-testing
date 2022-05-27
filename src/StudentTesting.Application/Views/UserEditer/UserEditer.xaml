@@ -76,7 +76,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Margin="5 0 0 10"
-                    ItemsSource="{x:Static utils:ListUserRoles.Roles}"
+                    ItemsSource="{x:Static utils:EnumUtils.Roles}"
                     SelectedItem="{Binding Role, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
