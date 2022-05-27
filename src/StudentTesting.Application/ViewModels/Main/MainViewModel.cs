@@ -111,12 +111,20 @@ namespace StudentTesting.Application.ViewModels.Main
             }
             else
             {
-
+                MenuItems.Add(
+                    new MenuItem(
+                        "Test",
+                        vm => null,
+                        null
+                    )
+                );
             }
         }
 
         private void Quit()
         {
+            ExcelLogs.ExcelLogsInstance.Value.AddLoginLog(_user.Login, "Exit", true);
+
             System.Windows.Application.Current.MainWindow = new AuthorizeWindow(new AuthorizeViewModel());
             System.Windows.Application.Current.MainWindow.Show();
 

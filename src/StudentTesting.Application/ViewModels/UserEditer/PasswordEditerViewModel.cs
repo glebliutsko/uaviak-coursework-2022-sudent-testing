@@ -66,6 +66,8 @@ namespace StudentTesting.Application.ViewModels.UserEditer
                 return;
             }
 
+            ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Password", "Change");
+
             var _passwordService = new PasswordUserService(_user);
             await _passwordService.SetNewPassword(Password);
 

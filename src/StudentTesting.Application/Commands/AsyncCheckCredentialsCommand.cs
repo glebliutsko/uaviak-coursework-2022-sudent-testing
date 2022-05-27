@@ -1,6 +1,7 @@
 ﻿using StudentTesting.Application.Commands.Async;
 using StudentTesting.Application.Services;
 using StudentTesting.Application.Services.Authorize;
+using StudentTesting.Application.Utils;
 using StudentTesting.Application.ViewModels.Authorize;
 using System;
 using System.Threading.Tasks;
@@ -44,6 +45,7 @@ namespace StudentTesting.Application.Commands
 
             if (_countAttempts >= 3 && !_requestCaptchaService.RequestCaptcha())
             {
+                ExcelLogs.ExcelLogsInstance.Value.AddLoginLog(_viewModel.Login, "Captcha", false);
                 _viewModel.ErrorMessage = "Ошибка капчи";
                 return;
             }
@@ -51,11 +53,14 @@ namespace StudentTesting.Application.Commands
             var checker = await PasswordUserService.SearchUserByLogin(_viewModel.Login);
             if (checker == null || !checker.CheckPassword(_viewModel.Password))
             {
+                ExcelLogs.ExcelLogsInstance.Value.AddLoginLog(_viewModel.Login, "Login", false);
                 _countAttempts++;
                 _viewModel.ErrorMessage = "Неверный логин или пароль";
                 ClearField();
                 return;
             }
+
+            ExcelLogs.ExcelLogsInstance.Value.AddLoginLog(_viewModel.Login, "Login", true);
 
             ClearField(false);
             _viewModel.ErrorMessage = "";

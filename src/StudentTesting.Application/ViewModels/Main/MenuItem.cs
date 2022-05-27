@@ -21,7 +21,7 @@ namespace StudentTesting.Application.ViewModels.Main
 
         public void Update()
         {
-            viewModel.UpdateData();
+            viewModel?.UpdateData();
         }
     }
 }

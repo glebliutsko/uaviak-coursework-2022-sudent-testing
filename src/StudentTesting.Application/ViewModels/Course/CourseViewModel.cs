@@ -19,11 +19,13 @@ namespace StudentTesting.Application.ViewModels.Course
         public event Action CourseChanged;
 
         private readonly DbModel.Course _course;
+        private readonly DbModel.User _user;
         private readonly AddTestWindowDialogService _windowDialogService = new AddTestWindowDialogService();
 
-        public CourseViewModel(DbModel.Course course)
+        public CourseViewModel(DbModel.Course course, DbModel.User user)
         {
             _course = course;
+            _user = user;
             CourseEditer = new CourseEditerViewModel(_course);
             CourseEditer.CourseChange += () => CourseChanged?.Invoke();
 
@@ -88,6 +90,8 @@ namespace StudentTesting.Application.ViewModels.Course
             DbContextKeeper.Saved.Tests.Add(result);
             DbContextKeeper.Saved.SaveChanges();
 
+            ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Tests", "Add");
+
             UpdateData();
         }
 
@@ -97,6 +101,7 @@ namespace StudentTesting.Application.ViewModels.Course
             {
                 DbContextKeeper.Saved.Tests.Remove(test);
                 DbContextKeeper.Saved.SaveChanges();
+                ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Remove", "Add");
 
                 UpdateData();
             }    

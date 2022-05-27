@@ -49,6 +49,7 @@ namespace StudentTesting.Application.ViewModels.Course
 
             var newCourse = newCourseService.Result;
             newCourse.OwnerCourceId = _user.Id;
+            ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Course", "Add");
 
             DbContextKeeper.Saved.Courses.Add(newCourseService.Result);
             DbContextKeeper.Saved.SaveChanges();
@@ -58,7 +59,7 @@ namespace StudentTesting.Application.ViewModels.Course
 
         public void OpenCource(DbModels.Course course)
         {
-            var viewModel = new CourseViewModel(course);
+            var viewModel = new CourseViewModel(course, _user);
             viewModel.UpdateData();
             viewModel.CourseChanged += UpdateData;
 

@@ -78,6 +78,8 @@ namespace StudentTesting.Application.ViewModels.Course
             _course.Description = Description;
             _course.Picture = Picture;
 
+            ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Course", "Edit");
+
             CourseChange?.Invoke();
 
             DbContextKeeper.Saved.SaveChanges();

@@ -1,4 +1,5 @@
 ﻿using StudentTesting.Application.Database;
+using StudentTesting.Application.Utils;
 using StudentTesting.Application.ViewModels.Authorize;
 using StudentTesting.Application.Views;
 using StudentTesting.Application.Views.Authorize;
@@ -65,6 +66,12 @@ namespace StudentTesting.Application
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             DbContextKeeper.ConnectionClose();
+
+            if (ExcelLogs.ExcelLogsInstance.IsValueCreated)
+            {
+                ExcelLogs.ExcelLogsInstance.Value.Save();
+                ExcelLogs.ExcelLogsInstance.Value.Dispose();
+            }
         }
     }
 }

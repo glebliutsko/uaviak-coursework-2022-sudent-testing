@@ -155,6 +155,8 @@ namespace StudentTesting.Application.ViewModels.UserEditer
             if (!_requestConfirm($"Вы действительно хотите удалить пользователя {Login}?"))
                 return;
 
+            ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Users", "Remove");
+
             DbContextKeeper.Saved.Users.Remove(_user);
             await DbContextKeeper.Saved.SaveChangesAsync();
 
@@ -179,6 +181,8 @@ namespace StudentTesting.Application.ViewModels.UserEditer
             _user.FullName = FullName;
             _user.DocumentNumber = DocumentNumber;
             _user.UserPic = UserPic;
+
+            ExcelLogs.ExcelLogsInstance.Value.AddChangedLog(_user.Login, "Users", "Change or add");
 
             if (State == StateEditable.NEW)
                 await DbContextKeeper.Saved.Users.AddAsync(_user);
