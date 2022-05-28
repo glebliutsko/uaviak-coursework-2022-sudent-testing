@@ -1,4 +1,4 @@
-﻿namespace StudentTesting.Application.ViewModels
+﻿namespace StudentTesting.Application.ViewModels.Editer
 {
     public enum StateEditable
     {

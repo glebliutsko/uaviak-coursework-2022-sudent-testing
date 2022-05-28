@@ -1,8 +1,6 @@
 ﻿using StudentTesting.Application.Commands.Sync;
-using StudentTesting.Application.Database;
 using StudentTesting.Application.Utils;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using DbModel = StudentTesting.Database.Models;
 
@@ -70,7 +68,7 @@ namespace StudentTesting.Application.ViewModels.Test
         #region Command
         public ICommand PreviousQuestionCommand { get; }
         public ICommand NextQuestionCommand { get; }
-        public ICommand AddQuestionCommand { get;  }
+        public ICommand AddQuestionCommand { get; }
         public ICommand RemoveQuestionCommand { get; }
         #endregion
 
