@@ -6,9 +6,9 @@ namespace StudentTesting.Application.Views.Test
     /// <summary>
     /// Interaction logic for TestStudentWindow.xaml
     /// </summary>
-    public partial class TestStudentWindow : Window
+    public partial class TestStudentWindow : ClosebleWindowBase
     {
-        public TestStudentWindow(TestStudentViewModel viewModel)
+        public TestStudentWindow(TestStudentViewModel viewModel) : base(viewModel)
         {
             DataContext = viewModel;
 

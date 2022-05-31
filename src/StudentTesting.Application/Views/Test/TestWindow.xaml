@@ -9,7 +9,7 @@
     xmlns:icons="clr-namespace:StudentTesting.Application.Views.Icons"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vmtest:TestViewModel}"
-    Title="{Binding Test.Title, Converter={StaticResource TestCourseConverter}}"
+    Title="{Binding Test.Title, Converter={StaticResource TitleTestConverter}}"
     x:Name="Root"
     Height="450"
     Width="800">

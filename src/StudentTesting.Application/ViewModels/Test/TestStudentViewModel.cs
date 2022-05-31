@@ -3,16 +3,18 @@ using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Database;
 using StudentTesting.Application.DTOModels;
 using StudentTesting.Application.Utils;
-using System.ComponentModel.DataAnnotations;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using DbModels = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.ViewModels.Test
 {
-    public class TestStudentViewModel : OnPropertyChangeBase, IDataVisualizationViewModel
+    public class TestStudentViewModel : OnPropertyChangeBase, IDataVisualizationViewModel, IRequestCloseViewModel
     {
+        public event EventHandler OnRequestClose;
         private DbModels.Test _testDb;
         public TestStudentViewModel(DbModels.Test test)
         {
@@ -24,9 +26,12 @@ namespace StudentTesting.Application.ViewModels.Test
                 if (e.PropertyName == nameof(SelectedQuestion))
                     SelectedIndexQuestion = Test.Questions.IndexOf(SelectedQuestion);
             };
+
             _testDb = test;
+
             PreviousQuestionCommand = new RelayCommand(x => GoRelativeCurrent(-1), x => CanGoRelative(-1));
             NextQuestionCommand = new RelayCommand(x => GoRelativeCurrent(1), x => CanGoRelative(1));
+            DoneCommand = new RelayCommand(x => Done());
         }
 
         #region Propery
@@ -61,6 +66,7 @@ namespace StudentTesting.Application.ViewModels.Test
         #region Command
         public ICommand PreviousQuestionCommand { get; }
         public ICommand NextQuestionCommand { get; }
+        public ICommand DoneCommand { get; }
         #endregion
 
         public void UpdateData()
@@ -87,6 +93,27 @@ namespace StudentTesting.Application.ViewModels.Test
         {
             var newIndex = SelectedIndexQuestion + offset;
             return newIndex >= 0 && newIndex < Test.Questions.Count;
+        }
+
+        private void Done()
+        {
+            if (!Test.Questions.All(q => q.Answers.Any(a => a.IsSelected)))
+            {
+                MessageBox.Show("Необходимо ответить на все вопросы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            int score = 0;
+            foreach (var question in Test.Questions)
+            {
+                bool result = question.Answers.All(x => x.IsCorrect == x.IsSelected);
+                score += result ? question.Score : 0;
+            }
+
+            OnRequestClose?.Invoke(this, EventArgs.Empty);
+
+            int allScore = Test.Questions.Sum(x => x.Score);
+            MessageBox.Show($"Вы прошли тест на {score}/{allScore}", "Результат", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

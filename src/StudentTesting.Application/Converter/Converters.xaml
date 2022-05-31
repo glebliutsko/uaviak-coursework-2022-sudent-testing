@@ -45,7 +45,7 @@
         Preffix="Курс" />
 
     <converter:TitleConverter
-        x:Key="TestCourseConverter"
+        x:Key="TitleTestConverter"
         Preffix="Тест" />
 
     <converter:AddNumberConverter
