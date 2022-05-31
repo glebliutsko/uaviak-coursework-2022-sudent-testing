@@ -26,8 +26,8 @@ namespace StudentTesting.Application.ViewModels.Course
         }
 
         #region Command
-        public ICommand AddCourceCommand { get; }
-        public ICommand OpenCourseCommand { get; }
+        public ICommand AddCourceCommand { get; protected set; }
+        public ICommand OpenCourseCommand { get; protected set; }
         #endregion
 
         #region Property
@@ -65,7 +65,7 @@ namespace StudentTesting.Application.ViewModels.Course
             new CourseWindow(viewModel).Show();
         }
 
-        public void UpdateData()
+        public virtual void UpdateData()
         {
             Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.Where(x => x.OwnerCourceId == _user.Id).ToList());
         }

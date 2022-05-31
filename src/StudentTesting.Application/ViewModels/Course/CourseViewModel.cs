@@ -100,7 +100,7 @@ namespace StudentTesting.Application.ViewModels.Course
                 DbContextKeeper.Saved.SaveChanges();
 
                 UpdateData();
-            }    
+            }
         }
 
         public void UpdateData()

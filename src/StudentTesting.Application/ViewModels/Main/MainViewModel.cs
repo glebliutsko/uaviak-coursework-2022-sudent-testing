@@ -92,6 +92,7 @@ namespace StudentTesting.Application.ViewModels.Main
 
         private void GenerateMenuItem()
         {
+            // Вообще это надо разделить по классам, но мне лень.
             if (User.Role == UserRole.TEACHER)
             {
                 MenuItems.Add(
@@ -111,7 +112,13 @@ namespace StudentTesting.Application.ViewModels.Main
             }
             else
             {
-
+                MenuItems.Add(
+                    new MenuItem(
+                        "Курсы",
+                        vm => new CoursesListUserControl((CoursesListViewModel)vm),
+                        new CourseListStudentViewModel(User)
+                    )
+                );
             }
         }
 

@@ -51,6 +51,7 @@
             </ScrollViewer>
             
             <Button
+                Visibility="{Binding AddCourceCommand, Converter={StaticResource HideIfNullConverter}}"
                 Grid.Row="1"
                 Command="{Binding AddCourceCommand}"
                 Style="{StaticResource PrimaryMaterialButton}"

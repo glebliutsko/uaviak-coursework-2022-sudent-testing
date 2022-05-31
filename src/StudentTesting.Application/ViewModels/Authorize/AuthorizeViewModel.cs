@@ -28,7 +28,7 @@ namespace StudentTesting.Application.ViewModels.Authorize
 
         #region Property
         #region Login
-        private string _login = "teacher";  // TODO: Не забыть удалить этот логин.
+        private string _login = "student";  // TODO: Не забыть удалить этот логин.
         public string Login
         {
             get => _login;
