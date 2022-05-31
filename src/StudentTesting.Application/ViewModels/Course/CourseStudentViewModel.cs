@@ -1,4 +1,6 @@
-﻿using DbModels = StudentTesting.Database.Models;
+﻿using StudentTesting.Application.ViewModels.Test;
+using StudentTesting.Application.Views.Test;
+using DbModels = StudentTesting.Database.Models;
 
 namespace StudentTesting.Application.ViewModels.Course
 {
@@ -9,6 +11,13 @@ namespace StudentTesting.Application.ViewModels.Course
             RemoveCourseCommand = null;
             AddTestCommand = null;
             RemoveTestCommand = null;
+        }
+        protected override void OpenTest(DbModels.Test test)
+        {
+            var viewModel = new TestStudentViewModel(test);
+            viewModel.UpdateData();
+
+            new TestStudentWindow(viewModel).Show();
         }
     }
 }

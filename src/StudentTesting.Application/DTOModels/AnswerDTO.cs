@@ -33,6 +33,17 @@ namespace StudentTesting.Application.DTOModels
         }
         #endregion
 
+        // Нужен при прохождении теста студентом.
+        // TODO: В иделале бы вынести в отдельную сущность, но мне насрать.
+        #region IsSelected
+        private bool _isSelected = false;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => SetProperty(ref _isSelected, value);
+        }
+        #endregion
+
         public object Clone()
         {
             return new AnswerDTO

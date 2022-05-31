@@ -69,18 +69,13 @@ namespace StudentTesting.Application.ViewModels.Course
             OnRequestClose?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OpenTest(DbModel.Test test)
+        protected virtual void OpenTest(DbModel.Test test)
         {
-            var viewModel = BuildTestViewModel(test);
+            var viewModel = new TestViewModel(test);
             viewModel.UpdateData();
             viewModel.TestChanged += () => UpdateData();
 
             new TestWindow(viewModel).Show();
-        }
-
-        protected virtual TestViewModel BuildTestViewModel(DbModel.Test test)
-        {
-            return new TestViewModel(test);
         }
 
         private void AddTest()

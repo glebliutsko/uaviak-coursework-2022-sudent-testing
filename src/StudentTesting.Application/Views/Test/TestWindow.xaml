@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vmtest="clr-namespace:StudentTesting.Application.ViewModels.Test"
     xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
-    xmlns:utils="clr-namespace:StudentTesting.Application.Utils"
     xmlns:icons="clr-namespace:StudentTesting.Application.Views.Icons"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vmtest:TestViewModel}"
@@ -221,8 +220,7 @@
                     </ScrollViewer>
 
                     <DockPanel
-                        Grid.Row="2"
-                        Margin="0 5 0 0">
+                        Grid.Row="2">
                         <Button
                             DockPanel.Dock="Left"
                             Style="{StaticResource PrimaryMaterialButton}"
