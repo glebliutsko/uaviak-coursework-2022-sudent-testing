@@ -17,7 +17,5 @@ namespace StudentTesting.Database.Models
         [ForeignKey("Question")]
         public int? QuestionId { get; set; }
         public Question Question { get; set; }
-
-        public ICollection<QuestionAttemt> QuestionAttemts { get; set; }
     }
 }

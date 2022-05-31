@@ -73,6 +73,7 @@ namespace StudentTesting.Application.ViewModels.Course
         {
             var viewModel = new TestViewModel(test);
             viewModel.UpdateData();
+            viewModel.TestChanged += () => UpdateData();
 
             new TestWindow(viewModel).Show();
         }

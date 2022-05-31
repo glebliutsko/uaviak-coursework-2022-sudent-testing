@@ -31,7 +31,6 @@ namespace StudentTesting.Database
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<QuestionAttemt> QuestionAttemts { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Attempt> Attempts { get; set; }
         public DbSet<User> Users { get; set; }
@@ -51,11 +50,6 @@ namespace StudentTesting.Database
             modelBuilder.Entity<User>()
                 .HasMany(x => x.Attempts)
                 .WithOne(x => x.Student)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<QuestionAttemt>()
-                .HasOne(x => x.ToQuestion)
-                .WithMany(x => x.Attempts)
                 .OnDelete(DeleteBehavior.NoAction);
         }
 

@@ -1,6 +1,14 @@
-﻿using StudentTesting.Application.Commands.Sync;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using StudentTesting.Application.Commands.Sync;
+using StudentTesting.Application.Database;
+using StudentTesting.Application.DTOModels;
+using StudentTesting.Application.Services;
 using StudentTesting.Application.Utils;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using DbModel = StudentTesting.Database.Models;
 
@@ -8,41 +16,39 @@ namespace StudentTesting.Application.ViewModels.Test
 {
     public class TestViewModel : OnPropertyChangeBase, IDataVisualizationViewModel
     {
+        public event Action TestChanged;
+        private DbModel.Test _test;
+
         public TestViewModel(DbModel.Test test)
         {
             PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(SelectedIndexQuestion))
-                    SelectedQuestion = SelectedIndexQuestion == -1 ? null : Questions[SelectedIndexQuestion];
+                    SelectedQuestion = SelectedIndexQuestion <= -1 ? null : Test.Questions[SelectedIndexQuestion];
 
                 if (e.PropertyName == nameof(SelectedQuestion))
-                    SelectedIndexQuestion = Questions.IndexOf(SelectedQuestion);
+                    SelectedIndexQuestion = Test.Questions.IndexOf(SelectedQuestion);
             };
 
-            Test = test;
+            _test = test;
 
             PreviousQuestionCommand = new RelayCommand(x => GoRelativeCurrent(-1), x => CanGoRelative(-1));
             NextQuestionCommand = new RelayCommand(x => GoRelativeCurrent(1), x => CanGoRelative(1));
             AddQuestionCommand = new RelayCommand(x => AddQuestion());
             RemoveQuestionCommand = new RelayCommand(x => RemoveQuestion());
+            SaveCommand = new RelayCommand(x => Save());
+            AddAnswerCommand = new RelayCommand(x => AddAnswer());
+            RemoveAnswerCommand = new RelayCommand(x => RemoveAnswer((AnswerDTO)x));
+            UndoCommand = new RelayCommand(x => Undo());
         }
 
         #region Property
-        #region Questions
-        private ObservableCollection<DbModel.Question> _questions;
-        public ObservableCollection<DbModel.Question> Questions
-        {
-            get => _questions;
-            set => SetProperty(ref _questions, value);
-        }
-        #endregion
-
         #region Test
-        private DbModel.Test _test;
-        public DbModel.Test Test
+        private TestDTO _testDTO;
+        public TestDTO Test
         {
-            get => _test;
-            set => SetProperty(ref _test, value);
+            get => _testDTO;
+            set => SetProperty(ref _testDTO, value);
         }
         #endregion
 
@@ -56,8 +62,8 @@ namespace StudentTesting.Application.ViewModels.Test
         #endregion
 
         #region SelectedQuestion
-        private DbModel.Question _selectedQuestion;
-        public DbModel.Question SelectedQuestion
+        private QuestionDTO _selectedQuestion;
+        public QuestionDTO SelectedQuestion
         {
             get => _selectedQuestion;
             private set => SetProperty(ref _selectedQuestion, value);
@@ -70,25 +76,28 @@ namespace StudentTesting.Application.ViewModels.Test
         public ICommand NextQuestionCommand { get; }
         public ICommand AddQuestionCommand { get; }
         public ICommand RemoveQuestionCommand { get; }
+        public ICommand SaveCommand { get; }
+        public ICommand AddAnswerCommand { get; }
+        public ICommand RemoveAnswerCommand { get; }
+        public ICommand UndoCommand { get; }
         #endregion
 
         private void GoRelativeCurrent(int offset)
         {
-            var newIndex = SelectedIndexQuestion + offset;
-            if (CanGoRelative(newIndex))
-                SelectedIndexQuestion = newIndex;
+            if (CanGoRelative(offset))
+                SelectedIndexQuestion = SelectedIndexQuestion + offset;
         }
 
         private bool CanGoRelative(int offset)
         {
             var newIndex = SelectedIndexQuestion + offset;
-            return newIndex >= 0 && newIndex < Questions.Count;
+            return newIndex >= 0 && newIndex < Test.Questions.Count;
         }
 
         private void AddQuestion()
         {
-            var newQuestion = new DbModel.Question { Order = -1 };
-            Questions.Add(newQuestion);
+            var newQuestion = new QuestionDTO { Score = 1 };
+            Test.Questions.Add(newQuestion);
             SelectedQuestion = newQuestion;
         }
 
@@ -96,31 +105,61 @@ namespace StudentTesting.Application.ViewModels.Test
         {
             var indexOldElement = SelectedIndexQuestion;
 
-            Questions.Remove(SelectedQuestion);
-            if (indexOldElement - 1 == -1 && Questions.Count != 0)
+            Test.Questions.Remove(SelectedQuestion);
+            if (indexOldElement - 1 == -1 && Test.Questions.Count != 0)
                 SelectedIndexQuestion = 0;
             else
                 SelectedIndexQuestion = indexOldElement - 1;
         }
 
+        private void AddAnswer()
+        {
+            if (SelectedQuestion == null)
+                return;
+
+            if (SelectedQuestion.Answers == null)
+                SelectedQuestion.Answers = new ObservableCollection<AnswerDTO>();
+
+            SelectedQuestion.Answers.Add(new AnswerDTO { IsCorrect = SelectedQuestion.Answers.Count == 0});
+        }
+
+        private void RemoveAnswer(AnswerDTO answer)
+        {
+            SelectedQuestion.Answers.Remove(answer);
+
+            if (answer.IsCorrect && SelectedQuestion.Answers.Count != 0)
+                SelectedQuestion.Answers[0].IsCorrect = true;
+        }
+
+        private void Save()
+        {
+            try
+            {
+                TestSaver.SaveTest(Test);
+                UpdateData();
+                TestChanged?.Invoke();
+            }
+            catch (TestSaverError e)
+            {
+                MessageBox.Show(e.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Undo()
+        {
+            UpdateData();
+        }
+
         public void UpdateData()
         {
-            Questions = new ObservableCollection<DbModel.Question>();
-            Questions.Add(new DbModel.Question()
-            {
-                Score = 1,
-                Type = DbModel.TypeQuestion.ONE_ANSWER,
-                Content = "x^2 + 2x + 5 = 3\nx = ?"
-            });
+            SelectedIndexQuestion = -1;
 
-            Questions.Add(new DbModel.Question()
-            {
-                Score = 1,
-                Type = DbModel.TypeQuestion.MULTIPLE_ANSWER,
-                Content = "Test 2"
-            });
-
-            SelectedIndexQuestion = 0;
+            _test = DbContextKeeper.Saved.Tests
+               .Include(x => x.Questions)
+               .ThenInclude(x => x.Answers)
+               .AsNoTracking()
+               .FirstOrDefault(x => x.Id == _test.Id);
+            Test = TestDTO.FromDb(_test);
         }
     }
 }

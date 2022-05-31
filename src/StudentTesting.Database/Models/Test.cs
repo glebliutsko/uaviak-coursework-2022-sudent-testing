@@ -21,5 +21,6 @@ namespace StudentTesting.Database.Models
         public Course Course { get; set; }
 
         public ICollection<Question> Questions { get; set; }
+        public ICollection<Attempt> Attempts { get; set; }
     }
 }

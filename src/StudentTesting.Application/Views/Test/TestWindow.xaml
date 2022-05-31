@@ -11,6 +11,7 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vmtest:TestViewModel}"
     Title="{Binding Test.Title, Converter={StaticResource TestCourseConverter}}"
+    x:Name="Root"
     Height="450"
     Width="800">
     <Window.Resources>
@@ -62,7 +63,7 @@
                     Value="True">
                     <Setter
                         Property="Color"
-                        Value="Blue" />
+                        Value="Red" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -79,17 +80,45 @@
             ap:Border.BorderCornerRadius="0 10 10 0"
             Grid.Column="0"
             Style="{StaticResource MaterialGroupBox}">
-            <TextBlock
-                Text="Тут должно быть редактирование названия и описания, но его нет :)."
-                TextWrapping="Wrap"
-                TextAlignment="Center"
-                HorizontalAlignment="Center"
-                FontSize="18">
-                <TextBlock.LayoutTransform>
-                    <RotateTransform
-                        Angle="-90" />
-                </TextBlock.LayoutTransform>
-            </TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBox
+                    Grid.Row="0"
+                    Text="{Binding Test.Title}"
+                    FontSize="18"
+                    Style="{StaticResource MaterialTextBox}"
+                    ap:Hint.HintText="Название" />
+                <TextBox
+                    Grid.Row="1"
+                    Text="{Binding Test.Description}"
+                    Style="{StaticResource MaterialTextBox}"
+                    ap:Hint.HintText="Описание"
+                    HorizontalContentAlignment="Left"
+                    VerticalAlignment="Top"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True" />
+
+                <StackPanel
+                    Grid.Row="2"
+                    VerticalAlignment="Bottom">
+                    <Button
+                        Style="{StaticResource PrimaryMaterialButton}"
+                        Command="{Binding SaveCommand}"
+                        Content="СОХРАНИТЬ" />
+                    <Button
+                        Margin="0 5 0 0"
+                        Command="{Binding UndoCommand}"
+                        Style="{StaticResource SecodaryMaterialButton}"
+                        Content="ОТМЕНИТЬ" />
+                </StackPanel>
+            </Grid>
         </GroupBox>
 
         <Grid
@@ -108,7 +137,8 @@
                 Margin="0 0 0 10"
                 HeaderStringFormat="Вопрос №{0}"
                 Header="{Binding SelectedIndexQuestion, Converter={StaticResource HumanIndexConverter}}"
-                d:Header="1">
+                d:Header="1"
+                Visibility="{Binding SelectedQuestion, Converter={StaticResource HideIfNullConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition
@@ -119,34 +149,76 @@
                     </Grid.RowDefinitions>
 
 
-                    <DockPanel
-                        Margin="0 5 0 0"
+                    <Grid
+                        Margin="0 5 0 10"
                         Grid.Row="0">
-                        <ComboBox
-                            DockPanel.Dock="Left"
-                            Width="150"
-                            SelectedItem="{Binding SelectedQuestion.Type}"
-                            ItemsSource="{x:Static utils:EnumUtils.TypeQuestions}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock
-                                        Text="{Binding Converter={StaticResource TypeQuestionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
                         <TextBox
-                            DockPanel.Dock="Right"
+                            Text="{Binding SelectedQuestion.Content}"
+                            MaxHeight="50"
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Left"
+                            Margin="0 0 5 0"
+                            AcceptsReturn="True"
+                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialTextBox}"
+                            ap:Hint.HintText="Вопрос"
+                            DockPanel.Dock="Left" />
+
+                        <TextBox
+                            Grid.Column="1"
                             Width="50"
-                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
                             Style="{StaticResource MaterialTextBox}"
                             ap:Hint.HintText="Баллы"
                             Text="{Binding SelectedQuestion.Score}" />
-                    </DockPanel>
+                    </Grid>
 
-                    <Border
-                        Margin="0 10 0 0"
-                        Grid.Row="1"
-                        Background="Red" />
+                    <ScrollViewer
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Hidden"
+                        Grid.Row="1">
+                        <ItemsControl
+                            ItemsSource="{Binding SelectedQuestion.Answers}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <RadioButton
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Stretch"
+                                            GroupName="Answer"
+                                            VerticalContentAlignment="Center"
+                                            IsChecked="{Binding IsCorrect}">
+                                            <TextBox
+                                                ap:Hint.HintText="Ответ"
+                                                HorizontalContentAlignment="Left"
+                                                Style="{StaticResource MaterialTextBox}"
+                                                Text="{Binding Content}" />
+                                        </RadioButton>
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Height="20"
+                                            Width="20"
+                                            Style="{StaticResource ImageButton}"
+                                            Command="{Binding ElementName=Root, Path=DataContext.RemoveAnswerCommand}"
+                                            CommandParameter="{Binding }">
+                                            <icons:DeleteIcon
+                                                Style="{StaticResource DeleteTestButtonIcon}" />
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
 
                     <DockPanel
                         Grid.Row="2"
@@ -158,6 +230,14 @@
                             HorizontalAlignment="Left"
                             Content="НАЗАД"
                             Padding="10 2" />
+                        <Button
+                            DockPanel.Dock="Left"
+                            Command="{Binding AddAnswerCommand}"
+                            Style="{StaticResource PrimaryMaterialButton}"
+                            Content="ДОБАВИТЬ ОТВЕТ"
+                            Padding="10 2"
+                            Margin="5 0 0 0" />
+
                         <Button
                             DockPanel.Dock="Right"
                             Style="{StaticResource PrimaryMaterialButton}"
@@ -184,7 +264,7 @@
                         Grid.Column="0"
                         ItemsControl.AlternationCount="999"
                         Style="{StaticResource MaterialListBox}"
-                        ItemsSource="{Binding Questions}"
+                        ItemsSource="{Binding Test.Questions}"
                         SelectedIndex="{Binding SelectedIndexQuestion}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -212,7 +292,8 @@
                     </ListBox>
 
                     <StackPanel
-                        Grid.Column="1">
+                        Grid.Column="1"
+                        VerticalAlignment="Center">
                         <Button
                             Style="{StaticResource ImageButton}"
                             Command="{Binding AddQuestionCommand}">

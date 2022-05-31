@@ -4,13 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentTesting.Database.Models
 {
-    public enum TypeQuestion
-    {
-        ONE_ANSWER = 1,
-        MULTIPLE_ANSWER = 2,
-        OPEN_ANSWER = 3
-    }
-
     public class Question
     {
         [Key]
@@ -25,10 +18,6 @@ namespace StudentTesting.Database.Models
         public int TestId { get; set; }
         public Test Test { get; set; }
 
-        [Column(TypeName = "NVARCHAR(50)")]
-        public TypeQuestion Type { get; set; }
-
         public ICollection<Answer> Answers { get; set; }
-        public ICollection<QuestionAttemt> Attempts { get; set; }
     }
 }
