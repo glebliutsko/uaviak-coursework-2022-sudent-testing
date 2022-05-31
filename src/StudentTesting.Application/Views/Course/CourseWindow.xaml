@@ -9,6 +9,7 @@
     xmlns:ap="clr-namespace:StudentTesting.Application.Styles.AttachedProperty"
     xmlns:uccourse="clr-namespace:StudentTesting.Application.Views.Course"
     xmlns:vmcourse="clr-namespace:StudentTesting.Application.ViewModels.Course"
+    xmlns:controls="clr-namespace:StudentTesting.Application.Views.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vmcourse:CourseViewModel}"
     Title="{Binding CourseEditer.Title, Converter={StaticResource TitleCourseConverter}, Mode=OneWay}"
@@ -55,12 +56,29 @@
                         Height="Auto" />
                 </Grid.RowDefinitions>
                 <local:CourseInformationEditerUserControl
+                    Visibility="{Binding RemoveCourseCommand, Converter={StaticResource HideIfNullConverter}}"
                     Picture="{Binding CourseEditer.Picture}"
                     Title="{Binding CourseEditer.Title, Mode=TwoWay}"
                     Description="{Binding CourseEditer.Description, Mode=TwoWay}"
                     ChangePictureCommand="{Binding CourseEditer.EditPictureCommand}" />
+                <StackPanel
+                    Visibility="{Binding RemoveCourseCommand, Converter={StaticResource VisibleIfNullConverter}}">
+                    <controls:CircleImage
+                        Width="200"
+                        Height="200"
+                        Source="{Binding CourseEditer.Picture, Converter={StaticResource ImagePlaceholderConverter}}"/>
+
+                    <TextBlock
+                        FontSize="18"
+                        TextAlignment="Center"
+                        Text="{Binding CourseEditer.Title}" />
+
+                    <TextBlock
+                        Text="{Binding CourseEditer.Description}" />
+                </StackPanel>
 
                 <StackPanel
+                    Visibility="{Binding RemoveCourseCommand, Converter={StaticResource HideIfNullConverter}}"
                     Grid.Row="1">
                     <UniformGrid
                         Margin="0 0 0 5"
@@ -112,6 +130,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <Button
+                        Visibility="{Binding AddTestCommand, Converter={StaticResource HideIfNullConverter}}"
                         Style="{StaticResource AddIconButton}"
                         Command="{Binding AddTestCommand}"
                         Content="ДОБАВИТЬ ТЕСТ" />

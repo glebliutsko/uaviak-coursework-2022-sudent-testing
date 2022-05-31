@@ -39,7 +39,7 @@ namespace StudentTesting.Application.ViewModels.Course
         public CourseEditerViewModel CourseEditer
         {
             get => _courseEditer;
-            private set => SetProperty(ref _courseEditer, value);
+            protected set => SetProperty(ref _courseEditer, value);
         }
         #endregion
 
@@ -54,10 +54,10 @@ namespace StudentTesting.Application.ViewModels.Course
         #endregion
 
         #region Command
-        public ICommand RemoveCourseCommand { get; }
-        public ICommand AddTestCommand { get; }
+        public ICommand RemoveCourseCommand { get; protected set; }
+        public ICommand AddTestCommand { get; protected set; }
         public ICommand OpenTestCommand { get; }
-        public ICommand RemoveTestCommand { get; }
+        public ICommand RemoveTestCommand { get; protected set; }
         #endregion
 
         private void Remove()
@@ -71,11 +71,16 @@ namespace StudentTesting.Application.ViewModels.Course
 
         private void OpenTest(DbModel.Test test)
         {
-            var viewModel = new TestViewModel(test);
+            var viewModel = BuildTestViewModel(test);
             viewModel.UpdateData();
             viewModel.TestChanged += () => UpdateData();
 
             new TestWindow(viewModel).Show();
+        }
+
+        protected virtual TestViewModel BuildTestViewModel(DbModel.Test test)
+        {
+            return new TestViewModel(test);
         }
 
         private void AddTest()

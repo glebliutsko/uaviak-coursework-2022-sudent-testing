@@ -24,6 +24,11 @@
         ValueIfNotNull="Visible"
         ValueIfNull="Collapsed" />
 
+    <converter:NullToVisibilityConverter
+        x:Key="VisibleIfNullConverter"
+        ValueIfNotNull="Collapsed"
+        ValueIfNull="Visible" />
+
     <converter:BoolToVisibilityConverter
         x:Key="FalseToCollapsedConverter"
         FalseValue="Hidden" />

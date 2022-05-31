@@ -4,6 +4,7 @@ using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
 using StudentTesting.Application.Views.Course;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using DbModels = StudentTesting.Database.Models;
@@ -58,11 +59,16 @@ namespace StudentTesting.Application.ViewModels.Course
 
         public void OpenCource(DbModels.Course course)
         {
-            var viewModel = new CourseViewModel(course);
+            CourseViewModel viewModel = BuildViewModel(course);
             viewModel.UpdateData();
             viewModel.CourseChanged += UpdateData;
 
             new CourseWindow(viewModel).Show();
+        }
+
+        protected virtual CourseViewModel BuildViewModel(DbModels.Course course)
+        {
+            return new CourseViewModel(course);
         }
 
         public virtual void UpdateData()

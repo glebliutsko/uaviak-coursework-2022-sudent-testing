@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StudentTesting.Application.Database;
+﻿using StudentTesting.Application.Database;
 using StudentTesting.Database.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,6 +16,11 @@ namespace StudentTesting.Application.ViewModels.Course
         public override void UpdateData()
         {
             Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.ToArray());
+        }
+
+        protected override CourseViewModel BuildViewModel(DbModels.Course course)
+        {
+            return new CourseStudentViewModel(course);
         }
     }
 }

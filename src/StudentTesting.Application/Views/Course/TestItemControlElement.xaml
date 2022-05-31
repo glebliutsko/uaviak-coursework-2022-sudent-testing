@@ -83,6 +83,7 @@
         </StackPanel>
 
         <Grid
+            Visibility="{Binding ElementName=Root, Path=DeleteCommand, Converter={StaticResource HideIfNullConverter}}"
             Grid.Column="1"
             Background="White"
             x:Name="IconContainer">
