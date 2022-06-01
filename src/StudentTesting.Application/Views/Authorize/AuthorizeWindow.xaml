@@ -76,11 +76,5 @@
                     HorizontalAlignment="Center" />
             </StackPanel>
         </GroupBox>
-
-        <Button
-            Style="{StaticResource SecodaryMaterialButton}"
-            Grid.Row="2"
-            Content="ВОСТАНОВИТЬ ПАРОЛЬ"
-            Margin="5 0" />
     </Grid>
 </views:ClosebleWindowBase>

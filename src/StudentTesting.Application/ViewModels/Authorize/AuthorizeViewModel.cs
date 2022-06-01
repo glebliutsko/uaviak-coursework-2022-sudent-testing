@@ -28,7 +28,7 @@ namespace StudentTesting.Application.ViewModels.Authorize
 
         #region Property
         #region Login
-        private string _login = "student";  // TODO: Не забыть удалить этот логин.
+        private string _login;
         public string Login
         {
             get => _login;
@@ -41,7 +41,7 @@ namespace StudentTesting.Application.ViewModels.Authorize
         #endregion
 
         #region Password
-        private string _password = "password";  // TODO: Не забыть удалить этот пароль.
+        private string _password = "";
         public string Password
         {
             get => _password;
