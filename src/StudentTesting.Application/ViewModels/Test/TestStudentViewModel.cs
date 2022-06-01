@@ -5,6 +5,7 @@ using StudentTesting.Application.DTOModels;
 using StudentTesting.Application.Utils;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -16,7 +17,9 @@ namespace StudentTesting.Application.ViewModels.Test
     {
         public event EventHandler OnRequestClose;
         private DbModels.Test _testDb;
-        public TestStudentViewModel(DbModels.Test test)
+        private readonly DbModels.User _user;
+
+        public TestStudentViewModel(DbModels.Test test, DbModels.User user)
         {
             PropertyChanged += (s, e) =>
             {
@@ -28,7 +31,7 @@ namespace StudentTesting.Application.ViewModels.Test
             };
 
             _testDb = test;
-
+            _user = user;
             PreviousQuestionCommand = new RelayCommand(x => GoRelativeCurrent(-1), x => CanGoRelative(-1));
             NextQuestionCommand = new RelayCommand(x => GoRelativeCurrent(1), x => CanGoRelative(1));
             DoneCommand = new RelayCommand(x => Done());
@@ -111,6 +114,15 @@ namespace StudentTesting.Application.ViewModels.Test
             }
 
             OnRequestClose?.Invoke(this, EventArgs.Empty);
+
+            var attemt = new DbModels.Attempt
+            {
+                TestId = (int)Test.Id,
+                StudentId = _user.Id,
+                Score = score
+            };
+            DbContextKeeper.Saved.Attempts.Add(attemt);
+            DbContextKeeper.Saved.SaveChanges();
 
             int allScore = Test.Questions.Sum(x => x.Score);
             MessageBox.Show($"Вы прошли тест на {score}/{allScore}", "Результат", MessageBoxButton.OK, MessageBoxImage.Information);

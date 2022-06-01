@@ -51,4 +51,9 @@
     <converter:AddNumberConverter
         x:Key="HumanIndexConverter"
         Term="1" />
+
+    <converter:UserRoleToVisibiltityConverter
+        x:Key="HideIfTeacher"
+        ValueIfTeacher="Collapsed"
+        ValueIfStudent="Visible" />
 </ResourceDictionary>

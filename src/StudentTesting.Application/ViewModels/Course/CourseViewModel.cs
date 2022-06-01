@@ -1,12 +1,17 @@
-﻿using StudentTesting.Application.Commands.Sync;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Database;
+using StudentTesting.Application.DTOModels;
 using StudentTesting.Application.Services;
+using StudentTesting.Application.Services.ExcelReport;
 using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
 using StudentTesting.Application.ViewModels.Test;
 using StudentTesting.Application.Views.Test;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using DbModel = StudentTesting.Database.Models;
@@ -18,19 +23,22 @@ namespace StudentTesting.Application.ViewModels.Course
         public event EventHandler OnRequestClose;
         public event Action CourseChanged;
 
-        private readonly DbModel.Course _course;
+        protected readonly DbModel.Course course;
+        protected readonly DbModel.User user;
         private readonly AddTestWindowDialogService _windowDialogService = new AddTestWindowDialogService();
 
-        public CourseViewModel(DbModel.Course course)
+        public CourseViewModel(DbModel.Course course, DbModel.User user)
         {
-            _course = course;
-            CourseEditer = new CourseEditerViewModel(_course);
+            this.course = course;
+            this.user = user;
+            CourseEditer = new CourseEditerViewModel(this.course);
             CourseEditer.CourseChange += () => CourseChanged?.Invoke();
 
             RemoveCourseCommand = new RelayCommand(x => Remove());
             AddTestCommand = new RelayCommand(x => AddTest());
             OpenTestCommand = new RelayCommand(x => OpenTest((DbModel.Test)x));
             RemoveTestCommand = new RelayCommand(x => RemoveTest((DbModel.Test)x));
+            GetResultCommand = new RelayCommand(x => GetResults());
         }
 
         #region Property
@@ -58,11 +66,13 @@ namespace StudentTesting.Application.ViewModels.Course
         public ICommand AddTestCommand { get; protected set; }
         public ICommand OpenTestCommand { get; }
         public ICommand RemoveTestCommand { get; protected set; }
+
+        public ICommand GetResultCommand { get; }
         #endregion
 
         private void Remove()
         {
-            DbContextKeeper.Saved.Remove(_course);
+            DbContextKeeper.Saved.Remove(course);
             DbContextKeeper.Saved.SaveChanges();
 
             CourseChanged?.Invoke();
@@ -84,7 +94,7 @@ namespace StudentTesting.Application.ViewModels.Course
                 return;
 
             var result = _windowDialogService.Result;
-            result.Course = _course;
+            result.Course = course;
 
             DbContextKeeper.Saved.Tests.Add(result);
             DbContextKeeper.Saved.SaveChanges();
@@ -103,9 +113,36 @@ namespace StudentTesting.Application.ViewModels.Course
             }
         }
 
+        protected virtual void GetResults()
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Excel Workbook (*.xlsx)|*.xlsx"
+            };
+            if (dialog.ShowDialog() != true)
+                return;
+
+            var attempts = LoadAttempt();
+
+            ReportAttempt.GenerateReport(new FileInfo(dialog.FileName), attempts);
+        }
+
+        protected virtual AttemptDTO[] LoadAttempt()
+        {
+            return DbContextKeeper.Saved.Attempts
+                .Include(x => x.Test)
+                .ThenInclude(x => x.Course)
+                .Include(x => x.Student)
+                .Include(x => x.Test)
+                .ThenInclude(x => x.Questions)
+                .Where(x => x.Test.Course == course)
+                .Select(x => AttemptDTO.FromDB(x))
+                .ToArray();
+        }
+
         public void UpdateData()
         {
-            Tests = new ObservableCollection<DbModel.Test>(DbContextKeeper.Saved.Tests.Where(x => x.CourseId == _course.Id).ToList());
+            Tests = new ObservableCollection<DbModel.Test>(DbContextKeeper.Saved.Tests.Where(x => x.CourseId == course.Id).ToList());
         }
     }
 }

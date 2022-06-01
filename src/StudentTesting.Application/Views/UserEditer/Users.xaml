@@ -91,15 +91,39 @@
             </Grid>
         </GroupBox>
 
-        <StackPanel
-            Grid.Column="1"
-            Margin="5 0 0 0"
-            Visibility="{Binding UserEditable, Converter={StaticResource HideIfNullConverter}}">
-            <userediter:UserEditer
-                DataContext="{Binding UserInformationEditor}"
-                Margin="0 0 0 5" />
-            <userediter:PasswordEditor
-                DataContext="{Binding PasswordEditor}" />
-        </StackPanel>
+        <ScrollViewer
+            VerticalScrollBarVisibility="Hidden"
+            Grid.Column="1">
+            <StackPanel
+                Margin="5 0 0 0"
+                Visibility="{Binding UserEditable, Converter={StaticResource HideIfNullConverter}}">
+                <userediter:UserEditer
+                    DataContext="{Binding UserInformationEditor}"
+                    Margin="0 0 0 5" />
+                <userediter:PasswordEditor
+                    Margin="0 0 0 5"
+                    DataContext="{Binding PasswordEditor}" />
+                
+                <GroupBox
+                    Visibility="{Binding SelectedUser.Role, Converter={StaticResource HideIfTeacher}}"
+                    Style="{StaticResource MaterialGroupBox}"
+                    Header="Отчеты">
+                    <StackPanel
+                        HorizontalAlignment="Center">
+                        <Button
+                            Style="{StaticResource PrimaryMaterialButton}"
+                            Command="{Binding ReportMarkStudentCommand}"
+                            Padding="10 2"
+                            Margin="0 0 0 5"
+                            Content="ОЦЕНКИ СТУДЕНТА" />
+                        <Button
+                            Style="{StaticResource PrimaryMaterialButton}"
+                            Command="{Binding ReportDebtsStudentCommand}"
+                            Padding="10 2"
+                            Content="НЕПРОЙДЕННЫЕ ТЕСТЫ" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

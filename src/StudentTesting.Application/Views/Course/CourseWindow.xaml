@@ -78,9 +78,9 @@
                 </StackPanel>
 
                 <StackPanel
-                    Visibility="{Binding RemoveCourseCommand, Converter={StaticResource HideIfNullConverter}}"
                     Grid.Row="1">
                     <UniformGrid
+                        Visibility="{Binding RemoveCourseCommand, Converter={StaticResource HideIfNullConverter}}"
                         Margin="0 0 0 5"
                         Columns="2">
                         <Button
@@ -96,9 +96,16 @@
                             Content="ОТМЕНИТЬ" />
                     </UniformGrid>
                     <Button
+                        Margin="0 0 0 5"
+                        Visibility="{Binding RemoveCourseCommand, Converter={StaticResource HideIfNullConverter}}"
                         Command="{Binding RemoveCourseCommand}"
                         Style="{StaticResource DangerousMaterialButton}"
                         Content="УДАЛИТЬ" />
+
+                    <Button
+                        Style="{StaticResource SecodaryMaterialButton}"
+                        Content="РЕЗУЛЬТАТЫ"
+                        Command="{Binding GetResultCommand}"/>
                 </StackPanel>
             </Grid>
         </GroupBox>

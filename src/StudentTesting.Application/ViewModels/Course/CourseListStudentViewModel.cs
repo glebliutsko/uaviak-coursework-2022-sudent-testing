@@ -20,7 +20,7 @@ namespace StudentTesting.Application.ViewModels.Course
 
         protected override CourseViewModel BuildViewModel(DbModels.Course course)
         {
-            return new CourseStudentViewModel(course);
+            return new CourseStudentViewModel(course, this.user);
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Win32;
 using StudentTesting.Application.Commands.Sync;
 using StudentTesting.Application.Database;
 using StudentTesting.Application.DTOModels;
 using StudentTesting.Application.Services;
+using StudentTesting.Application.Services.ExcelReport;
 using StudentTesting.Application.Utils;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -40,6 +43,7 @@ namespace StudentTesting.Application.ViewModels.Test
             AddAnswerCommand = new RelayCommand(x => AddAnswer());
             RemoveAnswerCommand = new RelayCommand(x => RemoveAnswer((AnswerDTO)x));
             UndoCommand = new RelayCommand(x => Undo());
+            ReportListDebtorsCommand = new RelayCommand(x => ReportListDebtors());
         }
 
         #region Property
@@ -80,6 +84,7 @@ namespace StudentTesting.Application.ViewModels.Test
         public ICommand AddAnswerCommand { get; }
         public ICommand RemoveAnswerCommand { get; }
         public ICommand UndoCommand { get; }
+        public ICommand ReportListDebtorsCommand { get; }
         #endregion
 
         private void GoRelativeCurrent(int offset)
@@ -129,6 +134,18 @@ namespace StudentTesting.Application.ViewModels.Test
 
             if (answer.IsCorrect && SelectedQuestion.Answers.Count != 0)
                 SelectedQuestion.Answers[0].IsCorrect = true;
+        }
+
+        private void ReportListDebtors()
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Excel Workbook (*.xlsx)|*.xlsx"
+            };
+            if (dialog.ShowDialog() != true)
+                return;
+
+            ReportDebtors.GenerateReport(new FileInfo(dialog.FileName), _test);
         }
 
         private void Save()

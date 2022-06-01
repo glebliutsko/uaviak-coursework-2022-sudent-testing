@@ -4,7 +4,6 @@ using StudentTesting.Application.Services.WindowDialog;
 using StudentTesting.Application.Utils;
 using StudentTesting.Application.Views.Course;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using DbModels = StudentTesting.Database.Models;
@@ -16,11 +15,11 @@ namespace StudentTesting.Application.ViewModels.Course
         private readonly IWindowDialogService<DbModels.Course> newCourseService =
             new AddCourseWindowDialogService();
 
-        private readonly DbModels.User _user;
+        protected readonly DbModels.User user;
 
         public CoursesListViewModel(DbModels.User user)
         {
-            _user = user;
+            this.user = user;
 
             AddCourceCommand = new RelayCommand(x => AddCource());
             OpenCourseCommand = new RelayCommand(x => OpenCource((DbModels.Course)x), x => x != null);
@@ -49,7 +48,7 @@ namespace StudentTesting.Application.ViewModels.Course
                 return;
 
             var newCourse = newCourseService.Result;
-            newCourse.OwnerCourceId = _user.Id;
+            newCourse.OwnerCourceId = user.Id;
 
             DbContextKeeper.Saved.Courses.Add(newCourseService.Result);
             DbContextKeeper.Saved.SaveChanges();
@@ -68,12 +67,12 @@ namespace StudentTesting.Application.ViewModels.Course
 
         protected virtual CourseViewModel BuildViewModel(DbModels.Course course)
         {
-            return new CourseViewModel(course);
+            return new CourseViewModel(course, user);
         }
 
         public virtual void UpdateData()
         {
-            Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.Where(x => x.OwnerCourceId == _user.Id).ToList());
+            Courses = new ObservableCollection<DbModels.Course>(DbContextKeeper.Saved.Courses.Where(x => x.OwnerCourceId == user.Id).ToList());
         }
     }
 }
