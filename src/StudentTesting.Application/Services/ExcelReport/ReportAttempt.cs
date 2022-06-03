@@ -22,8 +22,8 @@ namespace StudentTesting.Application.Services.ExcelReport
                 worksheet.Cell($"B{row}").Value = "Тест";
                 worksheet.Cell($"C{row}").Value = "Студент";
                 worksheet.Cell($"D{row}").Value = "Баллы";
-                worksheet.Cell($"C{row}").Value = "Баллы (Всего)";
-                worksheet.Cell($"E{row}").Value = "Оценка";
+                worksheet.Cell($"E{row}").Value = "Баллы (Всего)";
+                worksheet.Cell($"F{row}").Value = "Оценка";
 
                 row++;
 
@@ -33,11 +33,11 @@ namespace StudentTesting.Application.Services.ExcelReport
                     worksheet.Cell($"B{row}").Value = attempt.TestTitle;
                     worksheet.Cell($"C{row}").Value = attempt.StudentName;
                     worksheet.Cell($"D{row}").Value = attempt.Score;
-                    worksheet.Cell($"C{row}").Value = attempt.AllScore;
-                    worksheet.Cell($"E{row}").Value = attempt.Mark;
+                    worksheet.Cell($"E{row}").Value = attempt.AllScore;
+                    worksheet.Cell($"F{row}").Value = attempt.Mark;
 
                     (var r, var g, var b) = ColorMark.ToColorRgb(attempt.Mark);
-                    worksheet.Cell($"E{row}").Style.Fill.BackgroundColor = Excel.XLColor.FromArgb(r, g, b);
+                    worksheet.Cell($"F{row}").Style.Fill.BackgroundColor = Excel.XLColor.FromArgb(r, g, b);
 
                     row++;
                 }
